@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: { sessions: 'users/sessions'}
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  authenticated :user do
+    get 'home/index', to: 'home#index', as: :authenticated_root
+    get 'client/dashboard', to: 'client#dashboard', as: :client_dashboard
+  end
+
+  root 'home#index'
+
+  namespace :admin do
+    resources :users
+  end
+
 end
+
