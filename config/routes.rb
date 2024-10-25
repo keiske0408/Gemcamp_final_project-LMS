@@ -1,16 +1,22 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions'}
+  devise_for :users, controllers: { sessions: 'users/sessions' }
 
-  authenticated :user do
-    get 'home/index', to: 'home#index', as: :authenticated_root
+  constraints(AdminDomainConstraint.new) do
+    namespace :client do
+      resources :home, only: [:index]
+    end
+
     get 'client/dashboard', to: 'client#dashboard', as: :client_dashboard
+    root 'home#index'
+
+    constraints(ClientDomainConstraint.new) do
+      namespace :admin do
+        resources :home, only: [:index]
+      end
+    end
+
   end
-
-  root 'home#index'
-
-  namespace :admin do
-    resources :users
-  end
-
 end
+
+
 
