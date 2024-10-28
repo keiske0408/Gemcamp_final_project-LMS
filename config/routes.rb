@@ -1,22 +1,32 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { sessions: 'users/sessions' }, path: 'client'
 
-  constraints(AdminDomainConstraint.new) do
-    namespace :client do
-      resources :home, only: [:index]
+  # Admin-specific routes
+  constraints AdminDomainConstraint.new do
+    namespace :admin do
+      root 'home#index' # Admin dashboard
     end
-
-    get 'client/dashboard', to: 'client#dashboard', as: :client_dashboard
-    root 'home#index'
-
-    constraints(ClientDomainConstraint.new) do
-      namespace :admin do
-        resources :home, only: [:index]
-      end
-    end
-
   end
+
+  # Client routes with custom login path
+  constraints ClientDomainConstraint.new do
+    devise_scope :user do
+      get 'client/login', to: 'client/sessions#new', as: :new_client_session
+      post 'client/login', to: 'client/sessions#create', as: :client_session
+      delete 'client/logout', to: 'client/sessions#destroy', as: :destroy_client_session
+    end
+
+    namespace :client do
+      get 'dashboard', to: 'dashboard#index', as: :dashboard
+      root 'dashboard#index' # Client dashboard
+    end
+  end
+
+  # Default root path fallback
+  root 'home#index'
 end
+
+
 
 
 
