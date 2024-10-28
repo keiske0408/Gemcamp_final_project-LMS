@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+/config/domain.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -42,3 +43,4 @@
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/dataSources.xml
