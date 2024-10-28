@@ -36,3 +36,9 @@
 /node_modules
 
 /config/domain.yml
+.idea/gemcamp_final_project.iml
+.idea/dataSources.local.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
