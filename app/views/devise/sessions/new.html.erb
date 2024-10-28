@@ -1,26 +1,44 @@
-<h2>Log in</h2>
+<body class="bg-gradient (135deg, #6a11cb 0%, #2575fc 100%) ">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-5" style="width: 25rem;">
+    <h2 class="text-center mb-4">Login</h2>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
+      <!-- Email Field -->
+      <div class="form-group mb-3">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                          class: "form-control", placeholder: "Enter your email" %>
+      </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <!-- Password Field -->
+      <div class="form-group mb-3">
+        <%= f.label :password, class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "current-password",
+                             class: "form-control", placeholder: "Enter your password" %>
+      </div>
+
+      <!-- Remember Me Checkbox (if applicable) -->
+      <% if devise_mapping.rememberable? %>
+        <div class="form-check mb-3">
+          <%= f.check_box :remember_me, class: "form-check-input", id: "rememberMe" %>
+          <%= f.label :remember_me, class: "form-check-label", for: "rememberMe" %>
+        </div>
+      <% end %>
+
+      <!-- Login Button -->
+      <div class="d-grid">
+        <%= f.submit "Login", class: "btn btn-primary btn-block" %>
+      </div>
+    <% end %>
+
+    <!-- Additional Links -->
+    <div class="mt-3">
+      <%= render "devise/shared/links" %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
 
-<%= render "devise/shared/links" %>
+</body>
+
