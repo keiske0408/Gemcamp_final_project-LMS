@@ -1,50 +1,27 @@
-<<<<<<< HEAD
-<!-- app/views/client/sessions/new.html.erb -->
-=======
->>>>>>> Feature-2-and-3
 <body class="bg-gradient (135deg, #ff7e5f 0%, #feb47b 100%)">
 <div class="container d-flex justify-content-center align-items-center vh-100">
   <div class="card shadow p-5" style="width: 25rem;">
     <h2 class="text-center mb-4">Client Login</h2>
-<<<<<<< HEAD
 
-    <%= form_for(resource, as: resource_name, url: client_session_path, html: { class: "form" }) do |f| %>
-=======
     <%= form_for(resource, as: resource_name, url: new_client_session_path, html: { class: "form" }) do |f| %>
->>>>>>> Feature-2-and-3
       <div class="form-group mb-3">
         <%= f.label :email, class: "form-label" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
       </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> Feature-2-and-3
       <div class="form-group mb-3">
         <%= f.label :password, class: "form-label" %>
         <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Enter your password" %>
       </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> Feature-2-and-3
       <div class="d-grid">
         <%= f.submit "Login", class: "btn btn-success btn-block" %>
       </div>
     <% end %>
-<<<<<<< HEAD
 
-    <div class="mt-3">
-      <%= link_to "Forgot your password?", new_user_password_path %>
-    </div>
-  </div>
-</div>
-</body>
-=======
     <div class="mt-3">
       <%= link_to "Forgot your password?", new_client_password_path %>
     </div>
   </div>
 </div>
 </body>
->>>>>>> Feature-2-and-3

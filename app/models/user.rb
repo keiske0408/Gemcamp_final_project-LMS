@@ -15,5 +15,11 @@ class User < ApplicationRecord
     types: %i[voip mobile],
     countries: [:ph]
   }
+  def admin?
+    role == 'admin' # Adjust this based on your actual role logic
+  end
 
+  def client?
+    role == 'client' # Adjust this based on your actual role logic
+  end
 end

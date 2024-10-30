@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-class Client::SessionsController < Devise::SessionsController
-  # layout 'client' # Use a different layout for client login if needed
-
-  def new
-    super
-  end
-
-  def create
-    super
-  end
-
-  def destroy
-    super
-  end
-end
-=======
 # frozen_string_literal: true
 class Client::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
@@ -41,4 +24,4 @@ class Client::SessionsController < Devise::SessionsController
   # #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # # end
 end
->>>>>>> Feature-2-and-3
+
