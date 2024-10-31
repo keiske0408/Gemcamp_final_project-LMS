@@ -1,5 +1,5 @@
-class Admin::HomeController < Admin::AdminController
-  before_action :authenticate_admin!
+class Admin::HomeController < Admin::BaseController
+  # before_action :authenticate_admin!
   # before_action :redirect_non_admins, only: [:index]
 
   def index
@@ -8,8 +8,7 @@ class Admin::HomeController < Admin::AdminController
   end
 
   private
-
-  def redirect_non_admins
-    redirect_to root_path, alert: 'Access denied!' unless current_user&.role == 'admin'
-  end
+  # def redirect_non_admins
+  #   redirect_to root_path, alert: 'Access denied!' unless current_user&.role == 'admin'
+  # end
 end

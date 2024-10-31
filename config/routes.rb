@@ -5,9 +5,9 @@ Rails.application.routes.draw do
       sessions: 'admin/sessions'
     }
 
-    namespace :admin do
-      resources :home, only: [:index]
-    end
+    # namespace :admin do
+    #   resources :home, only: [:index]
+    # end
 
     root to: 'admin/home#index', as: :admin_root # Root for admin domain
   end
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   constraints(ClientDomainConstraint.new) do
     devise_for :client, class_name: 'User', controllers: {
       sessions: 'client/sessions',
-      registrations: 'users/client/registrations'
+      registrations: 'client/registrations'
     }
     # Define the root within devise_scope to fix the mapping issue
     devise_scope :client do
