@@ -1,2 +1,33 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+
+
+//.card {
+//  @media (min-width: 768px) {
+//    max-width: 700px; // Ensures width is limited on larger screens
+//  }
+//}
+
+.nav-tabs .nav-link.active {
+  background-color: #8b0000;
+  color: white !important;
+
+}
+
+/* Hover effect for all tabs */
+.nav-tabs .nav-link:hover {
+  transition: 0.3s;
+  background-color: dimgray;
+  color: white;
+
+}
+
+.register_btn {
+  color: black;
+}
+
+
+.register_btn {
+  color: black;
+}

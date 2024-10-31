@@ -1,29 +1,45 @@
-<h2>Sign up</h2>
+<%= render 'client/shared/navbar' if request.host == 'client.com' %>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh">
+  <div class="card shadow-lg p-5 w-100" style="max-width: 700px;">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <!-- Tab navigation for Login and Register -->
+    <ul class="nav nav-tabs mb-4 text-center">
+      <li class="nav-item col-lg-6">
+        <%= link_to "Login", new_client_session_path, class: "nav-link register_btn" %>
+      </li>
+      <li class="nav-item col-lg-6">
+        <a class="nav-link active" href="<%= new_client_registration_path %>">Register</a>
+      </li>
+    </ul>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <h2 class="text-center mb-4">Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-group mb-3">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= f.label :password, class: "form-label" %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Enter your password" %>
+      </div>
+
+      <div class="form-group mb-3">
+        <%= f.label :password_confirmation, class: "form-label" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your password" %>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Sign up", class: "btn btn-dark btn-block" %>
+      </div>
+    <% end %>
+
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
+<%= render 'client/shared/footer' %>

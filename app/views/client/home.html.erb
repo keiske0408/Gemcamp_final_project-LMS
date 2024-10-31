@@ -1,76 +1,114 @@
-<html lang="en">
-<body>
-<!-- Top Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
-  <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">System Management</span>
-    <div class="ml-auto d-flex align-items-center">
-      <button class="btn btn-sm btn-outline-secondary me-3">Change Language</button>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= current_client.username %>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><%= button_to 'Sign Out', destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "dropdown-item" %><li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-<!-- Main Container -->
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebar">
-      <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active text-black" aria-current="page" href="#">Homepage</a>
-          </li>
-          <hr>
-          <li class="nav-item">
-            <a class="nav-link text-black" data-bs-toggle="collapse" href="#memberManagement" role="button" aria-expanded="false" aria-controls="memberManagement">
-              Member Management
-            </a>
-            <div class="collapse" id="memberManagement">
-              <ul class="nav flex-column ms-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">User List</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Item List</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <hr>
-          <li class="nav-item">
-            <a class="nav-link text-black" data-bs-toggle="collapse" href="#exampleManagement" role="button" aria-expanded="false" aria-controls="exampleManagement">
-              Example 2 Management
-            </a>
-            <div class="collapse" id="exampleManagement">
-              <ul class="nav flex-column ms-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Example 1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Example 2</a>
-                </li>
-              </ul>
-            </div>
-            <hr>
-          </li>
-        </ul>
+<%= render 'client/shared/navbar' if request.host == 'client.com' %>
+<div class="container-fluid d-flex flex-column min-vh-100">
+
+  <div class="row flex-grow-1">
+    <!-- Sidebar (optional) -->
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <!-- Add your sidebar content here if needed -->
       </div>
     </nav>
+
     <!-- Main Content -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Hi, <%= current_client.username %></h1>
+    <main class="col-md-10 ml-sm-auto col-lg-10 px-md-4 d-flex flex-column">
+      <!-- Banner Image -->
+      <div class="jumbotron jumbotron-fluid bg-light text-center">
+        <div class="container">
+          <h1 class="display-4">Banner Image</h1>
+        </div>
       </div>
-      <!-- Additional content or dashboard cards can go here -->
+
+      <!-- Announcement -->
+      <div class="alert alert-primary" role="alert">
+        Announcement:
+      </div>
+
+      <!-- Winners Feedback -->
+      <div class="content-section mb-4">
+        <h4>Winners Feedback</h4>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <img src="image1.jpg" class="card-img-top" alt="Image 1">
+              <div class="card-body">
+                <h5 class="card-title">Image 1</h5>
+                <p class="card-text">Description for Image 1</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <img src="image2.jpg" class="card-img-top" alt="Image 2">
+              <div class="card-body">
+                <h5 class="card-title">Image 2</h5>
+                <p class="card-text">Description for Image 2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <img src="image3.jpg" class="card-img-top" alt="Image 3">
+              <div class="card-body">
+                <h5 class="card-title">Image 3</h5>
+                <p class="card-text">Description for Image 3</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <img src="more.jpg" class="card-img-top" alt="More...">
+              <div class="card-body">
+                <h5 class="card-title">More...</h5>
+                <p class="card-text">Description for More...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coming Soon -->
+      <div class="content-section mb-4">
+        <h4>Coming Soon</h4>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <img src="coming-soon1.jpg" class="card-img-top" alt="Image 1">
+              <div class="card-body">
+                <h5 class="card-title">Image 1</h5>
+                <p class="card-text">Description for Image 1</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <img src="coming-soon2.jpg" class="card-img-top" alt="Image 2">
+              <div class="card-body">
+                <h5 class="card-title">Image 2</h5>
+                <p class="card-text">Description for Image 2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <img src="coming-soon3.jpg" class="card-img-top" alt="Image 3">
+              <div class="card-body">
+                <h5 class="card-title">Image 3</h5>
+                <p class="card-text">Description for Image 3</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <img src="coming-soon-more.jpg" class="card-img-top" alt="More...">
+              <div class="card-body">
+                <h5 class="card-title">More...</h5>
+                <p class="card-text">Description for More...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 </div>
-</body>
+<%= render 'client/shared/footer' %>
