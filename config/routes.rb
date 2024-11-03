@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   constraints(AdminDomainConstraint.new) do
     devise_for :admin, class_name: 'User', only: [:sessions], controllers: {
       sessions: 'admin/sessions'
@@ -15,7 +14,7 @@ Rails.application.routes.draw do
   constraints(ClientDomainConstraint.new) do
     devise_for :client, class_name: 'User', controllers: {
       sessions: 'client/sessions',
-      registrations: 'client/registrations'
+      registrations: 'client/registrations',
     }
     # Define the root within devise_scope to fix the mapping issue
     devise_scope :client do
@@ -24,6 +23,7 @@ Rails.application.routes.draw do
 
     namespace :client do
       resources :home, only: [:index, :new]
+      resources :menu, only: [:index]
     end
   end
 end
