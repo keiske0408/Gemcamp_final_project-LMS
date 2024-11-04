@@ -1,6 +1,4 @@
-<%= render 'client/shared/navbar' if request.host == 'client.com' %>
 <%= button_to 'Sign Out', destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "dropdown-item" %>
-
 <div class="container my-5">
   <!-- Banner with Navigation Arrows -->
   <div class="row align-items-center mb-4">
@@ -77,4 +75,3 @@
   </div>
 </div>
 
-<%= render 'client/shared/footer' %>

@@ -1,19 +1,12 @@
-<nav class="navbar navbar-expand-lg bg-light border-bottom py-2 px-4">
+<nav class="navbar bg-light border-bottom py-2 px-4 fixed-top">
   <div class="container-fluid d-flex justify-content-between align-items-center">
     <!-- Brand Image -->
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img src="path/to/brand-image.png" alt="Brand Logo" class="img-fluid" style="max-height: 40px;">
     </a>
 
-    <!-- Navbar Toggler (Menu Button) for Mobile View -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <span>Menu</span>
-    </button>
-
-    <!-- Navbar Links -->
-    <div class="collapse navbar-collapse" id="navbarContent">
-      <ul class="navbar-nav ms-auto d-flex align-items-center gap-5">
+    <div class="d-flex flex-row gap-4">
+      <ul class="navbar-nav d-flex flex-row align-items-center gap-5">
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Coins</a>
         </li>
@@ -23,15 +16,15 @@
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Language</a>
         </li>
-        <li>
-          <%= link_to "try", client_menu_index_path %>
-          <button class="btn btn-outline-secondary btn-sm menu-toggle" aria-label="Toggle Menu">☰</button>
-        </li>
       </ul>
+
+      <!-- Navbar Toggler (Menu Button) always visible -->
+      <% if client_signed_in? %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <% end %>
     </div>
   </div>
 </nav>
-
-
-
-
+<%= render 'client/shared/menu' %>
