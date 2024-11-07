@@ -16,9 +16,10 @@
     <small>Shop</small>
   </a>
   <% if client_signed_in? %>
-    <a href="#" class="text-center text-decoration-none text-dark">
+    <%= link_to client_me_path, class:"text-center text-decoration-none text-dark" do %>
       <i class="bi bi-person-fill"></i><br>
       <small>Me</small>
-    </a>
+    <% end %>
   <% end %>
+
 </footer>
