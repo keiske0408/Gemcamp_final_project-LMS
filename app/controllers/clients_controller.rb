@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :authenticate_client!
+  # before_action :authenticate_client!
   before_action :authorize_client
 
   private

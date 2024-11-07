@@ -1,6 +1,8 @@
-class AdminsController < ApplicationController
+class AdminsController < ActionController::Base
   before_action :authenticate_admin!
   before_action :authorize_admin
+  layout 'admin'
+
 
   private
 
