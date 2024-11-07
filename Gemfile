@@ -5,6 +5,8 @@ ruby "3.0.4"
 
 gem 'faker'
 
+gem 'rest-client'
+
 gem 'carrierwave'
 
 gem 'phonelib'
