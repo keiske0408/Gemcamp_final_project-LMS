@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  mount_uploader :image, ImageUploader
+
   enum genre: { client: 0, admin: 1 }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -22,4 +24,7 @@ class User < ApplicationRecord
   def client?
     role == 'client' # Adjust this based on your actual role logic
   end
+
+  # Devise methods
+
 end

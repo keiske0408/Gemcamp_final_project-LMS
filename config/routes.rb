@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
     namespace :client do
       resources :home, only: [:index, :new]
-      resources :menu, only: [:index]
+      resource :me, controller: :me, only: [:show]
     end
   end
 end

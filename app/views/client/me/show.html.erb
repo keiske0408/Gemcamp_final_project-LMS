@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="container rounded p-2 border border-black p-5" style="max-width: 1200px; height: 600px;">
+
+    <!-- Profile Section -->
+    <div class="d-flex flex-column align-items-center mb-2">
+      <img src="<%= current_client.image.url.present? ? current_client.image.url : 'https://via.placeholder.com/200' %>" class="border border-4 border-black mb-4 rounded-3" style="width: 200px; height: 200px;" alt="Profile Image">
+      <div class="text-center">
+        <h3 class="mb-1 py-1"><%= current_client.username %></h3>
+        <p class="text-muted fs-5 mb-1 py-1"><i class="bi bi-envelope me-1"></i><%= current_client.email %></p>
+        <p class="text-muted fs-5 py-1"><i class="bi bi-coin me-1"></i><%= current_client.coins %></p>
+      </div>
+    </div>
+
+    <!-- Cash In Now Button -->
+    <div class="d-grid mb-3">
+      <button class="btn btn btn-dark btn-lg fw-bold py-3" style="max-width: 100%;">Cash In Now</button>
+    </div>
+
+    <!-- Links Section -->
+    <div class="row row-cols-2 g-3">
+      <div class="col">
+        <%= link_to 'Edit Profile', edit_client_registration_path, class: "btn btn-outline-dark btn-lg py-2 w-100" %>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-dark btn-lg py-2 w-100">Addresses</button>
+      </div>
+    </div>
+  </div>
+</div>
