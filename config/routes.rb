@@ -24,8 +24,11 @@ Rails.application.routes.draw do
     namespace :client do
       resources :home, only: [:index, :new]
       resource :me, controller: :me, only: [:show]
+      resources :client_addresses
     end
   end
+
+
 
   namespace :api do
     namespace :v1 do

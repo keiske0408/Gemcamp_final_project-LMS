@@ -16,7 +16,6 @@ end
       password: 'password123', # Devise requires valid password
       password_confirmation: 'password123',
       username: Faker::Internet.username,
-      role: User::ROLES.sample,
       phone_number: generate_philippine_phone, # Valid PH number
       coins: rand(0..100),
       total_deposit: Faker::Commerce.price(range: 0..10_000),

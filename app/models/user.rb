@@ -17,6 +17,7 @@ class User < ApplicationRecord
     types: %i[voip mobile],
     countries: [:ph]
   }
+  has_many :client_addresses, dependent: :destroy
   def admin?
     role == 'admin' # Adjust this based on your actual role logic
   end

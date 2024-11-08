@@ -4,7 +4,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.hosts << "client.com"
   config.hosts << "admin.com"
-  config.hosts << "ecc3-175-176-38-131.ngrok-free.app"
+  config.hosts << "5798-175-176-38-153.ngrok-free.app"
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
