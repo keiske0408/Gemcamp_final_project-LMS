@@ -17,15 +17,12 @@ class User < ApplicationRecord
     types: %i[voip mobile],
     countries: [:ph]
   }
-  has_many :client_addresses, dependent: :destroy
-  def admin?
-    role == 'admin' # Adjust this based on your actual role logic
-  end
+  has_many :locations, class_name: 'Location'
 
-  def client?
-    role == 'client' # Adjust this based on your actual role logic
-  end
+  private
 
-  # Devise methods
+  def location_limit
+    errors.add(:locations, "limit of 5 addresses per user") if locations.size > 5
+  end
 
 end

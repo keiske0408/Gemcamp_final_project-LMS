@@ -1,0 +1,34 @@
+<div class="container">
+  <h1 class="text-center mb-4">Listing Locations</h1>
+
+  <div class="row justify-content-center">
+    <% @locations.each do |location| %>
+      <div class="col-md-6 mt-4">
+        <div class="card text-center shadow mb-5 bg-white rounded">
+          <div class="card-header font-italic">
+            Location: <%= location.genre %>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-success"><%= location.street_address %></h5>
+            <p class="card-text"><%= location.phone_number %></p>
+            <p class="card-text"><%= location.remark %></p>
+            <p class="card-text">Region: <%= location.region&.name %></p>
+            <p class="card-text">Province: <%= location.province&.name %></p>
+            <p class="card-text">City: <%= location.city&.name %></p>
+            <p class="card-text">Barangay: <%= location.barangay&.name %></p>
+            <%= link_to 'Show', client_location_path(location), class: "btn btn-outline-success", type: "button" %>
+            <%= link_to 'Edit', edit_client_location_path(location), class: "btn btn-outline-info", type: "button" %>
+            <%= button_to 'Delete', client_location_path(location), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger ml-2", type: "button", form_class: "d-inline" %>
+          </div>
+          <div class="card-footer text-muted">
+            <small>Created <%= time_ago_in_words(location.created_at) %> ago, edited <%= time_ago_in_words(location.updated_at) %> ago</small>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-grid mb-3">
+    <%= link_to 'New Location', new_client_location_path, class: "btn btn-dark btn-block" %>
+  </div>
+</div>

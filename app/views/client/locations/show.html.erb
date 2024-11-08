@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <div class="content">
+    <div class="card shadow-lg p-4 form-container">
+      <h2 class="text-center mb-4">Location Details</h2>
+
+      <div class="row">
+        <!-- Left Column (Name, Phone Number, Remark, Is Default, Genre) -->
+        <div class="col-lg-6">
+          <div class="form-group row mb-4">
+            <%= label_tag :name, 'Name', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.name %></p>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <%= label_tag :phone_number, 'Phone Number', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.phone_number %></p>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <%= label_tag :remark, 'Remark', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.remark %></p>
+            </div>
+          </div>
+
+
+          <div class="form-group row mb-4">
+            <%= label_tag :genre, 'Genre', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.genre.humanize %></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Address Info) -->
+        <div class="col-lg-6">
+          <div class="form-group row mb-4">
+            <%= label_tag :street_address, 'Street Address', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.street_address %></p>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <%= label_tag :address_region_id, 'Region', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.region.name %></p>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <%= label_tag :address_province_id, 'Province', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.province.name %></p>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <%= label_tag :address_city_id, 'City', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.city.name %></p>
+            </div>
+          </div>
+
+          <div class="form-group row mb-4">
+            <%= label_tag :address_barangay_id, 'Barangay', class: "col-sm-5 col-form-label font-weight-bold" %>
+            <div class="col-sm-8">
+              <p class="form-control-plaintext text-muted"><%= @location.barangay.name %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <div class="d-grid">
+        <%= link_to "Back", client_locations_path, class: "btn btn-secondary btn-block" %>
+      </div>
+    </div>
+  </div>
+</div>

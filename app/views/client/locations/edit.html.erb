@@ -1,0 +1,154 @@
+<div class="container-fluid">
+  <div class="content">
+    <div class="card shadow-lg p-3 p-sm-5 form-container">
+      <h2 class="text-center mb-4">Edit Address</h2>
+
+      <%= form_with model: @location, url: client_location_path(@location), method: :patch, data: { controller: 'location' }, html: { class: "form" } do |form| %>
+        <% if @location.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h4><%= pluralize(@location.errors.count, "error") %> prohibited this address from being saved:</h4>
+            <ul>
+              <% @location.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="row mb-2">
+          <!-- Left Column (Name, Phone Number, Remark, Is Default) -->
+          <div class="col-lg-6">
+            <div class="form-group row mb-3">
+              <%= form.label :name, 'Name', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.text_field :name, class: "form-control", placeholder: "Enter your name" %>
+                <% if @location.errors[:name].any? %>
+                  <div class="text-danger"><%= @location.errors[:name].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :phone_number, 'Phone Number', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.text_field :phone_number, class: "form-control", placeholder: "Enter your phone number" %>
+                <% if @location.errors[:phone_number].any? %>
+                  <div class="text-danger"><%= @location.errors[:phone_number].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :remark, 'Remark', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.text_area :remark, class: "form-control", placeholder: "Enter remarks" %>
+                <% if @location.errors[:remark].any? %>
+                  <div class="text-danger"><%= @location.errors[:remark].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :is_default, 'Is Default', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <div class="form-check">
+                  <%= form.check_box :is_default, class: "form-check-input" %>
+                  <%= form.label :is_default, "Set as default", class: "form-check-label" %>
+                </div>
+                <% if @location.errors[:is_default].any? %>
+                  <div class="text-danger"><%= @location.errors[:is_default].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Genre Field (Select Dropdown) -->
+            <div class="form-group row mb-3">
+              <%= form.label :genre, 'Genre', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.select :genre, Location.genres.keys.map { |genre| [genre.humanize, genre] }, { prompt: 'Please select genre' }, class: "form-control" %>
+                <% if @location.errors[:genre].any? %>
+                  <div class="text-danger"><%= @location.errors[:genre].first %></div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column (Address Info) -->
+          <div class="col-lg-6">
+            <div class="form-group row mb-3">
+              <%= form.label :street_address, 'Street Address', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.text_field :street_address, class: "form-control", placeholder: "Enter your street address" %>
+                <% if @location.errors[:street_address].any? %>
+                  <div class="text-danger"><%= @location.errors[:street_address].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :address_region_id, 'Region', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.collection_select :address_region_id,
+                                           Address::Region.all, :id, :name,
+                                           { prompt: 'Please select region' },
+                                           { class: "form-control", data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces' } } %>
+                <% if @location.errors[:address_region_id].any? %>
+                  <div class="text-danger"><%= @location.errors[:address_region_id].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :address_province_id, 'Province', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.collection_select :address_province_id,
+                                           Address::Province.all, :id, :name,
+                                           { prompt: 'Please select province' },
+                                           { class: "form-control", data: { location_target: 'selectProvinceId', action: 'change->location#fetchCities' } } %>
+                <% if @location.errors[:address_province_id].any? %>
+                  <div class="text-danger"><%= @location.errors[:address_province_id].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :address_city_id, 'City', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.collection_select :address_city_id,
+                                           Address::City.all, :id, :name,
+                                           { prompt: 'Please select city' },
+                                           { class: "form-control", data: { location_target: 'selectCityId', action: 'change->location#fetchBarangays' } } %>
+                <% if @location.errors[:address_city_id].any? %>
+                  <div class="text-danger"><%= @location.errors[:address_city_id].first %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="form-group row mb-3">
+              <%= form.label :address_barangay_id, 'Barangay', class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.collection_select :address_barangay_id,
+                                           Address::Barangay.all, :id, :name,
+                                           { prompt: 'Please select barangay' },
+                                           { class: "form-control", data: { location_target: 'selectBarangayId' } } %>
+                <% if @location.errors[:address_barangay_id].any? %>
+                  <div class="text-danger"><%= @location.errors[:address_barangay_id].first %></div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid mb-2">
+          <%= form.submit "Save Changes", class: "btn btn-dark btn-block" %>
+        </div>
+      <% end %>
+
+      <!-- Back Button -->
+      <div class="d-grid">
+        <%= link_to "Back", client_locations_path, class: "btn btn-secondary btn-block" %>
+      </div>
+    </div>
+  </div>
+</div>
