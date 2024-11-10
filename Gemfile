@@ -3,7 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.4"
 
-gem 'stimulus-rails'
+gem 'rqrcode'
+
+gem 'chunky_png'
 
 gem 'faker'
 
