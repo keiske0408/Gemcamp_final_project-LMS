@@ -1,34 +1,12 @@
 class Client::InvitationsController < ApplicationController
-  skip_before_action :authenticate_client!, only: [:show]
-
   def show
-    if params[:promoter]
-      # Store the promoter in a cookie
-      cookies[:promoter] = params[:promoter]
+    @promoter_email = params[:promoter] || cookies[:promoter_email]
+
+    if @promoter_email
+      cookies[:promoter_email] = @promoter_email # Save promoter email in a cookie
     end
 
-    if current_client
-      @invite_url = new_client_registration_url(promoter: current_client.email)
-    else
-      @invite_url = new_client_registration_url(promoter: "default@example.com")
-    end
-
-    # Generate QR code for the invite URL
-    # Generate QR code for the invite URL
-    qrcode = RQRCode::QRCode.new(@invite_url)
-
-    # Generate PNG QR code as binary data
-    png = qrcode.as_png(
-      bit_depth: 1,
-      color: 'black',
-      bgcolor: 'white',
-      module_px_size: 6,
-      border_modules: 4
-    )
-
-    # Encode the PNG image to Base64 for inline display in HTML
-    @qr_code = Base64.encode64(png.to_s)
-
+    qrcode = RQRCode::QRCode.new(new_client_registration_url(promoter: @promoter_email))
+    @qrcode_svg = qrcode.as_svg(offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 6)
   end
 end
-

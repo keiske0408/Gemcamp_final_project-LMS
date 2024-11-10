@@ -1,4 +1,12 @@
-<div class="invite-link">
-  <p>Invite URL: <%= @invite_url %></p>
-  <%= image_tag "data:image/png;base64,#{@qr_code}", alt: "Invite QR Code" %>
+<div class="text-center">
+  <h1>INVITE PEOPLE</h1>
+  <p class="text-white">Scan the QR Code or use the invite URL:</p>
+  <div class="bg-white d-flex justify-content-center align-items-center">
+    <%= raw @qrcode_svg %>
+  </div>
+  <p>
+  <h2>Invite URL:</h2>
+  <%# Display the promoter email for debugging %>
+  <%= new_client_registration_url(promoter: @promoter_email || 'default@example.com') %>
+  </p>
 </div>

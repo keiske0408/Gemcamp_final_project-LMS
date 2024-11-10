@@ -5,8 +5,6 @@ ruby "3.0.4"
 
 gem 'rqrcode'
 
-gem 'chunky_png'
-
 gem 'faker'
 
 gem 'rest-client'
