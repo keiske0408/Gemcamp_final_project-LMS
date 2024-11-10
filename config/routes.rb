@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :home, only: [:index, :new]
       resource :me, controller: :me, only: [:show]
       resources :locations
+      get 'invite-people', to: 'invitations#show', as: :invite_people
     end
   end
 
