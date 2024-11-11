@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_10_145847) do
     t.string "image"
     t.bigint "parent_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["parent_id"], name: "index_users_on_parent_id"
+    t.index ["parent_id"], name: "fk_rails_684a13307d"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

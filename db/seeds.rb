@@ -19,7 +19,6 @@ end
       phone_number: generate_philippine_phone, # Valid PH number
       coins: rand(0..100),
       total_deposit: Faker::Commerce.price(range: 0..10_000),
-      children_members: rand(0..5),
       genre: User.genres.keys.sample,
       created_at: Time.zone.now,
       updated_at: Time.zone.now

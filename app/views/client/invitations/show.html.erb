@@ -7,6 +7,7 @@
   <p>
   <h2>Invite URL:</h2>
   <%# Display the promoter email for debugging %>
+  <p>Promoter Email: <%= @promoter_email %></p>
   <%= new_client_registration_url(promoter: @promoter_email || 'default@example.com') %>
   </p>
 </div>
