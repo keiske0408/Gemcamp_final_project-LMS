@@ -1,0 +1,39 @@
+<h1>New Item</h1>
+
+<%= form_with model: @item, url: admin_items_path, local: true, html: { multipart: true } do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :category_id, 'Category' %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "Select a Category", class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :name, 'Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :quantity, 'Quantity' %>
+    <%= f.number_field :quantity, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :minimum_tickets, 'Minimum Tickets' %>
+    <%= f.number_field :minimum_tickets, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :status, 'Status' %>
+    <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']]), {}, class: 'form-select' %>
+  </div>
+
+
+  <div class="mb-3">
+    <%= f.label :image, 'Image' %>
+    <%= f.file_field :image, class: 'form-control' %>
+  </div>
+
+
+  <%= f.submit 'Create Item', class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', admin_items_path, class: 'btn btn-secondary' %>
+<% end %>

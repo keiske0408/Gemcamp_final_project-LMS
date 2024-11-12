@@ -1,0 +1,66 @@
+<h1 class="text-center my-4">Items Management</h1>
+
+<div class="d-flex justify-content-end mb-3">
+  <%= link_to 'New Item', new_admin_item_path, class: 'btn btn-primary' %>
+</div>
+
+<table class="table table-sm table-striped table-hover border rounded">
+  <thead class="table-dark text-center">
+  <tr>
+    <th>Image</th>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Min Tickets</th>
+    <th>Status</th>
+    <th>State</th>
+    <th>Category</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @items.each do |item| %>
+    <tr>
+      <td class="text-center">
+        <%= image_tag item.image.url, width: 80, height: 80, class: "rounded border" if item.image? %>
+      </td>
+      <td class="text-center"><%= item.name %></td>
+      <td class="text-center"><%= item.quantity %></td>
+      <td class="text-center"><%= item.minimum_tickets %></td>
+      <td class="text-center">
+  <span class="badge bg-<%= item.status.present? && item.status == 'active' ? 'success' : 'secondary' %>">
+    <%= item.status.present? ? item.status.capitalize : 'N/A' %>
+  </span>
+      </td>
+      <td class="text-center">
+  <span class="badge bg-<%= item.state == 'starting' ? 'success' : 'secondary' %>">
+    <%= item.state.present? ? item.state.capitalize : 'N/A' %>
+  </span>
+      </td>
+      <td class="text-center"><%= item.category.name if item.category %></td>
+      <td class="text-center">
+        <div class="btn-group" role="group">
+          <%= link_to 'View', admin_item_path(item), class: 'btn btn-outline-info btn-sm' %>
+          <%= link_to 'Edit', edit_admin_item_path(item), class: 'btn btn-outline-warning btn-sm' %>
+          <%= link_to 'Delete', admin_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
+
+          <% if item.may_start? %>
+            <%= link_to 'Start', start_admin_item_path(item), method: :patch, class: 'btn btn-outline-success btn-sm' %>
+          <% end %>
+
+          <% if item.may_pause? %>
+            <%= link_to 'Pause', pause_admin_item_path(item), method: :patch, class: 'btn btn-outline-secondary btn-sm' %>
+          <% end %>
+
+          <% if item.may_end? %>
+            <%= link_to 'End', end_admin_item_path(item), method: :patch, class: 'btn btn-outline-dark btn-sm' %>
+          <% end %>
+
+          <% if item.may_cancel? %>
+            <%= link_to 'Cancel', cancel_admin_item_path(item), method: :patch, class: 'btn btn-outline-danger btn-sm' %>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

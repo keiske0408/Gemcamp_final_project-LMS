@@ -1,0 +1,19 @@
+<h1>Item Details</h1>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><%= @item.name %></h5>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><strong>Image:</strong> <%= @item.image %></li>
+      <li class="list-group-item"><strong>Quantity:</strong> <%= @item.quantity %></li>
+      <li class="list-group-item"><strong>Minimum Tickets:</strong> <%= @item.minimum_tickets %></li>
+      <li class="list-group-item"><strong>Status:</strong> <%= @item.status.capitalize %></li>
+      <li class="list-group-item"><strong>Batch Count:</strong> <%= @item.batch_count %></li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_admin_item_path(@item), class: 'btn btn-warning' %>
+    <%= link_to 'Back to List', admin_items_path, class: 'btn btn-secondary' %>
+  </div>
+</div>

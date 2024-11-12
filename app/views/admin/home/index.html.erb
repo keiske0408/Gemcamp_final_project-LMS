@@ -39,7 +39,10 @@
                   <a class="nav-link" href="#">User List</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Item List</a>
+                  <%= link_to 'Item List',admin_items_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'Category List',admin_categories_path, class: "nav-link" %>
                 </li>
               </ul>
             </div>
