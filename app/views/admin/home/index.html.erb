@@ -8,11 +8,11 @@
       <button class="btn btn-sm btn-outline-secondary me-3">Change Language</button>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          <%=current_admin.username %>
+          <%= current_admin.username %>
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
           <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "dropdown-item" %><li>
+          <li><%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "dropdown-item" %></li>
         </ul>
       </div>
     </div>
@@ -59,18 +59,56 @@
                 </li>
               </ul>
             </div>
-            <hr>
           </li>
+          <hr>
         </ul>
       </div>
     </nav>
     <!-- Main Content -->
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Hi, <%=current_admin.username %></h1>
+        <h1 class="h2">Hi, <%= current_admin.username %></h1>
       </div>
+
+      <!-- Data Table -->
+      <table class="table table-striped">
+        <thead class>
+        <tr>
+          <th>Parent Email</th>
+          <th>Email</th>
+          <th>Total Deposit</th>
+          <th>Member Total Deposits</th>
+          <th>Coins</th>
+          <th>Total Used Coins</th>
+          <th>Children Members</th>
+          <th>Phone Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @client_users.present? %>
+          <% @client_users.each do |user| %>
+            <tr>
+              <td><%= user.parent_email %></td>
+              <td><%= user.email %></td>
+              <td><%= user.total_deposit %></td>
+              <td><%= user.member_total_deposits %></td>
+              <td><%= user.coins %></td>
+              <td>0</td>
+              <td><%= user.children_members.count %></td>
+              <td><%= user.phone_number %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="8">No client users found.</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+
       <!-- Additional content or dashboard cards can go here -->
     </main>
   </div>
 </div>
 </body>
+</html>

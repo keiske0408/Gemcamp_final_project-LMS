@@ -3,8 +3,18 @@ class Admin::HomeController < Admin::BaseController
   # before_action :redirect_non_admins, only: [:index]
 
   def index
-    render template: 'admin/home'
+    @client_users = User
+                      .where(role: 'client')
+                      .left_joins(:children_members)
+                      .select(
+                        'users.*',
+                        'parents.email AS parent_email',
+                        'COALESCE(SUM(children_members_users.total_deposit), 0) AS member_total_deposits'
+                      )
+                      .joins('LEFT JOIN users AS parents ON users.parent_id = parents.id')
+                      .group('users.id, parents.email')
     # Admin-specific logic here
+    #
   end
 
   private
