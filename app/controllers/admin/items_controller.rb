@@ -1,5 +1,5 @@
 class Admin::ItemsController < Admin::BaseController
-  before_action :set_item, only: [:edit, :update, :start, :pause, :end, :cancel]
+  before_action :set_item, only: [:show, :destroy, :edit, :update, :start, :pause, :end, :cancel]
   layout 'admin'
 
   def start
@@ -39,7 +39,7 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def index
-    @items = Item.all
+    @items = Item.where(deleted_at: nil)  # Exclude deleted items
   end
 
   def show
@@ -79,9 +79,12 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def destroy
-    update(deleted_at: Time.current)
-    redirect_to admin_items_path, notice: 'Item was successfully deleted.'
+    puts "Destroying item #{@item.id}"  # Add this line for debugging
+    @item.destroy
+    flash[:notice] = 'Item was successfully deleted.'
+    redirect_to admin_items_path
   end
+
 
   private
 
