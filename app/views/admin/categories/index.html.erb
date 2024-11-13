@@ -15,9 +15,8 @@
       <td><%= category.name %></td>
       <td>
         <%= link_to 'Edit', edit_admin_category_path(category), class: 'btn btn-sm btn-warning' %>
-
         <% if category.deleted_at.nil? %>
-          <%= link_to 'Delete', admin_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+          <%= button_to 'Delete', admin_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
         <% else %>
           <%= link_to 'Restore', restore_admin_category_path(category), method: :patch, class: 'btn btn-sm btn-success' %>
         <% end %>
