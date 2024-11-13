@@ -1,5 +1,8 @@
 class Category < ApplicationRecord
   # Default scope to exclude soft-deleted categories
+  has_many :item_category_ships
+  has_many :items, through: :item_category_ships
+
   default_scope { where(deleted_at: nil) }
 
   # Soft delete by setting deleted_at instead of deleting the record
@@ -22,7 +25,6 @@ class Category < ApplicationRecord
     update(deleted_at: nil)
   end
 
-  # Associations (assuming each category has many items)
-  has_many :items, dependent: :restrict_with_error
+
 
 end

@@ -3,7 +3,8 @@ class Item < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   enum status: { inactive: 0, active: 1 }
 
-  belongs_to :category
+  has_many :item_category_ships
+  has_many :categories, through: :item_category_ships
   include AASM
 
   # AASM for the main lifecycle of the item
@@ -44,7 +45,9 @@ class Item < ApplicationRecord
   # def set_defaults
   #   self.batch_count ||= 0
   # end
-
+  def destroy
+    update(deleted_at: Time.current)
+  end
   def startable?
     quantity.positive? && offline_at.present? && Date.today < offline_at && active?
   end
