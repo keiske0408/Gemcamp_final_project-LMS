@@ -1,0 +1,17 @@
+<h1>Lottery Items</h1>
+
+<% @categories.each do |category| %>
+  <h2><%= category.name %></h2>
+  <ul>
+    <% category.items.each do |item| %>
+      <% if item.status == 'active' && item.state == 'starting'%>
+        <li>
+          <strong><%= item.name %></strong><br>
+          Online at: <%= item.online_at.strftime("%Y/%m/%d %I:%M %p") %><br>
+          Status: <%= item.status %><br>
+          State: <%= item.state %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>

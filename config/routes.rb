@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'lottery/index'
   constraints(AdminDomainConstraint.new) do
     devise_for :admin, class_name: 'User', only: [:sessions], controllers: {
       sessions: 'admin/sessions'
@@ -36,6 +37,7 @@ constraints(ClientDomainConstraint.new) do
     resource :me, controller: :me, only: [:show]
     resources :locations
     get 'invite-people', to: 'invitations#show', as: :invite_people
+    get '/lottery', to: 'lottery#index', as: 'lottery'
   end
 end
 
