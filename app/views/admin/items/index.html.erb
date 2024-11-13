@@ -13,6 +13,8 @@
     <th>Min Tickets</th>
     <th>Status</th>
     <th>State</th>
+    <th>Offline At</th>
+    <th>Online At</th>
     <th>Category</th>
     <th>Actions</th>
   </tr>
@@ -36,6 +38,12 @@
     <%= item.state.present? ? item.state.capitalize : 'N/A' %>
   </span>
       </td>
+      <td class="text-center">
+        <%= item.offline_at&.strftime("%Y/%m/%d %I:%M %p")%>
+      </td>
+      <td class="text-center">
+        <%= item.online_at&.strftime("%Y/%m/%d %I:%M %p")%>
+      </td>
       <td class="text-center"><%= item.category.name if item.category %></td>
       <td class="text-center">
         <div class="btn-group" role="group">
@@ -44,19 +52,19 @@
           <%= link_to 'Delete', admin_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
 
           <% if item.may_start? %>
-            <%= link_to 'Start', start_admin_item_path(item), method: :patch, class: 'btn btn-outline-success btn-sm' %>
+            <%= button_to 'Start', start_admin_item_path(item), method: :patch, class: 'btn btn-outline-success btn-sm' %>
           <% end %>
 
           <% if item.may_pause? %>
-            <%= link_to 'Pause', pause_admin_item_path(item), method: :patch, class: 'btn btn-outline-secondary btn-sm' %>
+            <%= button_to 'Pause', pause_admin_item_path(item), method: :patch, class: 'btn btn-outline-secondary btn-sm' %>
           <% end %>
 
           <% if item.may_end? %>
-            <%= link_to 'End', end_admin_item_path(item), method: :patch, class: 'btn btn-outline-dark btn-sm' %>
+            <%= button_to 'End', end_admin_item_path(item), method: :patch, class: 'btn btn-outline-dark btn-sm' %>
           <% end %>
 
           <% if item.may_cancel? %>
-            <%= link_to 'Cancel', cancel_admin_item_path(item), method: :patch, class: 'btn btn-outline-danger btn-sm' %>
+            <%= button_to 'Cancel', cancel_admin_item_path(item), method: :patch, class: 'btn btn-outline-danger btn-sm' %>
           <% end %>
         </div>
       </td>

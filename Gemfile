@@ -7,6 +7,8 @@ gem 'rqrcode'
 
 gem 'faker'
 
+gem 'aasm'
+
 gem 'rest-client'
 
 gem 'carrierwave'

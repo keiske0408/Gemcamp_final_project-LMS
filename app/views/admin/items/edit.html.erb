@@ -24,13 +24,21 @@
 
   <div class="mb-3">
     <%= f.label :status, 'Status' %>
-    <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']], @item.status), {}, class: 'form-select' %>
+    <%= f.select :status, Item.statuses.keys.map { |status| [status.titleize, status] }, {}, class: 'form-select' %>
   </div>
 
-  <div class="mb-3">
-    <%= f.label :image, 'Image' %>
-    <%= f.file_field :image, class: 'form-control' %>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= f.label :online_at, 'Online At', class: 'form-label' %>
+      <%= f.datetime_local_field :online_at, value: @item.online_at&.strftime("%Y-%m-%dT%H:%M"), class: 'form-control' %>
+    </div>
+
+    <div class="col-md-6">
+      <%= f.label :offline_at, 'Offline At', class: 'form-label' %>
+      <%= f.datetime_local_field :offline_at, value: @item.offline_at&.strftime("%Y-%m-%dT%H:%M"), class: 'form-control' %>
+    </div>
   </div>
+
 
   <%= f.submit 'Update Item', class: 'btn btn-primary' %>
   <%= link_to 'Cancel', admin_items_path, class: 'btn btn-secondary' %>

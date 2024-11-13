@@ -1,6 +1,7 @@
 class Item < ApplicationRecord
   mount_uploader :image, ImageUploader
   default_scope { where(deleted_at: nil) }
+  enum status: { inactive: 0, active: 1 }
 
   belongs_to :category
   include AASM
@@ -36,31 +37,16 @@ class Item < ApplicationRecord
     end
   end
 
-  # AASM for the status lifecycle
-  aasm column: 'status' do
-    state :draft, initial: true
-    state :active
-    state :inactive
-
-    event :activate do
-      transitions from: [:draft, :inactive], to: :active
-    end
-
-    event :deactivate do
-      transitions from: [:active], to: :inactive
-    end
-  end
-
   validates :name, :quantity, :minimum_tickets, :batch_count, presence: true
 
-  after_initialize :set_defaults, if: :new_record?
+  # after_initialize :set_defaults, if: :new_record?
 
-  def set_defaults
-    self.batch_count ||= 0
-  end
+  # def set_defaults
+  #   self.batch_count ||= 0
+  # end
 
   def startable?
-    quantity.positive? && offline_at.present? && Date.today < offline_at && status == 'active'
+    quantity.positive? && offline_at.present? && Date.today < offline_at && active?
   end
 
   private
@@ -72,3 +58,5 @@ class Item < ApplicationRecord
   end
 
 end
+
+
