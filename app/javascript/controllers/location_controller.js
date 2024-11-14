@@ -5,9 +5,9 @@ export default class extends Controller {
 
     fetchProvinces() {
         let target = this.selectProvinceIdTarget
-        $(target).empty();
-        $(this.selectCityIdTarget).empty();
-        $(this.selectBarangayIdTarget).empty();
+        $(target).empty().append(new Option("Please select province", "", true, true)); // Add placeholder
+        $(this.selectCityIdTarget).empty().append(new Option("Please select city", "", true, true));
+        $(this.selectBarangayIdTarget).empty().append(new Option("Please select barangay", "", true, true));
 
         $.ajax({
             type: 'GET',
@@ -27,8 +27,8 @@ export default class extends Controller {
 
     fetchCities() {
         let target = this.selectCityIdTarget
-        $(target).empty();
-        $(this.selectBarangayIdTarget).empty();
+        $(target).empty().append(new Option("Please select city", "", true, true)); // Add placeholder
+        $(this.selectBarangayIdTarget).empty().append(new Option("Please select barangay", "", true, true));
 
         $.ajax({
             type: 'GET',
@@ -48,7 +48,7 @@ export default class extends Controller {
 
     fetchBarangays() {
         let target = this.selectBarangayIdTarget
-        $(target).empty();
+        $(target).empty().append(new Option("Please select barangay", "", true, true)); // Add placeholder
 
         $.ajax({
             type: 'GET',
@@ -66,3 +66,6 @@ export default class extends Controller {
         })
     }
 }
+
+
+
