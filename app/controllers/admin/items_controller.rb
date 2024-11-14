@@ -93,6 +93,6 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def item_params
-    params.require(:item).permit(:name, :quantity, :minimum_tickets, :batch_count, :online_at, :offline_at, :start_at, :status, :image, :state, :category_id)
+    params.require(:item).permit(:name, :quantity, :minimum_tickets, :batch_count, :online_at, :offline_at, :start_at, :status, :image, :state, category_ids: [])
   end
 end

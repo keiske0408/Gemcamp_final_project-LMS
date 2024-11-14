@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   enum status: { inactive: 0, active: 1 }
 
-  has_many :item_category_ships
+  has_many :item_category_ships, dependent: :restrict_with_error
   has_many :categories, through: :item_category_ships
   include AASM
 
@@ -40,11 +40,6 @@ class Item < ApplicationRecord
 
   validates :name, :quantity, :minimum_tickets, :batch_count, presence: true
 
-  # after_initialize :set_defaults, if: :new_record?
-
-  # def set_defaults
-  #   self.batch_count ||= 0
-  # end
   def destroy
     update(deleted_at: Time.current)
   end
