@@ -1,4 +1,4 @@
-<div class="container d-flex justify-content-center align-items-center " style="min-height: 85vh">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh">
   <div class="card shadow-lg p-5 w-100" style="max-width: 700px;">
 
     <!-- Tab navigation for Login and Register -->
@@ -13,15 +13,21 @@
 
     <h2 class="text-center mb-4">Login</h2>
 
-    <%= form_for(resource, as: resource_name, url: new_client_session_path, html: { class: "form" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
       <div class="form-group mb-3">
         <%= f.label :email, class: "form-label" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+        <% if resource.errors[:email].any? %>
+          <div class="text-danger mt-1"><%= resource.errors[:email].first %></div>
+        <% end %>
       </div>
 
       <div class="form-group mb-3">
         <%= f.label :password, class: "form-label" %>
         <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Enter your password" %>
+        <% if resource.errors[:password].any? %>
+          <div class="text-danger mt-1"><%= resource.errors[:password].first %></div>
+        <% end %>
       </div>
 
       <div class="d-grid">

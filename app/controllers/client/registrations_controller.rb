@@ -13,7 +13,15 @@ class Client::RegistrationsController < Devise::RegistrationsController
         promoter = User.find_by(email: promoter_email)
         resource.parent_id = promoter.id if promoter
       end
-      resource.save if resource.valid? # Ensure parent_id is saved
+
+      if resource.save
+        flash[:notice] = "Successfully registered"
+      else
+        flash[:alert] = resource.errors.full_messages.join(', ')
+        clean_up_passwords(resource)
+        set_minimum_password_length
+        respond_with(resource)
+      end
     end
   end
 
