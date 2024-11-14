@@ -1,10 +1,10 @@
 <h1>Edit Item</h1>
 
-<%= form_with model: @item, url: admin_item_path(@item), local: true, html: { multipart: true } do |f| %>
+<%= form_with model: @item, url: admin_item_path(@item), local: true, data: { controller: 'select2' }, html: { multipart: true } do |f| %>
 
   <div class="mb-3">
-    <%= f.label :category_id, 'Category' %>
-    <%= f.collection_select :category_id, Category.all, :id, :name, prompt: "Select a Category", class: 'form-control' %>
+    <%= f.label :category_ids, 'Categories' %>
+    <%= f.collection_select :category_ids, Category.all, :id, :name, { prompt: "Select Categories" }, { multiple: true, class: 'form-control select2' } %>
   </div>
 
   <div class="mb-3">
