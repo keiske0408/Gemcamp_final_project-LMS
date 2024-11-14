@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_10_145847) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_13_083639) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -43,6 +43,39 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_10_145847) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "item_category_ships", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "item_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_item_category_ships_on_category_id"
+    t.index ["item_id"], name: "index_item_category_ships_on_item_id"
+  end
+
+  create_table "items", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.integer "quantity"
+    t.integer "minimum_tickets"
+    t.integer "batch_count"
+    t.datetime "online_at"
+    t.datetime "offline_at"
+    t.datetime "start_at"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "state"
+    t.datetime "deleted_at"
+    t.integer "category_id"
+    t.integer "status", default: 0
   end
 
   create_table "locations", charset: "utf8mb4", force: :cascade do |t|
