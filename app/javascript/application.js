@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
+import "./navbar"
 Turbo.session.drive = false
 import jQuery from "jquery"
 
