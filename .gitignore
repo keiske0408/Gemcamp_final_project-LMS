@@ -45,3 +45,6 @@
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/dataSources.xml
+app/helpers/admin/categories_helper.rb
+app/helpers/lottery_helper.rb
+config/environments/development.rb
