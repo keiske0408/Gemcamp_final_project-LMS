@@ -1,83 +1,15 @@
-<html lang="en">
-<body>
-<!-- Top Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
-  <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">System Management</span>
-    <div class="ml-auto d-flex align-items-center">
-      <button class="btn btn-sm btn-outline-secondary me-3">Change Language</button>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= current_admin.username %>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "dropdown-item" %></li>
-        </ul>
-      </div>
+<div class="container-fluid px-4 mt-3">
+  <h1>Hi, <%= current_admin.username %></h1>
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      Userlist
     </div>
-  </div>
-</nav>
-<!-- Main Container -->
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" id="sidebar">
-      <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active text-black" aria-current="page" href="#">Homepage</a>
-          </li>
-          <hr>
-          <li class="nav-item">
-            <a class="nav-link text-black" data-bs-toggle="collapse" href="#memberManagement" role="button" aria-expanded="false" aria-controls="memberManagement">
-              Member Management
-            </a>
-            <div class="collapse" id="memberManagement">
-              <ul class="nav flex-column ms-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">User List</a>
-                </li>
-                <li class="nav-item">
-                  <%= link_to 'Item List',admin_items_path, class: "nav-link" %>
-                </li>
-                <li class="nav-item">
-                  <%= link_to 'Category List',admin_categories_path, class: "nav-link" %>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <hr>
-          <li class="nav-item">
-            <a class="nav-link text-black" data-bs-toggle="collapse" href="#exampleManagement" role="button" aria-expanded="false" aria-controls="exampleManagement">
-              Example 2 Management
-            </a>
-            <div class="collapse" id="exampleManagement">
-              <ul class="nav flex-column ms-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Example 1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Example 2</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <hr>
-        </ul>
-      </div>
-    </nav>
-    <!-- Main Content -->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Hi, <%= current_admin.username %></h1>
-      </div>
-
-      <!-- Data Table -->
+    <div class="card-body">
       <table class="table table-striped">
         <thead class>
         <tr>
-          <th>Parent Email</th>
+          <th class="email">Parent Email</th>
           <th>Email</th>
           <th>Total Deposit</th>
           <th>Member Total Deposits</th>
@@ -91,7 +23,7 @@
         <% if @client_users.present? %>
           <% @client_users.each do |user| %>
             <tr>
-              <td><%= user.parent_email %></td>
+              <td class="email"><%= user.parent_email %></td>
               <td><%= user.email %></td>
               <td><%= user.total_deposit %></td>
               <td><%= user.member_total_deposits %></td>
@@ -108,10 +40,8 @@
         <% end %>
         </tbody>
       </table>
-
-      <!-- Additional content or dashboard cards can go here -->
-    </main>
+    </div>
   </div>
 </div>
-</body>
-</html>
+
+

@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Admin</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Admin</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <%= stylesheet_link_tag "application", "admin", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body class="sb-nav-fixed">
+<%= render partial: 'admin/shared/header' if current_admin %>
+<% if current_admin %>
+  <div id="layoutSidenav">
+    <%= render partial: 'admin/shared/sidebar' %>
+    <div id="layoutSidenav_content">
+      <main>
+        <%= yield %>
+      </main>
+      <%= render partial: 'admin/shared/footer' %>
+    </div>
+  </div>
+<% else %>
+  <%= yield %>
+<% end %>
 
+</body>
 </html>

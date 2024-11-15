@@ -4,21 +4,23 @@
     <small>Share</small>
   </a>
   <% if client_signed_in? %>
-  <%=link_to client_invite_people_path, class:"text-center text-decoration-none text-dark" do %>
-    <i class="bi bi-people-fill"></i><br>
-    <small>Invite</small>
+    <%= link_to client_invite_people_path, class: "text-center text-decoration-none text-dark" do %>
+      <i class="bi bi-people-fill"></i><br>
+      <small>Invite</small>
+    <% end %>
   <% end %>
-  <% end %>
-  <a href="#" class="text-center text-decoration-none text-dark">
+
+  <%= link_to lottery_index_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-gift-fill"></i><br>
     <small>Lottery</small>
-  </a>
+  <% end %>
+
   <a href="#" class="text-center text-decoration-none text-dark">
     <i class="bi bi-shop"></i><br>
     <small>Shop</small>
   </a>
   <% if client_signed_in? %>
-    <%= link_to client_me_path, class:"text-center text-decoration-none text-dark" do %>
+    <%= link_to client_me_path, class: "text-center text-decoration-none text-dark" do %>
       <i class="bi bi-person-fill"></i><br>
       <small>Me</small>
     <% end %>
