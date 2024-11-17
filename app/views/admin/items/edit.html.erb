@@ -39,6 +39,10 @@
     </div>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :image, 'Image' %>
+    <%= f.file_field :image, class: 'form-control' %>
+  </div>
 
   <%= f.submit 'Update Item', class: 'btn btn-primary' %>
   <%= link_to 'Cancel', admin_items_path, class: 'btn btn-secondary' %>
