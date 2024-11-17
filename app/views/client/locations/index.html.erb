@@ -7,6 +7,9 @@
         <div class="card text-center shadow mb-5 bg-white rounded">
           <div class="card-header font-italic">
             Location: <%= location.genre %>
+            <% if location.is_default? %>
+              <span class="badge bg-primary ml-2">Default</span>
+            <% end %>
           </div>
           <div class="card-body">
             <h5 class="card-title text-success"><%= location.street_address %></h5>

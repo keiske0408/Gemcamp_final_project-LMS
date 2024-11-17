@@ -4,17 +4,6 @@
       <h2 class="text-center mb-4"><%= action_name.capitalize %> Address</h2>
 
       <%= form_with model: @location, url: client_locations_path, data: { controller: 'location' }, html: { class: "form" } do |form| %>
-        <% if @location.errors.any? %>
-          <div id="error_explanation" class="alert alert-danger">
-            <h4><%= pluralize(@location.errors.count, "error") %> prohibited this address from being saved:</h4>
-            <ul>
-              <% @location.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
         <div class="row mb-2">
           <div class="col-lg-6">
             <div class="form-group row mb-3">
@@ -50,6 +39,15 @@
                 <%= form.select :genre, Location.genres.keys.map { |genre| [genre.humanize, genre] }, { prompt: 'Please select genre' }, class: "form-control" %>
                 <% if @location.errors[:genre].any? %>
                   <div class="text-danger"><%= @location.errors[:genre].first %></div>
+                <% end %>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <%= form.label :is_default, "Set as Default", class: "col-sm-4 col-form-label" %>
+              <div class="col-sm-8">
+                <%= form.check_box :is_default, class: "form-check-input" %>
+                <% if @location.errors[:is_default].any? %>
+                  <div class="text-danger"><%= @location.errors[:is_default].first %></div>
                 <% end %>
               </div>
             </div>
