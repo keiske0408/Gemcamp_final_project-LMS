@@ -38,6 +38,7 @@ constraints(ClientDomainConstraint.new) do
     resources :locations
     get 'invite-people', to: 'invitations#show', as: :invite_people
     get '/lottery', to: 'lottery#index', as: 'lottery'
+    resources :categories, only: [:index]
   end
 end
 
