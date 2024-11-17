@@ -3,8 +3,6 @@
     <h2 class="text-center mb-4">Edit <%= resource_name.to_s.humanize %></h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form" }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
-
       <div class="form-group mb-2">
         <%= f.label :image, class: "form-label" %>
         <%= f.file_field :image, class: "form-control" %>
@@ -13,11 +11,17 @@
       <div class="form-group mb-2">
         <%= f.label :phone_number, class: "form-label" %>
         <%= f.telephone_field :phone_number, class: "form-control", placeholder: "Enter your phone number" %>
+        <% if resource.errors[:phone_number].present? %>
+          <small class="text-danger fw-bold"><%= resource.errors[:phone_number].join(", ") %></small>
+        <% end %>
       </div>
 
       <div class="form-group mb-2">
         <%= f.label :email, class: "form-label" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+        <% if resource.errors[:email].present? %>
+          <small class="text-danger fw-bold"><%= resource.errors[:email].join(", ") %></small>
+        <% end %>
       </div>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -27,6 +31,9 @@
       <div class="form-group mb-2">
         <%= f.label :password, class: "form-label" %> <i>(leave blank if you don't want to change it)</i>
         <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Enter your new password" %>
+        <% if resource.errors[:password].present? %>
+          <small class="text-danger fw-bold"><%= resource.errors[:password].join(", ") %></small>
+        <% end %>
         <% if @minimum_password_length %>
           <small class="form-text text-muted"><%= @minimum_password_length %> characters minimum</small>
         <% end %>
@@ -35,11 +42,17 @@
       <div class="form-group mb-2">
         <%= f.label :password_confirmation, class: "form-label" %>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your new password" %>
+        <% if resource.errors[:password_confirmation].present? %>
+          <small class="text-danger fw-bold"><%= resource.errors[:password_confirmation].join(", ") %></small>
+        <% end %>
       </div>
 
       <div class="form-group mb-3">
         <%= f.label :current_password, class: "form-label" %> <i>(we need your current password to confirm your changes)</i>
         <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", placeholder: "Enter your current password" %>
+        <% if resource.errors[:current_password].present? %>
+          <small class="text-danger fw-bold"><%= resource.errors[:current_password].join(", ") %></small>
+        <% end %>
       </div>
 
       <div class="d-grid mb-3">
