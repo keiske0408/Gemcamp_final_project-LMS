@@ -37,7 +37,7 @@ constraints(ClientDomainConstraint.new) do
     resource :me, controller: :me, only: [:show]
     resources :locations
     get 'invite-people', to: 'invitations#show', as: :invite_people
-    get '/lottery', to: 'lottery#index', as: 'lottery'
+    resources :lottery, only: [:index]
     resources :categories, only: [:index]
   end
 end

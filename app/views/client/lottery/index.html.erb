@@ -1,0 +1,107 @@
+<div class="container my-5">
+  <h1>Lottery Items</h1>
+
+  <!-- Banner Image Carousel -->
+  <div id="bannerCarousel" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="banner-image text-center">Banner Image 1</div>
+      </div>
+      <div class="carousel-item">
+        <div class="banner-image text-center">Banner Image 2</div>
+      </div>
+      <div class="carousel-item">
+        <div class="banner-image text-center">Banner Image 3</div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="announcement-bar py-3">
+        <span>Announcement: </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2 mb-4">
+    <button class="btn btn-outline-dark" type="button" style="min-height: 45px">Button</button>
+  </div>
+
+  <!-- Category Buttons -->
+  <div class="row category-buttons text-lg-start mb-2">
+    <div class="col-12">
+      <%= link_to 'All', client_lottery_index_path(category: 'All'), class: 'button-50 mx-1 my-1 btn-sm' %>
+      <% if @categories.present? %>
+        <% @categories.each do |category| %>
+          <%= link_to category.name, client_lottery_index_path(category: category.id),
+                      class: "button-50 mx-1 my-1 btn-sm" %>
+        <% end %>
+    <% else %>
+        <p>No categories available.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Product Images -->
+  <% if @items.present? %>
+    <section class="py-2">
+      <div class="container px-4 px-lg-2 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+          <% @paginated_items.each do |item| %>
+            <div class="col mb-5">
+              <div class="card h-100">
+                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><%= item.state %></div>
+
+                <!-- Product image-->
+                <img class="card-img-top" src="<%= item.image %>" alt="..."/>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder"><%= item.name %></h5>
+                    <!-- Online at-->
+                    <p>Online at: <%= item.online_at.strftime("%Y/%m/%d %I:%M %p") %></p>
+                    <!-- Status and State-->
+                    <p>TBA</p>
+                    <!-- Product reviews-->
+                    <div class="d-flex justify-content-center small text-warning mb-2">
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                      <div class="bi-star-fill"></div>
+                    </div>
+                    <!-- Product price-->
+                    <span class="text-muted text-decoration-line-through">$20.00</span>
+
+                  </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <%= paginate @paginated_items %>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% else %>
+    <p>No items available for the selected category.</p>
+  <% end %>
+</div>
