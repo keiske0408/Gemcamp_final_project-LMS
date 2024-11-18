@@ -16,50 +16,54 @@ Rails.application.routes.draw do
         end
       end
       resources :categories
+      resources :tickets do
+        member do
+          patch :cancel
+        end
+      end
     end
 
-
-  root to: 'admin/home#index', as: :admin_root # Root for admin domain
-end
-
-constraints(ClientDomainConstraint.new) do
-  devise_for :client, class_name: 'User', controllers: {
-    sessions: 'client/sessions',
-    registrations: 'client/registrations',
-  }
-  # Define the root within devise_scope to fix the mapping issue
-  devise_scope :client do
-    root to: 'client/home#new', as: :client_root
+    root to: 'admin/home#index', as: :admin_root # Root for admin domain
   end
 
-  namespace :client do
-    resources :home, only: [:index, :new]
-    resource :me, controller: :me, only: [:show]
-    resources :locations
-    get 'invite-people', to: 'invitations#show', as: :invite_people
-    resources :lottery, only: [:index]
-    resources :categories, only: [:index]
+  constraints(ClientDomainConstraint.new) do
+    devise_for :client, class_name: 'User', controllers: {
+      sessions: 'client/sessions',
+      registrations: 'client/registrations',
+    }
+    # Define the root within devise_scope to fix the mapping issue
+    devise_scope :client do
+      root to: 'client/home#new', as: :client_root
+    end
+
+    namespace :client do
+      resources :home, only: [:index, :new]
+      resource :me, controller: :me, only: [:show]
+      resources :locations
+      get 'invite-people', to: 'invitations#show', as: :invite_people
+      resources :lottery, only: [:index]
+      resources :categories, only: [:index]
+    end
   end
-end
 
-namespace :api do
-  namespace :v1 do
-    resources :regions, only: %i[index show], defaults: { format: :json } do
-      resources :provinces, only: :index, defaults: { format: :json }
+  namespace :api do
+    namespace :v1 do
+      resources :regions, only: %i[index show], defaults: { format: :json } do
+        resources :provinces, only: :index, defaults: { format: :json }
+      end
+
+      resources :provinces, only: %i[index show], defaults: { format: :json } do
+        resources :cities, only: :index, defaults: { format: :json }
+      end
+
+      resources :cities, only: %i[index show], defaults: { format: :json } do
+        resources :barangays, only: :index, defaults: { format: :json }
+      end
+
+      resources :barangays, only: %i[index show], defaults: { format: :json }
+
     end
-
-    resources :provinces, only: %i[index show], defaults: { format: :json } do
-      resources :cities, only: :index, defaults: { format: :json }
-    end
-
-    resources :cities, only: %i[index show], defaults: { format: :json } do
-      resources :barangays, only: :index, defaults: { format: :json }
-    end
-
-    resources :barangays, only: %i[index show], defaults: { format: :json }
-
   end
-end
 end
 
 

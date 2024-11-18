@@ -3,8 +3,12 @@ class Item < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   enum status: { inactive: 0, active: 1 }
 
+  validate :cannot_be_deleted_if_tickets_exist, on: :destroy
   has_many :item_category_ships, dependent: :restrict_with_error
   has_many :categories, through: :item_category_ships
+  has_many :tickets
+  before_destroy :check_for_associated_tickets
+
   include AASM
 
   # AASM for the main lifecycle of the item
@@ -38,6 +42,7 @@ class Item < ApplicationRecord
     end
   end
 
+  after_update :cancel_all_tickets_if_cancelled
   validates :name, :quantity, :minimum_tickets, :batch_count, presence: true
 
   def destroy
@@ -53,6 +58,19 @@ class Item < ApplicationRecord
   def decrement_quantity_and_increment_batch
     decrement!(:quantity, 1)
     increment!(:batch_count, 1)
+  end
+
+  def cancel_all_tickets_if_cancelled
+    if state == 'cancelled'
+      tickets.update_all(state: 'cancelled')
+    end
+  end
+
+  def check_for_associated_tickets
+    if tickets.exists?
+      errors.add(:base, 'Cannot delete item with associated tickets')
+      throw :abort
+    end
   end
 
 end

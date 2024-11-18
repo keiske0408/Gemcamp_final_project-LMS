@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Search Tickets</h4>
+    </div>
+    <div class="card-body">
+      <%= form_with(url: admin_tickets_path, method: :get, local: true) do |form| %>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <%= form.label :serial_number, 'Serial Number', class: 'form-label' %>
+            <%= form.text_field :serial_number, value: params[:serial_number], class: 'form-control' %>
+          </div>
+          <div class="col-md-4">
+            <%= form.label :item_name, 'Item Name', class: 'form-label' %>
+            <%= form.text_field :item_name, placeholder: "Item Name", class: "form-control" %>
+          </div>
+          <div class="col-md-4">
+            <%= form.label :email, 'Email', class: 'form-label' %>
+            <%= form.text_field :email, placeholder: "Email", class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <%= form.label :state, 'Ticket State', class: 'form-label' %>
+            <%= form.select :state, Ticket.states.keys.map { |state| [state.humanize, state] }, include_blank: true, class: "form-control" %>
+          </div>
+          <div class="col-md-4">
+            <%= form.label :start_date, 'Start Date', class: 'form-label' %>
+            <%= form.date_field :start_date, class: "form-control" %>
+          </div>
+          <div class="col-md-4">
+            <%= form.label :end_date, 'End Date', class: 'form-label' %>
+            <%= form.date_field :end_date, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <%= form.submit "Search", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-4">
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Item Name</th>
+        <th>Email</th>
+        <th>Batch Count</th>
+        <th>Coins</th>
+        <th>State</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tickets.each do |ticket| %>
+        <tr>
+          <td><%= ticket.serial_number %></td>
+          <td><%= ticket.item.name %></td>
+          <td><%= ticket.user.email %></td>
+          <td><%= ticket.batch_count %></td>
+          <td><%= ticket.coins %></td>
+          <td><%= ticket.state.humanize %></td>
+          <td><%= ticket.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <td>
+            <% if ticket.may_cancel? %>
+              <%= button_to 'Cancel', cancel_admin_ticket_path(ticket), method: :patch, class: 'btn btn-warning' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
