@@ -16,11 +16,9 @@ class Client::RegistrationsController < Devise::RegistrationsController
 
       if resource.save
         flash[:notice] = "Successfully registered"
+        cookies.delete(:promoter_email) # Specify the cookie to delete
       else
-        flash[:alert] = resource.errors.full_messages.join(', ')
-        clean_up_passwords(resource)
-        set_minimum_password_length
-        respond_with(resource)
+        flash[:alert] = "Registration failed"
       end
     end
   end
