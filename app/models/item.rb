@@ -7,6 +7,7 @@ class Item < ApplicationRecord
   has_many :item_category_ships, dependent: :restrict_with_error
   has_many :categories, through: :item_category_ships
   has_many :tickets
+  has_many :winners
   before_destroy :check_for_associated_tickets
 
   include AASM
@@ -34,7 +35,11 @@ class Item < ApplicationRecord
     end
 
     event :end do
-      transitions from: :starting, to: :ended
+      transitions from: :starting, to: :ended, guard: :can_transition_to_ended? do
+        after do
+          handle_winner_selection
+        end
+      end
     end
 
     event :cancel do
@@ -73,6 +78,40 @@ class Item < ApplicationRecord
     end
   end
 
+  # Guard for transitioning to 'ended'
+  def can_transition_to_ended?
+    tickets.where(batch_count: batch_count).count >= minimum_tickets
+  end
+
+  # Logic to handle winner selection
+  def handle_winner_selection
+    current_batch_tickets = tickets.where(batch_count: batch_count)
+    winner_ticket = current_batch_tickets.sample
+
+    if winner_ticket
+      winner_ticket.update!(state: 'won')
+      current_batch_tickets.where.not(id: winner_ticket.id).update_all(state: 'lost')
+
+      Winner.create!(
+        item_id: id,
+        ticket_id: winner_ticket.id,
+        user_id: winner_ticket.user_id,
+        location_id: winner_ticket.user.locations.first&.id,
+        admin_id: User.admin.first&.id, # Adjust as per your admin fetching logic
+        price: calculate_winner_price,
+        state: 'won'
+      )
+    else
+      errors.add(:base, 'No tickets available to pick a winner')
+      raise ActiveRecord::Rollback
+    end
+  end
+
+  # Example method to calculate winner's price (customize as needed)
+  def calculate_winner_price
+    # Assuming the price is based on some logic; adjust accordingly
+    minimum_tickets * 10
+  end
 end
 
 
