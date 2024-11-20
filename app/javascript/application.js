@@ -3,6 +3,8 @@ import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
 import "./navbar"
+import "./lottery"
+
 Turbo.session.drive = false
 import jQuery from "jquery"
 

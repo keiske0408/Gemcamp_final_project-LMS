@@ -68,6 +68,18 @@ html, body {
   }
 }
 
+.progress-bar {
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #f39c12;
+}
+
+.progress {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
 //@media (min-height: 600px) {
   //.container {
   //  padding-top: 40px;

@@ -1,0 +1,84 @@
+<!-- Main Content -->
+<div class="container my-5" style="max-width: 900px;">
+  <!-- Item Image -->
+  <div class="card mb-4">
+    <div class="card-body text-center">
+      <div class="card text-center p-1 mb-2 bg-primary">
+        <img src="<%= @item.image %>" alt="<%= @item.name %>" class="img-fluid" style="max-height: 400px;">
+      </div>
+      <div class="card-body text-center pt-2 p-1 mb-2">
+        <div class="progress" style="height: 30px;">
+          <div
+            id="progress-bar"
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            style="width: <%= [(@total_tickets.to_f / @minimum_tickets * 100).round, 100].min %>%;"
+            aria-valuenow="<%= @total_tickets %>"
+            aria-valuemin="0"
+            aria-valuemax="<%= @minimum_tickets %>">
+            <%= [(@total_tickets.to_f / @minimum_tickets * 100).round, 100].min %>% Complete
+          </div>
+        </div>
+        <h2 class="my-2 text-md-start"><%= @item.name %></h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket Purchase Section -->
+  <div class="card mb-4 shadow">
+    <div class="card-body text-center">
+      <% if current_client %>
+        <h5 class="mb-3">Choose Ticket Quantity</h5>
+
+        <!-- Add Ticket Section -->
+        <div class="d-flex align-items-center justify-content-center my-4">
+          <!-- Styled and Enhanced Controls -->
+          <div class="input-group" style="max-width: 200px;">
+            <%= button_to "-", "#",
+                          class: "btn btn-outline-secondary btn-lg",
+                          id: "decrease",
+                          data: { bs_toggle: "tooltip", bs_placement: "top", bs_title: "Decrease Quantity" } %>
+            <input
+              type="number"
+              value="0"
+              min="0"
+              class="form-control text-center form-control-lg mx-2"
+              id="ticket-quantity"
+              style="max-width: 120px;"
+              placeholder="0"
+              aria-label="Ticket Quantity">
+            <%= button_to "+", "#",
+                          class: "btn btn-outline-secondary btn-lg",
+                          id: "increase",
+                          data: { bs_toggle: "tooltip", bs_placement: "top", bs_title: "Increase Quantity" } %>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <%= form_with url: buy_tickets_client_lottery_path(@item), method: :post, local: true do |form| %>
+          <input type="hidden" name="quantity" id="ticket-quantity-input">
+          <%= form.submit "Submit", class: "btn btn-primary text-white btn-lg w-100" %>
+        <% end %>
+      <% else %>
+        <p class="text-center text-muted">You need to <%= link_to 'sign in', new_client_session_path %> to buy tickets.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- User's Tickets -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="text-center mt-2">Your Serial Numbers</h5>
+      <% if @user_tickets.any? %>
+        <ul class="list-group">
+          <% @user_tickets.each do |ticket| %>
+            <li class="list-group-item"><%= ticket.serial_number %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-muted text-center">You have no tickets for this item yet.</p>
+      <% end %>
+    </div>
+  </div>
+  <%= link_to "back", client_lottery_index_path, class: "btn btn-outline-primary"  %>
+</div>
