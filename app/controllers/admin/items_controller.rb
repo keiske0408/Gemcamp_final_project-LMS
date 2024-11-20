@@ -40,6 +40,7 @@ class Admin::ItemsController < Admin::BaseController
 
   def index
     @items = Item.where(deleted_at: nil)  # Exclude deleted items
+    @items = Item.page(params[:page]).per(5)
   end
 
   def show

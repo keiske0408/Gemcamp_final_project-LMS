@@ -7,6 +7,34 @@
   .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav
     transform: translateX(-250px) !important
 
+.page-link
+  &.active, .active > &
+    background-color: gray
+    border-color: grey
+
+.page-link
+  color: black
+
+.pagination
+  --bs-pagination-hover-color: grayscale
+  --bs-pagination-active-border-color: black
+
+.card-registration
+  .select-input
+    &.form-control[readonly]:not([disabled])
+      font-size: 1rem
+      line-height: 2.15
+      padding-left: 0.75em
+      padding-right: 0.75em
+
+  .select-arrow
+    top: 13px
+
+
+
+
+
+
 
 
 
