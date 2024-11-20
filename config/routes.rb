@@ -21,6 +21,17 @@ Rails.application.routes.draw do
           patch :cancel
         end
       end
+
+      resources :winners, only: [:index] do
+        member do
+          post :submit
+          post :pay
+          post :ship
+          post :deliver
+          post :publish
+          post :remove_publish
+        end
+      end
     end
 
     root to: 'admin/home#index', as: :admin_root # Root for admin domain
@@ -41,7 +52,11 @@ Rails.application.routes.draw do
       resource :me, controller: :me, only: [:show]
       resources :locations
       get 'invite-people', to: 'invitations#show', as: :invite_people
-      resources :lottery, only: [:index]
+      resources :lottery, only: [:index, :show] do
+        member do
+          post :buy_tickets
+        end
+      end
       resources :categories, only: [:index]
     end
   end
