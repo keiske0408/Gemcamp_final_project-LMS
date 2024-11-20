@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Search Winners</h4>
+    </div>
+    <div class="card-body">
+      <%= form_with url: admin_winners_path, method: :get, local: true do %>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <%= label_tag :q, "Serial Number or Email", class: "form-label" %>
+            <%= text_field_tag :q, params[:q], placeholder: "Search...", class: "form-control" %>
+          </div>
+          <div class="col-md-4">
+            <%= label_tag :state, "State", class: "form-label" %>
+            <%= select_tag :state, options_for_select(Winner.aasm.states.map(&:name), params[:state]), include_blank: "All States", class: "form-select" %>          </div>
+          <div class="col-md-2">
+            <%= label_tag :start_date, "Start Date", class: "form-label" %>
+            <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
+          </div>
+          <div class="col-md-2">
+            <%= label_tag :end_date, "End Date", class: "form-label" %>
+            <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <%= submit_tag "Filter", class: "btn btn-primary px-4" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-4">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>Serial Number</th>
+        <th>Email</th>
+        <th>State</th>
+        <th>Price</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @winners.each do |winner| %>
+        <tr>
+          <td><%= winner.ticket.serial_number %></td>
+          <td><%= winner.user.email %></td>
+          <td><%= winner.state.humanize %></td>
+          <td><%= number_to_currency(winner.price) %></td>
+          <td><%= winner.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <%= link_to "Submit", submit_admin_winner_path(winner), method: :post, class: "btn btn-primary" if winner.may_submit? %>
+              <%= link_to "Pay", pay_admin_winner_path(winner), method: :post, class: "btn btn-success" if winner.may_pay? %>
+              <%= link_to "Ship", ship_admin_winner_path(winner), method: :post, class: "btn btn-info" if winner.may_ship? %>
+              <%= link_to "Deliver", deliver_admin_winner_path(winner), method: :post, class: "btn btn-warning" if winner.may_deliver? %>
+              <%= link_to "Publish", publish_admin_winner_path(winner), method: :post, class: "btn btn-dark" if winner.may_publish? %>
+              <%= link_to "Remove Publish", remove_publish_admin_winner_path(winner), method: :post, class: "btn btn-danger" if winner.may_remove_publish? %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
