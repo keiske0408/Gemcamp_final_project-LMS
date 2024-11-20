@@ -32,6 +32,8 @@ Rails.application.routes.draw do
           post :remove_publish
         end
       end
+
+      resources :offers
     end
 
     root to: 'admin/home#index', as: :admin_root # Root for admin domain
