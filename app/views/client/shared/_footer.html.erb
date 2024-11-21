@@ -15,10 +15,10 @@
     <small>Lottery</small>
   <% end %>
 
-  <a href="#" class="text-center text-decoration-none text-dark">
+  <%= link_to client_shop_index_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-shop"></i><br>
     <small>Shop</small>
-  </a>
+  <% end %>
   <% if client_signed_in? %>
     <%= link_to client_me_path, class: "text-center text-decoration-none text-dark" do %>
       <i class="bi bi-person-fill"></i><br>

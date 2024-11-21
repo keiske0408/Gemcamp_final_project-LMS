@@ -1,0 +1,85 @@
+<div class="container my-5">
+  <h1>Shop</h1>
+
+  <!-- Banner Image Carousel -->
+  <div id="shopBannerCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="banner-image text-center">Shop Banner Image 1</div>
+      </div>
+      <div class="carousel-item">
+        <div class="banner-image text-center">Shop Banner Image 2</div>
+      </div>
+      <div class="carousel-item">
+        <div class="banner-image text-center">Shop Banner Image 3</div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#shopBannerCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#shopBannerCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="announcement-bar py-3">
+        <span>Announcement: Welcome to the Shop! Check out our amazing offers.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offers Section -->
+  <% if @offers.present? %>
+    <section class="py-2">
+      <div class="container px-4 px-lg-2 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+          <% @offers.each do |offer| %>
+            <div class="col mb-5">
+              <div class="card h-100">
+                <!-- Offer Image -->
+                <% if offer.image.present? %>
+                  <img class="card-img-top" src="<%= offer.image.url %>" alt="<%= offer.name %>"
+                       style="width: 100%; height: 200px; object-fit: cover;" />
+                <% end %>
+
+                <!-- Offer Details -->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Offer Name -->
+                    <h5 class="fw-bolder"><%= offer.name %></h5>
+                    <!-- Offer Price -->
+                    <p>Price: <%= number_to_currency(offer.amount) %></p>
+                    <!-- Offer Coins -->
+                    <p>Coins: <%= offer.coin %></p>
+                  </div>
+                </div>
+
+                <!-- Offer Actions -->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center">
+                    <% if client_signed_in? %>
+                      <div class="d-flex gap-2 justify-content-center pb-2 ">
+                      <%= link_to "View", client_shop_path(offer), class: "btn btn-outline-dark mt-auto" %>
+                        <%= button_to "Purchase", purchase_client_shop_path(offer), method: :post, class: "btn btn-outline-dark mt-auto" %>
+                      </div>
+                    <% else %>
+                      <%= link_to "Sign in to Purchase", new_client_session_path, class: "btn btn-secondary mt-auto" %>
+                    <% end %>
+                  </div>
+                </div>
+                <%= paginate @offers %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  <% else %>
+    <p class="text-center">No offers available at the moment. Please check back later!</p>
+  <% end %>
+</div>

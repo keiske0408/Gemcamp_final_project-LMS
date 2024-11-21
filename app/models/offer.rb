@@ -5,4 +5,6 @@ class Offer < ApplicationRecord
 
   validates :name, :amount, :coin, presence: true
   validates :amount, :coin, numericality: { greater_than: 0 }
+
+  scope :active, -> { where(status: :active) }
 end

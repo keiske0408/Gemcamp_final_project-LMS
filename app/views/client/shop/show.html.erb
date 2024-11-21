@@ -1,0 +1,11 @@
+<div class="container my-5">
+  <h1>Offer Details</h1>
+  <% if @offer.image.present? %>
+    <img class="card-img-top" src="<%= @offer.image.url %>" alt="<%= @offer.name %>"
+         style="width: 100px; height: 100px; object-fit: cover;" />
+  <% end %>
+  <p><strong>Offer:</strong> <%= @offer.name %></p>
+  <p><strong>Price:</strong> <%= number_to_currency(@offer.amount) %></p>
+  <p><strong>Coins:</strong> <%= @offer.coin %></p>
+  <%= button_to "Purchase", purchase_client_shop_path(@offer), method: :post, class: "btn btn-outline-dark mt-auto" %>
+</div>
