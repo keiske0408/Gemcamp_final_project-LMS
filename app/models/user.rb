@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :children_members, class_name: 'User', foreign_key: :parent_id, counter_cache: :children_members
   has_many :locations, class_name: 'Location'
   has_many :tickets, class_name: 'Ticket'
+  has_many :orders
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -15,7 +16,8 @@ class User < ApplicationRecord
 
 
   ROLES = %w[admin client].freeze
-
+  validates :coins, numericality: { greater_than_or_equal_to: 0 }
+  validates :total_deposit, numericality: { greater_than_or_equal_to: 0 }
   validates :role, inclusion: { in: ROLES }
   validates :phone_number, phone: {
     possible: true,
