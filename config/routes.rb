@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'lottery/index'
   constraints(AdminDomainConstraint.new) do
     devise_for :admin, class_name: 'User', only: [:sessions], controllers: {
       sessions: 'admin/sessions'
@@ -34,6 +33,13 @@ Rails.application.routes.draw do
       end
 
       resources :offers
+
+      resources :orders, only: [:index] do
+        member do
+          post :pay
+          post :cancel
+        end
+      end
     end
 
     root to: 'admin/home#index', as: :admin_root # Root for admin domain
@@ -53,13 +59,18 @@ Rails.application.routes.draw do
       resources :home, only: [:index, :new]
       resource :me, controller: :me, only: [:show]
       resources :locations
-      get 'invite-people', to: 'invitations#show', as: :invite_people
       resources :lottery, only: [:index, :show] do
         member do
           post :buy_tickets
         end
       end
       resources :categories, only: [:index]
+      resources :shop, only: [:index, :show] do
+        member do
+          post :purchase
+        end
+      end
+      get 'invite-people', to: 'invitations#show'
     end
   end
 
