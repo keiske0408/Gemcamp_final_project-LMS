@@ -48,3 +48,4 @@
 app/helpers/admin/categories_helper.rb
 app/helpers/lottery_helper.rb
 config/environments/development.rb
+config/environments/development.rb
