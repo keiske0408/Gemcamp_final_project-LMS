@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_19_100155) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_20_123456) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -99,6 +99,31 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_19_100155) do
     t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
+  create_table "offers", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.integer "coin", null: false
+    t.string "image"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "offer_id", null: false
+    t.string "serial_number"
+    t.string "state"
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0"
+    t.integer "coin", default: 0
+    t.text "remarks"
+    t.integer "genre", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_orders_on_offer_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "tickets", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "item_id", null: false
@@ -121,8 +146,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_19_100155) do
     t.string "username"
     t.string "role", default: "client"
     t.string "phone_number"
-    t.integer "coins"
-    t.decimal "total_deposit", precision: 10
+    t.integer "coins", default: 0
+    t.decimal "total_deposit", precision: 10, scale: 2, default: "0.0"
     t.integer "children_members"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,7 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_19_100155) do
     t.string "image"
     t.bigint "parent_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["parent_id"], name: "index_users_on_parent_id"
+    t.index ["parent_id"], name: "fk_rails_684a13307d"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -160,6 +185,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_19_100155) do
   add_foreign_key "locations", "address_provinces"
   add_foreign_key "locations", "address_regions"
   add_foreign_key "locations", "users"
+  add_foreign_key "orders", "offers"
+  add_foreign_key "orders", "users"
   add_foreign_key "tickets", "items"
   add_foreign_key "tickets", "users"
   add_foreign_key "users", "users", column: "parent_id"
