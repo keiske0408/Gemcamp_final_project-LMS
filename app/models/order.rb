@@ -1,6 +1,17 @@
 class Order < ApplicationRecord
+  include AASM
+
   belongs_to :user
   belongs_to :offer, optional: true
+
+  scope :filter_by_serial_number, ->(serial_number) { where("serial_number LIKE ?", "%#{serial_number}%") if serial_number.present? }
+  scope :filter_by_email, ->(email) { joins(:user).where("users.email LIKE ?", "%#{email}%") if email.present? }
+  scope :filter_by_genre, ->(genre) { where(genre: genre) if genre.present? }
+  scope :filter_by_state, ->(state) { where(state: state) if state.present? }
+  scope :filter_by_offer, ->(offer_id) { where(offer_id: offer_id) if offer_id.present? }
+  scope :filter_by_date_range, ->(start_date, end_date) {
+    where(created_at: start_date..end_date) if start_date.present? && end_date.present?
+  }
 
   enum genre: {
     deposit: 0,
@@ -9,8 +20,6 @@ class Order < ApplicationRecord
     bonus: 3,
     share: 4,
   }
-
-  include AASM
 
   aasm column: 'state' do
     state :pending, initial: true
@@ -36,22 +45,19 @@ class Order < ApplicationRecord
     end
   end
 
-  # Generate serial number before saving
   before_create :generate_serial_number
 
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { deposit? }
   validates :coin, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  private
-
-  # Generate serial number based on the format
   def generate_serial_number
     number_count = Order.where(user_id: user_id).count + 1
     formatted_count = number_count.to_s.rjust(4, '0')
-    self.serial_number = "#{Time.current.strftime('%y%m%d')}-#{id || '0'}-#{user_id}-#{formatted_count}"
+    "#{Time.current.strftime('%y%m%d')}-#{id || '0'}-#{user_id}-#{formatted_count}"
   end
 
-  # Process payment based on genre
+  private
+
   def process_payment
     case genre.to_sym
     when :deduct
@@ -62,7 +68,6 @@ class Order < ApplicationRecord
     user.increment!(:total_deposit, amount) if deposit?
   end
 
-  # Revert payment when cancelled
   def revert_payment_actions
     case genre.to_sym
     when :deduct

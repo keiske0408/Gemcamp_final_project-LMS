@@ -1,0 +1,73 @@
+<!-- app/views/admin/orders/index.html.erb -->
+<h1>Admin Orders</h1>
+
+<%= form_with url: admin_orders_path, method: :get, local: true do %>
+  <div class="row">
+    <div class="col-md-2">
+      <%= label_tag :serial_number, "Serial Number" %>
+      <%= text_field_tag :serial_number, params[:serial_number], class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag :email, "Email" %>
+      <%= text_field_tag :email, params[:email], class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag :genre, "Genre" %>
+      <%= select_tag :genre, options_for_select(Order.genres.keys, params[:genre]), include_blank: "Select Genre", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag :state, "State" %>
+      <%= select_tag :state, options_for_select(Order.aasm.states.map(&:name), params[:state] ), include_blank: "Select State", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag :offer_id, "Offer" %>
+      <%= select_tag :offer_id, options_from_collection_for_select(Offer.all, :id, :name, params[:offer_id]), include_blank: "Select Offer", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag :start_date, "Start Date" %>
+      <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= label_tag :end_date, "End Date" %>
+      <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
+    </div>
+  </div>
+  <%= submit_tag "Search", class: "btn btn-primary mt-2" %>
+<% end %>
+
+<table class="table table-bordered mt-3">
+  <thead>
+  <tr>
+    <th>Serial Number</th>
+    <th>Email</th>
+    <th>Genre</th>
+    <th>State</th>
+    <th>Offer</th>
+    <th>Amount</th>
+    <th>Coins</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @orders.each do |order| %>
+    <tr>
+      <td><%= order.serial_number %></td>
+      <td><%= order.user.email %></td>
+      <td><%= order.genre %></td>
+      <td><%= order.state %></td>
+      <td><%= order.offer&.name %></td>
+      <td><%= number_to_currency(order.amount) %></td>
+      <td><%= order.coin %></td>
+      <td>
+        <%= button_to "Pay", pay_admin_order_path(order), method: :post, class: "btn btn-success btn-sm" %>
+        <%= button_to "Cancel", cancel_admin_order_path(order), method: :post, class: "btn btn-danger btn-sm" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<p><strong>Subtotal (Current Page):</strong> <%= number_to_currency(@subtotal) %></p>
+<p><strong>Total (All Records):</strong> <%= number_to_currency(@total) %></p>
+
+<%= paginate @orders %>
