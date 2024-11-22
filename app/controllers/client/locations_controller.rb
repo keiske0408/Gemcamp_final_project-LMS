@@ -15,9 +15,6 @@ class Client::LocationsController < ApplicationController
 
   def create
     @location = current_client.locations.build(location_params)
-
-    Rails.logger.debug "Location Params: #{location_params.inspect}"
-
     if current_client.locations.count >= 5
       flash[:alert] = "You can only have up to 5 addresses."
       render :new
@@ -25,7 +22,6 @@ class Client::LocationsController < ApplicationController
       flash[:notice] = "Address successfully created."
       redirect_to client_location_path(@location)
     else
-      Rails.logger.error @location.errors.full_messages
       render :new
     end
   end
@@ -43,10 +39,24 @@ class Client::LocationsController < ApplicationController
   end
 
   def destroy
-    @location.destroy
-    flash[:notice] = "Address successfully deleted."
+    if @location.is_default? && current_client.locations.count > 1
+      next_default = current_client.locations.where.not(id: @location.id).first
+      if next_default
+        next_default.update!(is_default: true)
+      end
+    elsif @location.is_default?
+      flash[:alert] = "You must have at least one default address."
+      redirect_to client_locations_path and return
+    end
+
+    if @location.destroy
+      flash[:notice] = "Address successfully deleted."
+    else
+      flash[:alert] = "Address could not be deleted."
+    end
     redirect_to client_locations_path
   end
+
 
   private
 
