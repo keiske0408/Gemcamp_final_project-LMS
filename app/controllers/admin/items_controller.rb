@@ -61,6 +61,7 @@ class Admin::ItemsController < Admin::BaseController
       redirect_to admin_items_path, notice: 'Item was successfully created.'
     else
       puts @item.errors.full_messages # Debug line
+      flash[:alert] = @item.errors.full_messages.to_sentence
       render :new
     end
   end

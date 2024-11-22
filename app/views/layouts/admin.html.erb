@@ -12,11 +12,17 @@
 </head>
 
 <body class="sb-nav-fixed">
-<%= render partial: 'admin/shared/header' if current_admin %>
 <% if current_admin %>
   <div id="layoutSidenav">
     <%= render partial: 'admin/shared/sidebar' %>
     <div id="layoutSidenav_content">
+      <%= render partial: 'admin/shared/header' if current_admin %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger"><%= flash[:alert] %></div>
+      <% end %>
+      <% if flash[:notice] %>
+        <div class="alert alert-success"><%= flash[:notice] %></div>
+      <% end %>
       <main>
         <%= yield %>
       </main>
