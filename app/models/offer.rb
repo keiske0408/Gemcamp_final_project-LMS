@@ -3,6 +3,7 @@ class Offer < ApplicationRecord
 
   enum status: { inactive: 0, active: 1 }
 
+  validates :status, inclusion: { in: statuses.keys }
   validates :name, :amount, :coin, presence: true
   validates :amount, :coin, numericality: { greater_than: 0 }
 

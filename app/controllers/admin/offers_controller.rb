@@ -4,6 +4,7 @@ class Admin::OffersController < Admin::BaseController
   def index
     @offers = Offer.all
     @offers = @offers.where(status: params[:status]) if params[:status].present?
+    @offers = @offers.where(name: params[:name]) if params[:name].present?
   end
 
   def new
