@@ -52,13 +52,26 @@
         <div class="card shadow" style="border-radius: 15px;">
           <div class="card-body">
             <div class="d-flex justify-content-center mb-3">
-              <%= link_to 'Order History', order_history_client_me_path, class: "btn btn-light-dark me-2" %>
+              <%= link_to 'Order History', order_history_client_me_path, class: "btn btn-light-dark me-2 " %>
               <%= link_to 'Lottery History', lottery_history_client_me_path, class: "btn btn-light-dark me-2" %>
-              <%= link_to 'Winning History', winning_history_client_me_path, class: "btn btn-light-dark me-2" %>
+              <%= link_to 'Winning History', winning_history_client_me_path, class: "btn btn-light-dark me-2 active" %>
               <%= link_to 'Invitation History', invitation_history_client_me_path, class: "btn btn-light-dark" %>
             </div>
-            <div id="history-container">
-              <p class="text-center text-muted">Select a section to view.</p>
+            <div id="history-container" style="max-height: 510px; overflow-y: auto;">
+              <div class="container-fluid">
+                <% @winnings.each do |winning| %>
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <p><strong>Item:</strong> <%= winning.item.name %></p>
+                      <p><strong>Price:</strong> <%= winning.price %></p>
+                      <p><strong>Status:</strong><span class="text-success"> <%= winning.state %></span></p>
+                      <p><strong>Paid At:</strong> <%= winning.paid_at %></p>
+                      <p><strong>Created At:</strong> <%= winning.created_at %></p>
+                    </div>
+                  </div>
+                <% end %>
+                <%= paginate @winnings %>
+              </div>
             </div>
           </div>
         </div>
@@ -66,3 +79,8 @@
     </div>
   </div>
 </section>
+
+
+
+
+

@@ -23,3 +23,121 @@
     touch-action: manipulation;
 }
 
+/* CSS */
+.button-46 {
+    align-items: center;
+    background-color: rgba(240, 240, 240, 0.26);
+    border: 1px solid #DFDFDF;
+    border-radius: 16px;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    line-height: 28px;
+    max-width: 100%;
+    padding: 14px 22px;
+    text-decoration: none;
+    transition: all .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+}
+
+.button-46:active,
+.button-46:hover {
+    outline: 0;
+}
+
+.button-46:hover {
+    background-color: #FFFFFF;
+    border-color: rgba(0, 0, 0, 0.19);
+}
+
+@media (min-width: 768px) {
+    .button-46 {
+        font-size: 17px;
+        min-width: 200px;
+        padding: 14px 16px;
+    }
+}
+
+.wrap {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-circle {
+    width: 140px;
+    height: 45px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-circle:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+/* Center alignment for container */
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+
+/* General button styles */
+.btn-hover {
+    display: inline-block; /* Ensures link behaves like a block-level element */
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff; /* Text color */
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    line-height: 55px; /* Vertically centers text */
+    text-align: center;
+    text-decoration: none; /* Remove underline from links */
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+
+    /* Transition Effects */
+    transition: all 0.4s ease-in-out;
+}
+
+/* Hover effect */
+.btn-hover:hover {
+    background-position: 100% 0;
+    transition: all 0.4s ease-in-out;
+}
+
+/* Focus effect */
+.btn-hover:focus {
+    outline: none;
+}
+
+/* Color variations */
+.btn-hover.color-8 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+

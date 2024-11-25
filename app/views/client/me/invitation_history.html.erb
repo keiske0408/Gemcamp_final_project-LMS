@@ -55,10 +55,22 @@
               <%= link_to 'Order History', order_history_client_me_path, class: "btn btn-light-dark me-2" %>
               <%= link_to 'Lottery History', lottery_history_client_me_path, class: "btn btn-light-dark me-2" %>
               <%= link_to 'Winning History', winning_history_client_me_path, class: "btn btn-light-dark me-2" %>
-              <%= link_to 'Invitation History', invitation_history_client_me_path, class: "btn btn-light-dark" %>
+              <%= link_to 'Invitation History', invitation_history_client_me_path, class: "btn btn-light-dark active" %>
             </div>
-            <div id="history-container">
-              <p class="text-center text-muted">Select a section to view.</p>
+            <div id="history-container" style="max-height: 510px; overflow-y: auto;">
+              <div class="container-fluid">
+                <% @invited_members.each do |member| %>
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <p><strong>Username: </strong><%= member.username %></p>
+                      <p><strong>Email: </strong> <%= member.email %></p>
+                      <p><strong>Phone Number: </strong><%= member.phone_number || 0 %></p>
+                      <p><strong>Created At: </strong> <%= member.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+                    </div>
+                  </div>
+                <% end %>
+                <%= paginate @invited_members %>
+              </div>
             </div>
           </div>
         </div>
@@ -66,3 +78,12 @@
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
+
+

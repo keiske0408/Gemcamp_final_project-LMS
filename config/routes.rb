@@ -56,15 +56,25 @@ Rails.application.routes.draw do
     end
 
     namespace :client do
+
       resources :home, only: [:index, :new]
-      resource :me, controller: :me, only: [:show]
+      resource :me, controller: :me, only: [:show] do
+        get 'order_history', to: 'me#order_history'
+        get 'lottery_history', to: 'me#lottery_history'
+        get 'invitation_history', to: 'me#invitation_history'
+        get 'winning_history', to: 'me#winning_history'
+      end
+
       resources :locations
+
       resources :lottery, only: [:index, :show] do
         member do
           post :buy_tickets
         end
       end
+
       resources :categories, only: [:index]
+
       resources :shop, only: [:index, :show] do
         member do
           post :purchase
@@ -89,7 +99,6 @@ Rails.application.routes.draw do
       end
 
       resources :barangays, only: %i[index show], defaults: { format: :json }
-
     end
   end
 end
