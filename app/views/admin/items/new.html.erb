@@ -1,6 +1,6 @@
 <h1>New Item</h1>
 
-<%= form_with model: @item, url: admin_items_path, local: true,data: { controller: 'select2' }, html: { multipart: true } do |f| %>
+<%= form_with model: @item, url: admin_items_path, local: true, data: { controller: 'select2' }, html: { multipart: true } do |f| %>
 
   <div class="mb-3">
     <%= f.label :category_ids, 'Categories' %>
@@ -23,10 +23,25 @@
   </div>
 
   <div class="mb-3">
+    <%= f.label :batch_count, 'Batch Count' %>
+    <%= f.number_field :batch_count, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
     <%= f.label :status, 'Status' %>
     <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']]), {}, class: 'form-select' %>
   </div>
 
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= f.label :online_at, 'Online At', class: 'form-label' %>
+      <%= f.datetime_local_field :online_at, value: @item.online_at&.strftime("%Y-%m-%dT%H:%M"), class: 'form-control' %>
+    </div>
+    <div class="col-md-6">
+      <%= f.label :offline_at, 'Offline At', class: 'form-label' %>
+      <%= f.datetime_local_field :offline_at, value: @item.offline_at&.strftime("%Y-%m-%dT%H:%M"), class: 'form-control' %>
+    </div>
+  </div>
 
   <div class="mb-3">
     <%= f.label :image, 'Image' %>

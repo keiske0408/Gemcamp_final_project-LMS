@@ -13,6 +13,7 @@
             <th>Name</th>
             <th>Quantity</th>
             <th>Min Tickets</th>
+            <th>Batch Count</th>
             <th>Status</th>
             <th>State</th>
             <th>Offline At</th>
@@ -26,11 +27,13 @@
           <% @items.each do |item| %>
             <tr>
               <td class="text-center align-middle">
-                <%= image_tag item.image.url, width: 100, height: 100, class: "rounded border" if item.image? %>
+                <%#= image_tag item.image.url, width: 100, height: 100, class: "rounded border" if item.image?  %>
+                <%= image_tag(item.image_url || "https://loremflickr.com/50/50", style: 'width: 100px; height: 100px;') %></td>
               </td>
               <td class="text-center align-middle"><%= item.name %></td>
               <td class="text-center align-middle"><%= item.quantity %></td>
               <td class="text-center align-middle"><%= item.minimum_tickets %></td>
+              <td class="text-center align-middle"><%= item.batch_count %></td>
               <td class="text-center align-middle">
                   <span class="badge bg-<%= item.status.present? && item.status == 'active' ? 'success' : 'secondary' %>">
                     <%= item.status.present? ? item.status.capitalize : 'N/A' %>
@@ -78,9 +81,14 @@
           </tbody>
         </table>
       </div>
-      <div class="d-flex justify-content-end flex-wrap mb-3">
-        <%= link_to 'New Item', new_admin_item_path, class: 'btn btn-dark me-2 mb-2' %>
-        <%= link_to 'Back', admin_session_path, class: 'btn btn-light mb-2' %>
+      <div class="d-flex justify-content-between flex-wrap align-items-center mb-3">
+        <div>
+          <%= paginate @items, class: "pagination justify-content-start"%>
+        </div>
+        <div>
+          <%= link_to 'New Item', new_admin_item_path, class: 'btn btn-dark me-2 mb-2' %>
+          <%= link_to 'Back', admin_session_path, class: 'btn btn-light mb-2' %>
+        </div>
       </div>
     </div>
   </div>
