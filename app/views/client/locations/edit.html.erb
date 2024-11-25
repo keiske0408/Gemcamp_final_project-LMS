@@ -51,10 +51,7 @@
             <div class="form-group row mb-3">
               <%= form.label :is_default, "Set as Default", class: "col-sm-4 col-form-label" %>
               <div class="col-sm-8">
-                <%= form.check_box :is_default, class: "form-check-input" %>
-                <% if @location.errors[:is_default].any? %>
-                  <div class="text-danger"><%= @location.errors[:is_default].first %></div>
-                <% end %>
+                <%= form.check_box :is_default, class: "form-check-input", disabled: @location.is_default %>
               </div>
             </div>
           </div>
