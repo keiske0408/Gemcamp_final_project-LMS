@@ -1,5 +1,31 @@
 <h1 class="text-center my-4">Offers Management</h1>
 <div class="container-fluid px-4 mt-3 w-75">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Search Offers</h4>
+    </div>
+    <div class="card-body">
+      <%= form_with(url: admin_offers_path, method: :get, local: true, class: "row g-3 align-items-center") do |form| %>
+        <!-- Offer Name Field -->
+        <div class="col-md-5 d-flex align-items-center">
+          <%= form.label :name, 'Offer Name', class: 'form-label text-nowrap me-2 mb-0' %>
+          <%= form.text_field :name, placeholder: "Offer Name", class: "form-control", value: params[:name] %>
+        </div>
+
+        <!-- Offer State Field -->
+        <div class="col-md-5 d-flex align-items-center">
+          <%= form.label :status, 'Offer State', class: 'form-label text-nowrap me-2 mb-0' %>
+          <%= form.select :status, Offer.statuses.keys.map { |status| [status.humanize, status] }, include_blank: 'All States', class: "form-control" %>
+        </div>
+
+        <!-- Search and Clear Filters Buttons -->
+        <div class="col-md-2 d-flex align-items-center justify-content-end">
+          <%= form.submit "Search", class: "btn btn-primary w-100 me-2" %>
+          <%= link_to "Clear Filters", admin_offers_path, class: "btn btn-secondary w-100 text-nowrap" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
   <div class="card mb-4 mt-3">
     <div class="card-header">
       <div class="d-flex justify-content-between">
@@ -34,7 +60,7 @@
             <td class="text-center">
               <div class="btn-group" role="group">
                 <%= link_to 'Edit', edit_admin_offer_path(offer), class: 'btn btn-outline-warning btn-sm' %>
-                  <%= button_to 'Delete', admin_offer_path(offer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
+                <%= button_to 'Delete', admin_offer_path(offer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
               </div>
             </td>
           </tr>
