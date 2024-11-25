@@ -30,37 +30,37 @@
       <% if current_client %>
         <h5 class="mb-3">Choose Ticket Quantity</h5>
 
-        <!-- Add Ticket Section -->
-        <div class="d-flex align-items-center justify-content-center my-4">
-          <!-- Styled and Enhanced Controls -->
-          <div class="input-group" style="max-width: 200px;">
-            <%= button_to "-", "#",
+        <%= form_with url: buy_tickets_client_lottery_path(@item), method: :post, local: false do |form| %>
+          <!-- Add Ticket Section -->
+          <div class="d-flex align-items-center justify-content-center my-4">
+            <!-- Styled and Enhanced Controls -->
+            <div class="input-group" style="max-width: 200px;">
+              <%= link_to "-", "#",
                           class: "btn btn-outline-secondary btn-lg",
                           id: "decrease",
                           data: { bs_toggle: "tooltip", bs_placement: "top", bs_title: "Decrease Quantity" } %>
-            <input
-              type="number"
-              value="0"
-              min="0"
-              class="form-control text-center form-control-lg mx-2"
-              id="ticket-quantity"
-              style="max-width: 120px;"
-              placeholder="0"
-              aria-label="Ticket Quantity">
-            <%= button_to "+", "#",
+
+              <%= form.number_field :quantity,
+                                    value: 0,
+                                    min: 0,
+                                    class: 'form-control text-center form-control-lg mx-2',
+                                    id: 'ticket-quantity',
+                                    placeholder: '0',
+                                    style: 'max-width: 120px' %>
+
+              <%= link_to "+", "#",
                           class: "btn btn-outline-secondary btn-lg",
                           id: "increase",
                           data: { bs_toggle: "tooltip", bs_placement: "top", bs_title: "Increase Quantity" } %>
+            </div>
           </div>
-        </div>
-
-        <!-- Submit Button -->
-        <%= form_with url: buy_tickets_client_lottery_path(@item), method: :post, local: true do |form| %>
-          <input type="hidden" name="quantity" id="ticket-quantity-input">
+          <!-- Submit Button -->
+          <input type="hidden" name="hidden-quantity" id="ticket-quantity-input">
           <%= form.submit "Submit", class: "btn btn-primary text-white btn-lg w-100" %>
         <% end %>
       <% else %>
-        <p class="text-center text-muted">You need to <%= link_to 'sign in', new_client_session_path %> to buy tickets.</p>
+        <p class="text-center text-muted">You need to <%= link_to 'sign in', new_client_session_path %> to buy
+          tickets.</p>
       <% end %>
     </div>
   </div>
@@ -80,5 +80,5 @@
       <% end %>
     </div>
   </div>
-  <%= link_to "back", client_lottery_index_path, class: "btn btn-outline-primary"  %>
+  <%= link_to "back", client_lottery_index_path, class: "btn btn-outline-primary" %>
 </div>
