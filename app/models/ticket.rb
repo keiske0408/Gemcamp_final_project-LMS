@@ -36,13 +36,6 @@ class Ticket < ApplicationRecord
     tickets.each { |ticket| ticket.cancel! }
   end
 
-  # Serial number format: "YYMMDD-ITEM_ID-BATCH_COUNT-NUMBER_COUNT"
-  # def generate_serial_number
-  #   number_count = format('%04d', item.batch_count)
-  #   "#{Time.current.strftime('%y%m%d')}-#{item.id}-#{item.batch_count}-#{number_count}"
-  # end
-
-
   private
 
   def set_serial_number

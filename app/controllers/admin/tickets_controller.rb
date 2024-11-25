@@ -22,6 +22,7 @@ class Admin::TicketsController < Admin::BaseController
     if params[:start_date].present? && params[:end_date].present?
       @tickets = @tickets.where(created_at: params[:start_date]..params[:end_date])
     end
+    @tickets = Ticket.page(params[:page]).per(10)
   end
 
   def create
