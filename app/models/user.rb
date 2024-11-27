@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   mount_uploader :image, ImageUploader
   belongs_to :parent, class_name: 'User', optional: true, counter_cache: :children_members
-  has_many :children_members, class_name: 'User', foreign_key: :parent_id, counter_cache: :children_members
+  has_many :children, class_name: 'User', foreign_key: :parent_id
   has_many :locations, class_name: 'Location'
   has_many :tickets, class_name: 'Ticket'
   has_many :orders
