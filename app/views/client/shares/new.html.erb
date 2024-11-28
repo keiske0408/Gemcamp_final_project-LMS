@@ -1,0 +1,16 @@
+<div class="container ">
+  <h2>Share Your Feedback</h2>
+  <%= form_with model: @winner, url: client_shares_path(@winner), method: :post, local: true do |form| %>
+    <div class="form-group">
+      <%= form.label :comment, "Your Message" %>
+      <%= form.text_area :comment, class: "form-control", rows: 5 %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :picture, "Upload a Picture" %>
+      <%= form.file_field :picture, class: "form-control" %>
+    </div>
+
+    <%= form.submit "Share", class: "btn btn-success mt-3" %>
+  <% end %>
+</div>

@@ -1,6 +1,7 @@
 class Winner < ApplicationRecord
   include AASM
 
+  mount_uploader :picture, ImageUploader
   belongs_to :item
   belongs_to :ticket
   belongs_to :user

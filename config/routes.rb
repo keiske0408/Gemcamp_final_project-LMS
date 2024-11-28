@@ -57,12 +57,14 @@ Rails.application.routes.draw do
 
     namespace :client do
 
+      resources :shares, only: [:new, :create, :update]
       resources :home, only: [:index, :new]
       resource :me, controller: :me, only: [:show] do
         get 'order_history', to: 'me#order_history'
         get 'lottery_history', to: 'me#lottery_history'
         get 'invitation_history', to: 'me#invitation_history'
         get 'winning_history', to: 'me#winning_history'
+        get 'share_feedback', to: 'me#share_feedback'
         member do
           patch :claim_prize
         end
