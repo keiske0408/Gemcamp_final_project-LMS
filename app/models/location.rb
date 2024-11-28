@@ -13,10 +13,13 @@ class Location < ApplicationRecord
   validates :phone_number, presence: true
   before_save :unset_previous_default, if: :is_default?
 
+  def full_address
+    "#{name} | #{phone_number}"
+  end
+
   private
+
   def unset_previous_default
     user.locations.where(is_default: true).where.not(id: id).update_all(is_default: false)
   end
-
-
 end

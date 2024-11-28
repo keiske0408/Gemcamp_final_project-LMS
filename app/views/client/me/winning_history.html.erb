@@ -59,14 +59,38 @@
             </div>
             <div id="history-container" style="max-height: 510px; overflow-y: auto;">
               <div class="container-fluid">
-                <% @winnings.each do |winning| %>
-                  <div class="card mb-3">
+                <% @winnings.each do |winner| %>
+                  <div class="card mb-3 border-dark-subtle">
                     <div class="card-body">
-                      <p><strong>Item:</strong> <%= winning.item.name %></p>
-                      <p><strong>Price:</strong> <%= winning.price %></p>
-                      <p><strong>Status:</strong><span class="text-success"> <%= winning.state %></span></p>
-                      <p><strong>Paid At:</strong> <%= winning.paid_at %></p>
-                      <p><strong>Created At:</strong> <%= winning.created_at %></p>
+                      <p><strong>Item:</strong> <%= winner.item.name %></p>
+                      <p><strong>Price:</strong> <%= winner.price %></p>
+                      <p><strong>Status:</strong><span class="text-success"> <%= winner.state %></span></p>
+                      <% if winner.won? %>
+                        <%= link_to 'Claim Prize', 'javascript:void(0)', class: "btn btn-primary ", 'data-bs-toggle': :collapse, 'data-bs-target': "#winnerTarget#{winner.id}" %>
+                      <% end %>
+
+                      <div class="collapse mt-3" id="winnerTarget<%= winner.id %>">
+                        <div class="card card-body">
+                          <%= form_with model: winner, url: claim_prize_client_me_path(winner_id: winner.id), html: { class: "form", data: { controller: "address-details" } } do |form| %>
+
+                            <div class="form-group row mb-4">
+                              <%= form.label :locations,"Address Selection" , class: "col-sm-4 col-form-label " %>
+                              <div class="col-sm-8">
+                                <%= form.select :locations,
+                                                current_client.locations.map { |location| [location.full_address, location.id] },
+                                                { prompt: 'Please select location'},
+                                                class: "form-control location-dropdown",
+                                                data: { action: "change->address-details#updateDetails", address_details_target: "dropdown" } %>
+                              </div>
+                            </div>
+                            <div id="location-details" class="mt-2" data-address-details-target="details">
+                            </div>
+                            <div class="d-grid mb-2">
+                              <%= form.submit "Ship to this address ✓", class: "btn btn-dark btn-block" %>
+                            </div>
+                          <% end %>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 <% end %>

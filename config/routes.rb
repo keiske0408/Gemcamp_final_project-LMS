@@ -63,9 +63,14 @@ Rails.application.routes.draw do
         get 'lottery_history', to: 'me#lottery_history'
         get 'invitation_history', to: 'me#invitation_history'
         get 'winning_history', to: 'me#winning_history'
+        member do
+          patch :claim_prize
+        end
       end
 
-      resources :locations
+      resources :locations do
+        get :details
+      end
 
       resources :lottery, only: [:index, :show] do
         member do

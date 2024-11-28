@@ -1,6 +1,6 @@
 class Client::LocationsController < ApplicationController
   before_action :authenticate_client!
-  before_action :set_location, only: [:show, :edit, :update, :destroy]
+  before_action :set_location, only: [:show, :edit, :update, :destroy, :details]
 
   def index
     @locations = current_client.locations.order(is_default: :desc, created_at: :asc)
@@ -57,11 +57,15 @@ class Client::LocationsController < ApplicationController
     redirect_to client_locations_path
   end
 
+  def details
+    render partial: "client/locations/details", locals: { location: @location }
+  end
+
 
   private
 
   def set_location
-    @location = current_client.locations.find(params[:id])
+    @location = current_client.locations.find(params[:id] || params[:location_id])
   end
 
   def location_params
