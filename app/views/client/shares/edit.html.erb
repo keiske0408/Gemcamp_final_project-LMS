@@ -1,6 +1,7 @@
 <div class="container ">
-  <h2>Share Your Feedback</h2>
-  <%= form_with model: @winner, url: client_shares_path(@winner), method: :post, local: true do |form| %>
+    <h1 class="text-primary"><%= @winner.item.name %></h1>
+  <h3>Share Your Feedback</h3>
+  <%= form_with model: @winner, url: client_share_path(@winner), method: :put, local: true do |form| %>
     <div class="form-group">
       <%= form.label :comment, "Your Message" %>
       <%= form.text_area :comment, class: "form-control", rows: 5 %>

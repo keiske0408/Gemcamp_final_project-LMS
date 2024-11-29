@@ -1,28 +1,32 @@
 class Client::SharesController < ApplicationController
   before_action :authenticate_client!
-  before_action :set_winner, only: [:new, :create]
+  before_action :set_winner, only: [:edit , :update]
 
-  def new
-    # @feedback = @winner.build_feedback
-    redirect_to winning_history_client_me_path, alert: "Invalid winner record." unless @winner.delivered?
+  def edit
   end
 
-  def create
+  def update
+    # render json: params
     if @winner.update(share_params)
-      @winner.share!
-      # (share_params.merge(state: "shared"))
-      flash[:notice] = "Thank you for sharing your feedback!"
-      redirect_to winning_history_client_me_path
+      if @winner.delivered?
+        @winner.share!
+        flash[:notice] = "Thank you for sharing your feedback!"
+        redirect_to winning_history_client_me_path
+      else
+        flash[:alert] = "This prize has already been shared."
+        redirect_to winning_history_client_me_path
+      end
     else
       flash.now[:alert] = "Please fix the errors below."
       render :new
     end
   end
 
+
   private
 
   def set_winner
-    @winner = Winner.find_by(user: current_client)
+    @winner = Winner.find(params[:id])
   end
 
   def share_params
