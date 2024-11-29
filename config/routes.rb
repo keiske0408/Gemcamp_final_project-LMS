@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
     namespace :client do
 
-      resources :shares, only: [:edit, :update]
+      resources :shares, only: [:edit, :update, :index, :show]
       resources :home, only: [:index, :new]
       resource :me, controller: :me, only: [:show] do
         get 'order_history', to: 'me#order_history'

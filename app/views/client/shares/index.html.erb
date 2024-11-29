@@ -1,0 +1,78 @@
+<div class="container my-5">
+  <!-- Banner Image Carousel -->
+  <div id="bannerCarousel" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="banner-image text-center">Banner Image 1</div>
+      </div>
+      <div class="carousel-item">
+        <div class="banner-image text-center">Banner Image 2</div>
+      </div>
+      <div class="carousel-item">
+        <div class="banner-image text-center">Banner Image 3</div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+  <!-- Announcement Bar -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="announcement-bar py-3">
+        <span>Announcement: </span>
+      </div>
+    </div>
+  </div>
+
+  <header class="py-lg-5 border-bottom mb-5">
+    <div class="container">
+      <div class="text-center my-5">
+        <h1 class="fw-bolder">Welcome to Winner's Feedback!</h1>
+        <p class="lead mb-0">Let's hear from the winners' testimonies </p>
+      </div>
+    </div>
+  </header>
+
+  <% if @published_winners.any? %>
+    <div class="container">
+      <div class="row justify-content-center">
+        <% @published_winners.each do |winner| %>
+          <!-- Blog entries-->
+          <div class="col-lg-8 mb-4">
+            <!-- Featured blog post-->
+            <div class="card mb-4">
+              <!-- Display winner's picture or a placeholder -->
+              <% if winner.picture.attached? %>
+                <%= image_tag winner.picture, class: "card-img-top", alt: winner.comment %>
+              <% else %>
+                <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image" />
+              <% end %>
+              <div class="card-body">
+                <div class="small text-muted"><%= winner.created_at.strftime('%B %d, %Y') %></div>
+                <h2 class="card-title"><%= winner.item&.name || "Prize" %></h2>
+                <p class="card-text"><%= winner.comment.presence || "No feedback provided." %></p>
+                <a class="btn btn-primary" href="#">Read more →</a>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-center">
+        <%= paginate @published_winners %>
+      </div>
+    </div>
+  <% else %>
+    <div class="container">
+      <p class="text-center mt-4">No shares available.</p>
+    </div>
+  <% end %>
+</div>

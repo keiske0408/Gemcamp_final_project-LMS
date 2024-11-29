@@ -1,8 +1,10 @@
+
 <footer class="d-flex justify-content-around align-items-center bg-light py-2 border-top">
-  <a href="#" class="text-center text-decoration-none text-dark">
+  <%= link_to client_shares_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-share-fill"></i><br>
     <small>Share</small>
-  </a>
+  <% end %>
+
   <% if client_signed_in? %>
     <%= link_to client_invite_people_path, class: "text-center text-decoration-none text-dark" do %>
       <i class="bi bi-people-fill"></i><br>

@@ -60,34 +60,67 @@
             <div id="history-container" style="max-height: 510px; overflow-y: auto;">
               <div class="container-fluid">
                 <% @winnings.each do |winner| %>
-                  <div class="card mb-3 border-dark-subtle">
+                  <div class="mb-4 shadow-sm border border-dark-subtle rounded-3">
                     <div class="card-body">
-                      <p><strong>Item:</strong> <%= winner.item.name %></p>
-                      <p><strong>Price:</strong> <%= winner.price %></p>
-                      <p><strong>Status:</strong><span class="text-success"> <%= winner.state %></span></p>
+                      <!-- Item Details -->
+                      <h5 class="card-title text-primary"><strong>Item:</strong> <%= winner.item.name %></h5>
+                      <p class="card-text mb-2"><strong>Price:</strong> <%= number_to_currency(winner.price) %></p>
+                      <p class="card-text mb-3"><strong>Status:</strong>
+                        <span class="badge <%= winner.won? ? 'bg-success' : 'bg-secondary' %>">
+            <%= winner.state.humanize %>
+          </span>
+                      </p>
+                      <!-- Action Buttons -->
                       <% if winner.won? %>
-                        <%= link_to 'Claim Prize', 'javascript:void(0)', class: "btn btn-primary ", 'data-bs-toggle': :collapse, 'data-bs-target': "#winnerTarget#{winner.id}" %>
+                        <%= link_to 'Claim Prize', 'javascript:void(0)',
+                                    class: "btn btn-primary mb-2",
+                                    'data-bs-toggle': :collapse,
+                                    'data-bs-target': "#winnerTarget#{winner.id}" %>
                       <% end %>
 
-                      <div class="collapse mt-3" id="winnerTarget<%= winner.id %>">
-                        <div class="card card-body">
-                          <%= form_with model: winner, url: claim_prize_client_me_path(winner_id: winner.id), html: { class: "form", data: { controller: "address-details" } } do |form| %>
+                      <% if winner.delivered? %>
+                        <%= link_to 'Share Feedback', edit_client_share_path(winner),
+                                    class: 'btn btn-primary mb-2' %>
+                      <% end %>
 
-                            <div class="form-group row mb-4">
-                              <%= form.label :locations,"Address Selection" , class: "col-sm-4 col-form-label " %>
-                              <div class="col-sm-8">
-                                <%= form.select :locations,
-                                                current_client.locations.map { |location| [location.full_address, location.id] },
-                                                { prompt: 'Please select location'},
-                                                class: "form-control location-dropdown",
-                                                data: { action: "change->address-details#updateDetails", address_details_target: "dropdown" } %>
+                      <% if winner.shared? %>
+                        <%= link_to 'Publish', publish_admin_winner_path(winner),
+                                    method: :post,
+                                    class: "btn btn-primary mb-2" %>
+                      <% end %>
+
+                      <!-- Address Selection (Collapse Section) -->
+                      <div class="collapse mt-3" id="winnerTarget<%= winner.id %>">
+                        <div class="card card-body  shadow-sm bg-light border rounded-3" style="background: linear-gradient(to bottom, rgba(254,255,255,1) 0%,rgba(221,241,249,1) 35%,rgba(160,216,239,1) 95%);">
+                          <%= form_with model: winner,
+                                        url: claim_prize_client_me_path(winner_id: winner.id),
+                                        html: { class: "form", data: { controller: "address-details" } } do |form| %>
+
+                            <h5 class="mb-3 text-center">
+                              <%= form.label :locations, "Select Shipping Address", class: "col-form-label fw-bold w-100" %>
+                            </h5>
+                            <div class="container">
+
+                              <div class="form-group row mb-4">
+                                <div class="row-cols-sm-6 text-center">
+                                  <%= form.select :locations,
+                                                  current_client.locations.map { |location| [location.full_address, location.id] },
+                                                  { prompt: 'Please select a location' },
+                                                  class: "form-select location-dropdown",
+                                                  data: { action: "change->address-details#updateDetails",
+                                                          address_details_target: "dropdown" } %>
+                                </div>
+                              </div>
+
+                              <div id="location-details" data-address-details-target="details">
+                                <p class="text-muted mb-0">Location details will appear here after selection.</p>
+                              </div>
+
+                              <div class="d-grid mt-4">
+                                <%= form.submit "Ship to this Address ✓", class: "btn btn-outline-light " %>
                               </div>
                             </div>
-                            <div id="location-details" class="mt-2" data-address-details-target="details">
-                            </div>
-                            <div class="d-grid mb-2">
-                              <%= form.submit "Ship to this address ✓", class: "btn btn-dark btn-block" %>
-                            </div>
+
                           <% end %>
                         </div>
                       </div>

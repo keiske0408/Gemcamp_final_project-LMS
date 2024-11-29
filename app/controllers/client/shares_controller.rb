@@ -2,6 +2,9 @@ class Client::SharesController < ApplicationController
   before_action :authenticate_client!
   before_action :set_winner, only: [:edit , :update]
 
+  def index
+    @published_winners = Winner.where(state: 'published').order(created_at: :desc).page(params[:page]).per(3)
+  end
   def edit
   end
 
