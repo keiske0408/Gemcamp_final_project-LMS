@@ -5,7 +5,6 @@ class Client::MeController < ApplicationController
     # Display user profile information
   end
 
-  
   def order_history
     @orders = current_client.orders.page(params[:page]).per(5)
   end
@@ -23,29 +22,44 @@ class Client::MeController < ApplicationController
   end
 
   def claim_prize
-    @winner = Winner.find(params[:id])
-    # Create a new address for the client if they don't have one
-    @address = current_client.locations.build
-  end
+    user = User.find(current_client.id)
+    winner = Winner.where(user: current_client).find(params[:winner_id])
 
-  def submit_address
-    @winner = Winner.find(params[:winner_id])
-    @address = current_client.addresses.new(address_params)
-
-    if @address.save
-      # Update the winner record status from 'won' to 'claimed'
-      @winner.update(state: 'claimed')
-      redirect_to client_me_path, notice: "Prize claimed successfully and address submitted!"
-    else
-      render :claim_prize
+    if params[:winner][:locations].blank?
+      flash[:alert] = "No address selected. Please select an address."
+      return redirect_to winning_history_client_me_path
     end
+
+    location = user.locations.find(params[:winner][:locations])
+
+    if winner.may_claim?
+      winner.claim!
+      winner.update(location_id: location.id)
+      flash[:notice] = "Prize claimed successfully!"
+    else
+      flash[:alert] = "Unable to claim prize."
+    end
+      redirect_to winning_history_client_me_path
   end
 
-  private
+  def publish
+    winner = Winner.find_by(id: params[:winner_id], user_id: current_client.id)
 
-  def address_params
-    params.require(:address).permit(:street, :city, :state, :zip_code, :country)
+    if winner.nil?
+      flash[:alert] = "Winner record not found."
+      return redirect_to winning_history_client_me_path
+    end
+
+    if winner.may_publish?
+      winner.publish!
+      flash[:notice] = "Your feedback has been successfully published!"
+    else
+      flash[:alert] = "Unable to publish feedback. Please ensure the feedback is shared first."
+    end
+
+    redirect_to winning_history_client_me_path
   end
+
 end
   
 

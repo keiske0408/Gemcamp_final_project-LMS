@@ -4,7 +4,6 @@ import "./controllers"
 import * as bootstrap from "bootstrap"
 import "./navbar"
 import "./lottery"
-import './claim_prize'
 
 Turbo.session.drive = false
 import jQuery from "jquery"

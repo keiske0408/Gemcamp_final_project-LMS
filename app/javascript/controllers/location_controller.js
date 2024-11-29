@@ -65,25 +65,6 @@ export default class extends Controller {
             }
         })
     }
-
-    static targets = ["details"];
-
-    connect() {
-        this.element.addEventListener("change", this.updateDetails.bind(this));
-    }
-
-    updateDetails(event) {
-        const locationId = event.target.value;
-
-        if (!locationId) {
-            this.detailsTarget.innerHTML = "<p class='text-danger'>No location selected.</p>";
-            return;
-        }
-
-        // Example: Display details for the selected location
-        this.detailsTarget.innerHTML = `<p class="text-info">Details for Location ID ${locationId} are shown here.</p>`;
-    }
-
 }
 
 
