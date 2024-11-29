@@ -49,23 +49,14 @@ class Client::LotteryController < ApplicationController
           Ticket.create!(
             item: @item,
             user: current_client,
-            state: 'pending',
-            serial_number: generate_serial_number(@item),
-            batch_count: @item.batch_count,
-            coins: 1
           )
         end
-        current_client.decrement!(:coins, quantity)
       end
+
       flash[:notice] = "Successfully bought #{quantity} ticket(s)."
       redirect_to client_lottery_path(@item)
     end
   end
 
-  private
-
-  def generate_serial_number(item)
-    "#{item.id}-#{SecureRandom.hex(4)}"
-  end
 end
 

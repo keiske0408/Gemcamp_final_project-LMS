@@ -1,7 +1,7 @@
 class Ticket < ApplicationRecord
   belongs_to :user
   belongs_to :item
-  after_create :set_serial_number
+  before_validation :generate_serial_number , on: :create
   after_create :subtract_coin_from_user
 
 
@@ -38,7 +38,7 @@ class Ticket < ApplicationRecord
 
   private
 
-  def set_serial_number
+  def generate_serial_number
     number_count = Ticket.where(item_id: item_id, batch_count: batch_count).count
     formatted_number_count = number_count.to_s.rjust(4, '0')
     time = Time.current.strftime("%y%m%d")

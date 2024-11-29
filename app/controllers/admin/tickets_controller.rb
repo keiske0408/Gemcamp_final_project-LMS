@@ -4,7 +4,7 @@ class Admin::TicketsController < Admin::BaseController
 
     # Filtering based on search params
     if params[:serial_number].present?
-      @tickets = @tickets.where("serial_number LIKE ?", "%#{params[:serial_number]}%")
+      @tickets = @tickets.where(serial_number:params[:serial_number])
     end
 
     if params[:item_name].present?
@@ -25,14 +25,6 @@ class Admin::TicketsController < Admin::BaseController
     @tickets = Ticket.page(params[:page]).per(10)
   end
 
-  def create
-    @ticket = Ticket.new(ticket_params)
-    if @ticket.save
-      redirect_to admin_tickets_path, notice: "Ticket created successfully."
-    else
-      render :new
-    end
-  end
 
   def cancel
     @ticket = Ticket.find(params[:id])
