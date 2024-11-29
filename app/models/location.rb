@@ -14,7 +14,7 @@ class Location < ApplicationRecord
   before_save :unset_previous_default, if: :is_default?
 
   def full_address
-    "#{name} | #{phone_number}"
+    "#{street_address} #{barangay.name} #{city.name} #{province.name} | #{name}"
   end
 
   private

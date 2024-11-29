@@ -12,7 +12,8 @@
           </div>
           <div class="col-md-4">
             <%= label_tag :state, "State", class: "form-label" %>
-            <%= select_tag :state, options_for_select(Winner.aasm.states.map(&:name), params[:state]), include_blank: "All States", class: "form-select" %>          </div>
+            <%= select_tag :state, options_for_select(Winner.aasm.states.map(&:name), params[:state]), include_blank: "All States", class: "form-select" %>
+          </div>
           <div class="col-md-2">
             <%= label_tag :start_date, "Start Date", class: "form-label" %>
             <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
@@ -52,12 +53,12 @@
           <td><%= winner.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
           <td>
             <div class="btn-group btn-group-sm" role="group">
-              <%= link_to "Submit", submit_admin_winner_path(winner), method: :post, class: "btn btn-primary" if winner.may_submit? %>
-              <%= link_to "Pay", pay_admin_winner_path(winner), method: :post, class: "btn btn-success" if winner.may_pay? %>
-              <%= link_to "Ship", ship_admin_winner_path(winner), method: :post, class: "btn btn-info" if winner.may_ship? %>
-              <%= link_to "Deliver", deliver_admin_winner_path(winner), method: :post, class: "btn btn-warning" if winner.may_deliver? %>
-              <%= link_to "Publish", publish_admin_winner_path(winner), method: :post, class: "btn btn-dark" if winner.may_publish? %>
-              <%= link_to "Remove Publish", remove_publish_admin_winner_path(winner), method: :post, class: "btn btn-danger" if winner.may_remove_publish? %>
+              <%= button_to "Submit", submit_admin_winner_path(winner), method: :post, class: "btn btn-primary" if winner.may_submit? %>
+              <%= button_to "Pay", pay_admin_winner_path(winner), method: :post, class: "btn btn-success" if winner.may_pay? %>
+              <%= button_to "Ship", ship_admin_winner_path(winner), method: :post, class: "btn btn-info" if winner.may_ship? %>
+              <%= button_to "Deliver", deliver_admin_winner_path(winner), method: :post, class: "btn btn-warning" if winner.may_deliver? %>
+              <%= button_to "Publish", publish_admin_winner_path(winner), method: :post, class: "btn btn-dark" if winner.may_publish? %>
+              <%= button_to "Remove Publish", remove_publish_admin_winner_path(winner), method: :post, class: "btn btn-danger" if winner.may_remove_publish? %>
             </div>
           </td>
         </tr>
