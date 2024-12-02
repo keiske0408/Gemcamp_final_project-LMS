@@ -68,6 +68,7 @@ Rails.application.routes.draw do
         member do
           patch :claim_prize
           post :publish
+          post :cancel_order
         end
       end
 

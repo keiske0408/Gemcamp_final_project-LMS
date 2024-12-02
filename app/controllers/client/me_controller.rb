@@ -60,6 +60,19 @@ class Client::MeController < ApplicationController
     redirect_to winning_history_client_me_path
   end
 
+  def cancel_order
+    order = current_client.orders.find(params[:id])
+
+    if order.submitted?
+      order.cancel!
+      flash[:notice] = 'Your order has been successfully canceled.'
+    else
+      flash[:alert] = 'Order cannot be canceled at this stage.'
+    end
+
+    redirect_to order_history_client_me_path
+  end
+
 end
   
 

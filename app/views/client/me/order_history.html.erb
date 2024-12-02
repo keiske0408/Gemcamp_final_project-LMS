@@ -23,7 +23,7 @@
             <div class="d-flex justify-content-between text-center mt-4 mb-4 m-5">
               <div class="px-2">
                 <p class="mb-1 h6"><%= current_client.total_deposit %></p>
-                <p class="text-muted mb-0">Wallets Balance</p>
+                <p class="text-muted mb-0">Total Deposit</p>
               </div>
               <div class="px-2">
                 <p class="mb-1 h6"><%= current_client.coins %></p>
@@ -68,6 +68,12 @@
                       <p><strong>Coins: </strong> <%= order.coin %></p>
                       <p><strong>Status: </strong> <span class="text-success"><%= order.state %></span></p>
                       <p><strong>Created At: </strong> <%= order.created_at %></p>
+                      <% if order.submitted? %>
+                        <%= button_to 'Cancel Order', cancel_order_client_me_path(id: order.id),
+                                      method: :post,
+                                      class: 'btn btn-danger',
+                                      data: { confirm: 'Are you sure you want to cancel this order?' } %>
+                      <% end %>
                     </div>
                   </div>
                 <% end %>

@@ -26,7 +26,9 @@ class Admin::OrdersController < Admin::BaseController
 
   def cancel
     order = Order.find(params[:id])
-    order.cancel!
+    order.revert_payment!
     redirect_to admin_orders_path, notice: "Order ##{order.serial_number} marked as cancelled."
   end
+
+
 end
