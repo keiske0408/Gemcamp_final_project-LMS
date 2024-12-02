@@ -1,5 +1,4 @@
 class Client::SharesController < ApplicationController
-  before_action :authenticate_client!
   before_action :set_winner, only: [:edit , :update]
 
   def index

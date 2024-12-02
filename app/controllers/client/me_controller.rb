@@ -39,11 +39,11 @@ class Client::MeController < ApplicationController
     else
       flash[:alert] = "Unable to claim prize."
     end
-      redirect_to winning_history_client_me_path
+    redirect_to winning_history_client_me_path
   end
 
   def publish
-    winner = Winner.find_by(id: params[:winner_id], user_id: current_client.id)
+    winner = Winner.find_by(id: params[:winner_id])
 
     if winner.nil?
       flash[:alert] = "Winner record not found."

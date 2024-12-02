@@ -84,7 +84,7 @@
                       <% end %>
 
                       <% if winner.shared? %>
-                        <%= link_to 'Publish', publish_admin_winner_path(winner),
+                        <%= button_to 'Publish', publish_client_me_path(winner_id: winner.id),
                                     method: :post,
                                     class: "btn btn-primary mb-2" %>
                       <% end %>

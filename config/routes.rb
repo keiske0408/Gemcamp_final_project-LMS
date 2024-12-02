@@ -67,6 +67,7 @@ Rails.application.routes.draw do
         get 'share_feedback', to: 'me#share_feedback'
         member do
           patch :claim_prize
+          post :publish
         end
       end
 

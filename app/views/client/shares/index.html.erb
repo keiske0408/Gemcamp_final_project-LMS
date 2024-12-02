@@ -50,13 +50,16 @@
             <!-- Featured blog post-->
             <div class="card mb-4">
               <!-- Display winner's picture or a placeholder -->
-              <% if winner.picture.attached? %>
-                <%= image_tag winner.picture, class: "card-img-top", alt: winner.comment %>
+              <% if winner.picture.present? %>
+                <%= image_tag winner.picture.url, class: "card-img-top", alt: winner.comment %>
               <% else %>
                 <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image" />
               <% end %>
               <div class="card-body">
-                <div class="small text-muted"><%= winner.created_at.strftime('%B %d, %Y') %></div>
+                <div class="d-flex justify-content-between small text-muted">
+                  <span><%= winner.created_at.strftime('%B %d, %Y') %></span>
+                  <span>Won by: <strong><%= winner.user.username %></strong> </span>
+                </div>
                 <h2 class="card-title"><%= winner.item&.name || "Prize" %></h2>
                 <p class="card-text"><%= winner.comment.presence || "No feedback provided." %></p>
                 <a class="btn btn-primary" href="#">Read more →</a>
