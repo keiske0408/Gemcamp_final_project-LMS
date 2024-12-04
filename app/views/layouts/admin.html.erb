@@ -17,21 +17,24 @@
     <%= render partial: 'admin/shared/sidebar' %>
     <div id="layoutSidenav_content">
       <%= render partial: 'admin/shared/header' if current_admin %>
-      <% if flash[:alert] %>
-        <div class="alert alert-danger"><%= flash[:alert] %></div>
+
+      <% flash.each do |type, message| %>
+        <% if ["success", "error", "alert", "notice"].include?(type.to_s) %>
+          <div class="alert alert-<%= type.to_s == 'success' ? 'success' : type.to_s %>">
+            <%= message %>
+          </div>
+        <% end %>
       <% end %>
-      <% if flash[:notice] %>
-        <div class="alert alert-success"><%= flash[:notice] %></div>
-      <% end %>
+
       <main>
         <%= yield %>
       </main>
+
       <%= render partial: 'admin/shared/footer' %>
     </div>
   </div>
 <% else %>
   <%= yield %>
 <% end %>
-
 </body>
 </html>
