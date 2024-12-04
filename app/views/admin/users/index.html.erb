@@ -1,0 +1,49 @@
+<div class="container-fluid px-4 mt-3">
+  <h1>Hi, <%= current_admin.username %></h1>
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      Userlist
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="email">Parent Email</th>
+          <th>Email</th>
+          <th>Total Deposit</th>
+          <th>Member Total Deposits</th>
+          <th>Coins</th>
+          <th>Total Used Coins</th>
+          <th>Children Members</th>
+          <th>Phone Number</th>
+          <th>Balances</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @client_users.present? %>
+          <% @client_users.each do |user| %>
+            <tr>
+              <td class="email"><%= user.parent&.email || "N/A" %></td>
+              <td><%= user.email %></td>
+              <td><%= user.total_deposit || 0 %></td>
+              <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
+              <td><%= user.coins || 0 %></td>
+              <td>0</td>
+              <td><%= user.children.count %></td>
+              <td><%= user.phone_number || "N/A" %></td>
+              <td>
+                <%= link_to "Operate", new_increase_admin_orders_path(user), class: "btn btn-primary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="9">No client users found.</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

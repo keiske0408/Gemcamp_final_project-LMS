@@ -40,9 +40,26 @@ Rails.application.routes.draw do
           post :cancel
         end
       end
+
+      resources :users, only: :index, path: 'users/clients' do
+        member do
+          resources :orders, only: [] do
+            collection do
+              get 'increase/new', to: 'balances#new_increase', as: :new_increase
+              post 'increase', to: 'balances#create_increase', as: :create_increase
+
+              get 'deduct/new', to: 'balances#new_deduct', as: :new_deduct
+              post 'orders/deduct', to: 'balances#create_deduct_order', as: :create_deduct
+
+              get 'bonus/new', to: 'balances#new_bonus', as: :new_bonus
+              post 'bonus', to: 'balances#create_bonus', as: :create_bonus
+            end
+          end
+        end
+      end
     end
 
-    root to: 'admin/home#index', as: :admin_root # Root for admin domain
+    root to: 'admin/users#index', as: :admin_root # Root for admin domain
   end
 
   constraints(ClientDomainConstraint.new) do
