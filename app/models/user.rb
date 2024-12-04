@@ -26,6 +26,10 @@ class User < ApplicationRecord
     countries: [:ph]
   }
 
+  def coins_used_count
+    tickets.sum(:coins)
+  end
+
   private
 
   def increment_parent_children_count

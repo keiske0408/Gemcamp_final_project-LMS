@@ -41,6 +41,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :users, only: [] do
+        collection do
+          get :invite_list
+        end
+      end
+
       resources :users, only: :index, path: 'users/clients' do
         member do
           resources :orders, only: [] do
