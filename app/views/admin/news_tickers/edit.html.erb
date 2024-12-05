@@ -1,0 +1,44 @@
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="card w-75">
+    <div class="card-header">
+      <h4 class="card-title mb-0 text-center">Edit News Ticker</h4>
+    </div>
+    <div class="card-body">
+      <%= form_with(model: @news_ticker, url: admin_news_ticker_path(@news_ticker), local: true, class: "row g-3") do |form| %>
+
+        <!-- Error Messages -->
+        <% if @news_ticker.errors.any? %>
+          <div class="alert alert-danger">
+            <h5><%= pluralize(@news_ticker.errors.count, "error") %> prohibited this news ticker from being saved:</h5>
+            <ul class="mb-0">
+              <% @news_ticker.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Content Field -->
+        <div class="col-12">
+          <%= form.label :content, class: "form-label" %>
+          <%= form.text_area :content, class: "form-control", rows: 4, placeholder: "Enter news ticker content" %>
+        </div>
+
+        <!-- Status Field -->
+        <div class="col-md-3">
+          <%= form.label :status, class: "form-label" %>
+          <%= form.select :status, [['Active', 'active'], ['Inactive', 'inactive']], {}, class: "form-select" %>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12">
+          <%= form.submit "Update News Ticker", class: "btn btn-primary w-100" %>
+        </div>
+
+      <% end %>
+    </div>
+    <div class="card-footer text-end">
+      <%= link_to 'Back', admin_news_tickers_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

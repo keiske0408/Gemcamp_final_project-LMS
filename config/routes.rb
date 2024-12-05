@@ -47,6 +47,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :news_tickers
+
       resources :users, only: :index, path: 'users/clients' do
         member do
           resources :orders, only: [] do
@@ -64,7 +66,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
     root to: 'admin/users#index', as: :admin_root # Root for admin domain
   end
 

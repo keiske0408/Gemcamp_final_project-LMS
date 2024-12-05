@@ -5,6 +5,8 @@ ruby "3.0.4"
 
 gem 'rqrcode'
 
+gem 'paranoia'
+
 gem 'faker'
 
 gem 'aasm'
