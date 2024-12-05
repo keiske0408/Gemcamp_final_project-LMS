@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       end
 
       resources :news_tickers
+      resources :banners
 
       resources :users, only: :index, path: 'users/clients' do
         member do

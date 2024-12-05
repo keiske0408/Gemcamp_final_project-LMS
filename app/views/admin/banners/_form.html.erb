@@ -1,0 +1,57 @@
+<h1 class="text-center my-4"><%= action_name == 'new' ? 'New Banner' : 'Edit Banner' %></h1>
+<div class="container-fluid px-4 mt-3 w-75">
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <h4 class="card-title mb-0 text-center"><%= action_name == 'new' ? 'Create a New Banner' : 'Edit Banner' %></h4>
+    </div>
+    <div class="card-body">
+      <%= form_with(model: @banner, url: action_name == 'new' ? admin_banners_path : admin_banner_path(@banner), local: true, class: "row g-3") do |form| %>
+
+        <!-- Error Messages -->
+        <% if @banner.errors.any? %>
+          <div class="alert alert-danger">
+            <h5><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h5>
+            <ul class="mb-0">
+              <% @banner.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Preview Field -->
+        <div class="col-12">
+          <%= form.label :preview, "Preview URL", class: "form-label" %>
+          <%= form.text_field :preview, class: "form-control", placeholder: "Enter preview URL" %>
+        </div>
+
+        <!-- Online At Field -->
+        <div class="col-md-6">
+          <%= form.label :online_at, "Online At", class: "form-label" %>
+          <%= form.datetime_local_field :online_at, class: "form-control", value: @banner.online_at.present? ? @banner.online_at.strftime('%Y-%m-%dT%H:%M') : nil %>
+        </div>
+
+        <!-- Offline At Field -->
+        <div class="col-md-6">
+          <%= form.label :offline_at, "Offline At", class: "form-label" %>
+          <%= form.datetime_local_field :offline_at, class: "form-control", value: @banner.offline_at.present? ? @banner.offline_at.strftime('%Y-%m-%dT%H:%M') : nil %>
+        </div>
+
+        <!-- Status Field -->
+        <div class="col-md-3 ">
+          <%= form.label :status, "Status", class: "form-label" %>
+          <%= form.select :status, [["Active", "active"], ["Inactive", "inactive"]], {}, class: "form-select" %>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="col-12">
+          <%= form.submit "Save Banner", class: "btn btn-primary w-100" %>
+        </div>
+
+      <% end %>
+    </div>
+    <div class="card-footer text-end">
+      <%= link_to 'Back', admin_banners_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>
