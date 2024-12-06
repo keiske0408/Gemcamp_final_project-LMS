@@ -7,7 +7,6 @@
     <div class="card-body">
       <%= form_with(model: @banner, url: action_name == 'new' ? admin_banners_path : admin_banner_path(@banner), local: true, class: "row g-3") do |form| %>
 
-        <!-- Error Messages -->
         <% if @banner.errors.any? %>
           <div class="alert alert-danger">
             <h5><%= pluralize(@banner.errors.count, "error") %> prohibited this banner from being saved:</h5>
@@ -19,10 +18,9 @@
           </div>
         <% end %>
 
-        <!-- Preview Field -->
         <div class="col-12">
-          <%= form.label :preview, "Preview URL", class: "form-label" %>
-          <%= form.text_field :preview, class: "form-control", placeholder: "Enter preview URL" %>
+          <%= form.label :preview, "Preview", class: "form-label" %>
+          <%= form.file_field :preview, class: "form-control" %>
         </div>
 
         <!-- Online At Field -->
@@ -40,7 +38,7 @@
         <!-- Status Field -->
         <div class="col-md-3 ">
           <%= form.label :status, "Status", class: "form-label" %>
-          <%= form.select :status, [["Active", "active"], ["Inactive", "inactive"]], {}, class: "form-select" %>
+          <%= form.select :status, Banner.statuses.keys.map {|status| [status.titleize, status]}, class: "form-select" %>
         </div>
 
         <!-- Submit Button -->

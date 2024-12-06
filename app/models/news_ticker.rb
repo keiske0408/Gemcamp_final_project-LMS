@@ -3,6 +3,7 @@ class NewsTicker < ApplicationRecord
 
   acts_as_paranoid
 
-  validates :content, presence: true
-  validates :status, inclusion: { in: ['active', 'inactive'] }
+  validates :status, presence: true
+  enum status: { inactive: 0, active: 1 }
+
 end

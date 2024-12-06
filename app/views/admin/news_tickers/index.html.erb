@@ -20,7 +20,7 @@
         <% @news_tickers.each do |news_ticker| %>
           <tr>
             <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= news_ticker.content %></td>
-            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= news_ticker.status.capitalize %></td>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= news_ticker.active? ? "Active" : "Inactive" %></td>
             <td class="text-center">
               <div class="btn-group" role="group">
                 <%= link_to 'Edit', edit_admin_news_ticker_path(news_ticker), class: 'btn btn-outline-warning btn-sm' %>

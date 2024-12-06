@@ -27,7 +27,6 @@
           <% @items.each do |item| %>
             <tr>
               <td class="text-center align-middle">
-                <%#= image_tag item.image.url, width: 100, height: 100, class: "rounded border" if item.image?  %>
                 <%= image_tag(item.image_url || "https://loremflickr.com/50/50", style: 'width: 100px; height: 100px;') %></td>
               </td>
               <td class="text-center align-middle"><%= item.name %></td>

@@ -1,7 +1,8 @@
 class Banner < ApplicationRecord
   acts_as_paranoid
 
+  mount_uploader :preview, ImageUploader
   validates :preview, presence: true
-  validates :status, inclusion: { in: %w[active inactive] }
-
+  validates :status, presence: true
+  enum status: { inactive: 0, active: 1 }
 end
