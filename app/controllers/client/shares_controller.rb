@@ -1,5 +1,8 @@
 class Client::SharesController < ApplicationController
   before_action :set_winner, only: [:edit , :update]
+  before_action :fetch_banners, only: [:index]
+  before_action :fetch_news_tickers, only: [:index]
+
 
   def index
     @published_winners = Winner.where(state: 'published').order(created_at: :desc).page(params[:page]).per(3)
@@ -33,5 +36,14 @@ class Client::SharesController < ApplicationController
 
   def share_params
     params.require(:winner).permit(:picture, :comment)
+  end
+
+  def fetch_banners
+    @banners = Banner.where(status: 'active')
+                     .where('online_at >= ? AND ? < offline_at', Time.current, Time.current)
+  end
+
+  def fetch_news_tickers
+    @news_tickers = NewsTicker.where(status: 'active').limit(5)
   end
 end

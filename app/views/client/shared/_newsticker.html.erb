@@ -1,0 +1,16 @@
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="announcement-bar">
+        <div class="col-2 fw-bold text-white text-center">
+          Announcement:
+        </div>
+        <div class="ticker-wrap">
+          <div class="ticker">
+            <% @news_tickers.each do |news_ticker| %>
+              <div class="item">[ <%= news_ticker.content %> ] </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -4,6 +4,60 @@
 @import "./button_custom.css";
 
 
+#bannerCarousel {
+  margin-bottom: 30px;
+}
+
+.announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 4rem;
+  max-width: 100%;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  background: radial-gradient(circle at 0.2% 1.8%, rgb(86, 2, 2) 0%, rgb(250, 88, 8) 100.2%);
+  color: white;
+}
+/* Ticker Wrapper */
+.ticker-wrap {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+  height: 3.5rem;
+  color: #FFFFFF;
+  align-items: center;
+  align-content: center;
+}
+
+/* Ticker Content */
+.ticker {
+  display: flex;
+  align-content: center;
+  animation: marquee 30s linear infinite; /* Scrolling animation */
+}
+
+.item {
+  align-items: center;
+  display: inline-block;
+  padding: 0 1rem;
+  color: white;
+  font-weight: 600;
+  white-space: nowrap; /* Prevent line breaks */
+  animation: scroll-left 25s linear infinite;
+}
+
+/* Scrolling Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .nav-tabs .nav-link.active {
   background-color: #8b0000;
   color: white !important;
@@ -80,13 +134,6 @@ html, body {
 }
 
 
-//@media (min-height: 600px) {
-  //.container {
-  //  padding-top: 40px;
-  //  padding-bottom: 40px;
-  //}
-//}
-
 //----Lottery---//
 
 .container {
@@ -106,12 +153,6 @@ html, body {
   height: 250px;
   background-color: #f8f9fa;
 }
-.announcement-bar {
-  background-color: rgba(248, 249, 250, 0.85); /* Semi-transparent background */
-  border: 1px solid #dee2e6;
-  padding: 10px;
-  max-width: 100%;
-}
 
 .category-buttons button {
   margin-right: 5px;
@@ -124,9 +165,11 @@ html, body {
   border: 1px solid #dee2e6;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: black; /* Ensure visibility */
+.carousel-inner .carousel-item img {
+  height: 650px;
+  object-fit: cover;
+  width: 100%;
 }
 
-//custom button//
+
+

@@ -1,37 +1,8 @@
 <div class="container my-5">
-  <h1>Shop</h1>
+  <h1 class="mb-4">Shop</h1>
 
-  <!-- Banner Image Carousel -->
-  <div id="shopBannerCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="banner-image text-center">Shop Banner Image 1</div>
-      </div>
-      <div class="carousel-item">
-        <div class="banner-image text-center">Shop Banner Image 2</div>
-      </div>
-      <div class="carousel-item">
-        <div class="banner-image text-center">Shop Banner Image 3</div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#shopBannerCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#shopBannerCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <!-- Announcement Bar -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="announcement-bar py-3">
-        <span>Announcement: Welcome to the Shop! Check out our amazing offers.</span>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'client/shared/banner' %>
+  <%= render partial: 'client/shared/newsticker' %>
 
   <!-- Offers Section -->
   <% if @offers.present? %>

@@ -1,5 +1,8 @@
 class Client::LotteryController < ApplicationController
   before_action :authenticate_client!, only: [:buy_tickets]
+  before_action :fetch_banners, only: [:index]
+  before_action :fetch_news_tickers, only: [:index]
+
   def index
     @categories = Category.all
 
@@ -58,5 +61,14 @@ class Client::LotteryController < ApplicationController
     end
   end
 
+  private
+  def fetch_banners
+    @banners = Banner.where(status: 'active')
+                     .where('online_at >= ? AND ? < offline_at', Time.current, Time.current)
+  end
+
+  def fetch_news_tickers
+    @news_tickers = NewsTicker.where(status: 'active').limit(5)
+  end
 end
 

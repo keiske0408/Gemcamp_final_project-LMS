@@ -1,59 +1,30 @@
-<div class="container my-5">
+<header class="py-lg-5 border-bottom mb-lg-2">
+  <div class="container">
+    <div class="text-center my-5">
+      <h1 class="fw-bolder">Welcome to Winner's Feedback!</h1>
+      <p class="lead mb-0">Let's hear from the winners' testimonies </p>
+    </div>
+  </div>
+</header>
+
+<div class="container my-4">
   <!-- Banner Image Carousel -->
-  <div id="bannerCarousel" class="carousel slide " data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="banner-image text-center">Banner Image 1</div>
-      </div>
-      <div class="carousel-item">
-        <div class="banner-image text-center">Banner Image 2</div>
-      </div>
-      <div class="carousel-item">
-        <div class="banner-image text-center">Banner Image 3</div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-
-  <!-- Announcement Bar -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="announcement-bar py-3">
-        <span>Announcement: </span>
-      </div>
-    </div>
-  </div>
-
-  <header class="py-lg-5 border-bottom mb-5">
-    <div class="container">
-      <div class="text-center my-5">
-        <h1 class="fw-bolder">Welcome to Winner's Feedback!</h1>
-        <p class="lead mb-0">Let's hear from the winners' testimonies </p>
-      </div>
-    </div>
-  </header>
+  <%= render partial: 'client/shared/banner' %>
+  <%= render partial: 'client/shared/newsticker' %>
 
   <% if @published_winners.any? %>
-    <div class="container">
+    <div class="container py-lg-4">
       <div class="row justify-content-center">
         <% @published_winners.each do |winner| %>
           <!-- Blog entries-->
-          <div class="col-lg-8 mb-4">
+          <div class="col-lg-6 mb-4">
             <!-- Featured blog post-->
             <div class="card mb-4">
               <!-- Display winner's picture or a placeholder -->
               <% if winner.picture.present? %>
                 <%= image_tag winner.picture.url, class: "card-img-top", alt: winner.comment %>
               <% else %>
-                <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image" />
+                <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image"/>
               <% end %>
               <div class="card-body">
                 <div class="d-flex justify-content-between small text-muted">
@@ -79,3 +50,5 @@
     </div>
   <% end %>
 </div>
+
+
