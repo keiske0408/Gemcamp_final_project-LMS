@@ -1,49 +1,53 @@
-<div class="container my-5">
+<div class="container my-xl-5">
   <!-- Banner with Navigation Arrows -->
   <%= render partial: 'client/shared/banner' %>
   <%= render partial: 'client/shared/newsticker' %>
 
   <!-- Winners Feedback Section with Border -->
-  <div class="row mb-4">
+  <div class="row">
     <div class="col">
       <div class="border border-dark rounded p-4">
-        <h4 class="mb-3">Winners Feedback</h4>
-        <div class="d-flex justify-content-around flex-wrap gap-3">
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="Sample Image 1" class="card-img-top rounded">
-          </div>
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="Sample Image 2" class="card-img-top rounded">
-          </div>
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="Sample Image 3" class="card-img-top rounded">
-          </div>
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="More Images" class="card-img-top rounded">
-          </div>
+        <h4 class="mb-4">Winners Feedback</h4>
+        <div class="row">
+          <% @winners_feedback.each do |winner| %>
+            <div class="col-3 mb-4">
+              <div class="card shadow text-center h-100 d-flex flex-column">
+                <%= image_tag winner.picture.url, alt: winner.comment.truncate(30), class: "card-img-top rounded" if winner.picture.present? %>
+                <div class="mt-2 flex-grow-1">
+                  <p class="card-text"><%= winner.comment.truncate(50) %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="text-center mt-4">
+          <%= link_to "Click to see more...", client_shares_path, class: "btn-hover color-8" %>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Coming Soon Section with Border -->
-  <div class="row">
+  <div class="row mt-lg-4">
     <div class="col">
       <div class="border border-dark rounded p-4">
-        <h4 class="mb-3">Coming Soon</h4>
-        <div class="d-flex justify-content-around flex-wrap gap-3">
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="Sample Image 1" class="card-img-top rounded">
-          </div>
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="Sample Image 2" class="card-img-top rounded">
-          </div>
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="Sample Image 3" class="card-img-top rounded">
-          </div>
-          <div class="card text-center p-3" style="width: 200px;">
-            <img src="https://via.placeholder.com/150" alt="More Images" class="card-img-top rounded">
-          </div>
+        <h4 class="mb-4">Coming Soon</h4>
+        <div class="row">
+          <% @coming_soon_items.each do |item| %>
+            <div class="col-3 mb-4">
+              <div class="card shadow text-center h-100 d-flex flex-column">
+                <%= image_tag item.image.url, alt: item.name, class: "card-img-top rounded" if item.image.present? %>
+                <div class="mt-2 flex-grow-1">
+                  <h5 class="card-title"><%= item.name %></h5>
+                  <p class="card-text">Min Tickets: <%= item.minimum_tickets %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="text-center mt-4">
+          <%= link_to "Click to see more...", client_lottery_index_path, class: "btn-hover color-8" %>
         </div>
       </div>
     </div>

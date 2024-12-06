@@ -6,6 +6,8 @@ class Client::HomeController < ClientsController
   end
 
   def new
+    @winners_feedback =  Winner.published.order(created_at: :desc).limit(5)
+    @coming_soon_items = Item.active.starting.order(created_at: :desc).limit(8)
     render template: 'client/home'
   end
 
