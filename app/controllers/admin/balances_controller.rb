@@ -1,11 +1,26 @@
 class Admin::BalancesController < Admin::BaseController
   before_action :set_user
 
+  def new_member_level
+    @order = Order.member_level.new
+  end
+
+  def update_member_level
+    @order = @user.orders.member_level.new(order_params)
+
+    if @order.save && @order.submit!
+      @order.pay!
+      flash[:success] = "Coins successfully rewarded!"
+    else
+      flash[:error] = @order.errors.full_messages.to_sentence
+    end
+    redirect_to admin_users_path
+  end
+
   def new_increase
     @order = Order.increase.new
     # @genre = :increase?
   end
-
   def create_increase
     @order = @user.orders.increase.new(order_params)
 

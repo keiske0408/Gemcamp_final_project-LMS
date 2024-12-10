@@ -19,6 +19,7 @@ class Order < ApplicationRecord
     deduct: 2,
     bonus: 3,
     share: 4,
+    member_level: 5,
   }
 
   aasm column: 'state' do

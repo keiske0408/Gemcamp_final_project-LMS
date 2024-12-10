@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     }
 
     namespace :admin do
+      resources :member_levels
       # resources :home, only: [:index]
       resources :items do
         member do
@@ -62,6 +63,9 @@ Rails.application.routes.draw do
 
               get 'bonus/new', to: 'balances#new_bonus', as: :new_bonus
               post 'bonus', to: 'balances#create_bonus', as: :create_bonus
+
+              get 'member_level/new', to: 'balances#new_member_level', as: :new_member_level
+              post 'member_level', to: 'balances#update_member_level', as: :update_member_level
             end
           end
         end

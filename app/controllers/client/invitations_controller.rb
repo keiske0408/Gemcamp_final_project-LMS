@@ -9,5 +9,11 @@ class Client::InvitationsController < ApplicationController
     # Generate the QR code with the full URL
     qrcode = RQRCode::QRCode.new(new_client_registration_url(promoter: @promoter_email))
     @qrcode_svg = qrcode.as_svg(offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 6)
+
+    @invited_members = current_client.children
+    @rewards = current_client.member_level
+
+    @current_level = MemberLevel.where('required_members <= ?', @invited_members.count).order(:level).last
+    @next_level = MemberLevel.where('required_members > ?', @invited_members.count).order(:required_members).first
   end
 end

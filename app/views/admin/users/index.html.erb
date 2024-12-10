@@ -17,6 +17,7 @@
           <th>Total Used Coins</th>
           <th>Children Members</th>
           <th>Phone Number</th>
+          <th>Level</th>
           <th>Balances</th>
         </tr>
         </thead>
@@ -32,6 +33,7 @@
               <td>0</td>
               <td><%= user.children.count %></td>
               <td><%= user.phone_number || "N/A" %></td>
+              <td><%= user.member_level.level %></td>
               <td>
                 <%= link_to "Operate", new_increase_admin_orders_path(user), class: "btn btn-primary btn-sm" %>
               </td>

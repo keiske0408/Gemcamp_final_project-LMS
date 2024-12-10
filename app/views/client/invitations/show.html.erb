@@ -1,13 +1,37 @@
 <div class="text-center">
-  <h1>INVITE PEOPLE</h1>
-  <p class="text-white">Scan the QR Code or use the invite URL:</p>
+  <h1>Invite People</h1>
+  <p>Scan the QR Code or use the invite URL:</p>
   <div class="bg-white d-flex justify-content-center align-items-center">
     <%= raw @qrcode_svg %>
   </div>
   <p>
   <h2>Invite URL:</h2>
-  <%# Display the promoter email for debugging %>
-  <p>Promoter Email: <%= @promoter_email %></p>
   <%= new_client_registration_url(promoter: @promoter_email || 'default@example.com') %>
   </p>
+</div>
+
+<div class="mt-5">
+  <h3>Your Invited Members</h3>
+  <ul>
+    <% @invited_members.each do |member| %>
+      <li><%= member.username %> (<%= member.email %>)</li>
+    <% end %>
+  </ul>
+
+  <h3>Level Information</h3>
+  <% if @current_level %>
+    <p>Current Level: <%= @current_level.level %></p>
+    <p>Coins Reward: <%= @current_level.coins %></p>
+  <% else %>
+    <p>You have not reached any level yet.</p>
+  <% end %>
+
+  <% if @next_level %>
+    <p>Next Level: <%= @next_level.level %></p>
+    <p>Required Invites: <%= @next_level.required_members - @invited_members.count %></p>
+    <p>Coins Reward: <%= @next_level.coins %></p>
+  <% else %>
+    <p>You've reached the maximum level!</p>
+  <% end %>
+
 </div>

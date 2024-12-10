@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_06_081814) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_10_054756) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -109,6 +109,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_081814) do
     t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
+  create_table "member_levels", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "level"
+    t.integer "required_members"
+    t.integer "coins"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "news_tickers", charset: "utf8mb4", force: :cascade do |t|
     t.text "content"
     t.integer "status", default: 0
@@ -174,8 +182,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_06_081814) do
     t.integer "genre", default: 0
     t.string "image"
     t.bigint "parent_id"
+    t.bigint "member_level_id", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["parent_id"], name: "fk_rails_684a13307d"
+    t.index ["member_level_id"], name: "index_users_on_member_level_id"
+    t.index ["parent_id"], name: "index_users_on_parent_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
