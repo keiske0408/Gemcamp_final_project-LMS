@@ -1,6 +1,36 @@
 class Admin::UsersController < Admin::BaseController
+  require 'csv'
+
   def index
     @client_users = User.includes(:children, :parent).page(params[:page]).per(15)
+
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [
+            'Parent Email', 'Email', 'Total Deposit', 'Member Total Deposits',
+            'Coins', 'Total Used Coins', 'Children Members', 'Phone Number', 'Level'
+          ]
+
+          @client_users.each do |user|
+            csv << [
+              user.parent&.email,
+              user.email,
+              user.total_deposit || 0,
+              user.children.pluck(:total_deposit).reject(&:nil?).sum,
+              user.coins || 0,
+              0,
+              user.children_members,
+              user.phone_number || "N/A",
+              user.member_level&.level,
+            ]
+          end
+        end
+
+        render plain: csv_string
+      }
+    end
   end
 
   def invite_list
