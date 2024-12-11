@@ -8,7 +8,7 @@ class Admin::BalancesController < Admin::BaseController
   def update_member_level
     @order = @user.orders.member_level.new(order_params)
 
-    if @order.save && @order.submit!
+    if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Coins successfully rewarded!"
     else
@@ -24,7 +24,7 @@ class Admin::BalancesController < Admin::BaseController
   def create_increase
     @order = @user.orders.increase.new(order_params)
 
-    if @order.save && @order.submit!
+    if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Coins successfully increased!"
     else
@@ -41,7 +41,7 @@ class Admin::BalancesController < Admin::BaseController
     @order = @user.orders.deduct.new(order_params)
 
     if @order.coin <= @user.coins
-      if @order.save && @order.submit!
+      if @order.save && @order.may_pay?
         @order.pay!
         flash[:success] = "Deduct order created and payment processed successfully."
       else
@@ -62,7 +62,7 @@ class Admin::BalancesController < Admin::BaseController
   def create_bonus
     @order = @user.orders.bonus.new(order_params)
 
-    if @order.save && @order.submit!
+    if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Deduct order created and payment processed successfully."
     else
