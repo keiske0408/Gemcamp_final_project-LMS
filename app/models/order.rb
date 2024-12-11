@@ -39,6 +39,7 @@ class Order < ApplicationRecord
 
     event :pay do
       transitions from: :submitted, to: :paid, after: :process_payment
+      transitions from: :pending, to: :paid, guard: -> { !deposit? }, after: :process_payment
     end
 
     event :revert_payment do

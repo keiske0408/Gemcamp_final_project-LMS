@@ -182,10 +182,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_10_054756) do
     t.integer "genre", default: 0
     t.string "image"
     t.bigint "parent_id"
-    t.bigint "member_level_id", default: 0
+    t.bigint "member_level_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["member_level_id"], name: "index_users_on_member_level_id"
-    t.index ["parent_id"], name: "index_users_on_parent_id"
+    t.index ["parent_id"], name: "fk_rails_684a13307d"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -219,6 +219,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_10_054756) do
   add_foreign_key "orders", "users"
   add_foreign_key "tickets", "items"
   add_foreign_key "tickets", "users"
+  add_foreign_key "users", "member_levels"
   add_foreign_key "users", "users", column: "parent_id"
   add_foreign_key "winners", "items"
   add_foreign_key "winners", "locations"

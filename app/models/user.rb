@@ -11,9 +11,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  after_create :increment_parent_children_count, if: -> { parent.present? }
-  after_create :check_member_level
-
+  after_create :increment_parent_children_count , if: -> { parent.present? }
   enum genre: { client: 0, admin: 1 }
 
   ROLES = %w[admin client].freeze
@@ -31,6 +29,29 @@ class User < ApplicationRecord
     tickets.sum(:coins)
   end
 
+  def check_parent_member_level
+    parent.reload
+
+    promoter_member_count = parent.children_members
+    promoter_member_level = parent.member_level
+
+    next_member_level = MemberLevel.where("required_members > ?", promoter_member_level&.required_members || 0)
+                                   .order(:required_members)
+                                   .first
+
+    if next_member_level && promoter_member_count >= next_member_level.required_members
+      ActiveRecord::Base.transaction do
+        promoter_order = parent.orders.create!(genre: "member_level", coin: next_member_level.coins)
+
+        promoter_order.pay!
+        parent.update!(member_level: next_member_level, coins: parent.coins + next_member_level.coins)
+
+      end
+    else
+      Rails.logger.debug "Parent does not qualify for promotion."
+    end
+  end
+
   private
 
   def increment_parent_children_count
@@ -39,27 +60,5 @@ class User < ApplicationRecord
 
   def location_limit
     errors.add(:locations, "limit of 5 addresses per user") if locations.size > 5
-  end
-
-  def check_member_level
-    return unless parent.present?
-
-    promoter_member_count = parent.children_members
-    promoter_member_level = parent.member_level
-
-    Rails.logger.debug "Promoter Member Count: #{promoter_member_count}"
-    Rails.logger.debug "Promoter Member Level: #{promoter_member_level&.level}"
-
-
-    next_member_level = MemberLevel.find_by("level > ?", promoter_member_level&.level || 0)
-
-    Rails.logger.debug "Next Member Level: #{next_member_level.inspect}"
-
-    if next_member_level && promoter_member_count >= next_member_level.required_members
-      Rails.logger.debug "Promoter qualifies for next level!"
-      promoter_order = parent.orders.create(genre: "member_level", coin: next_member_level.coins)
-      promoter_order.pay!
-      parent.update(member_level: next_member_level)
-    end
   end
 end

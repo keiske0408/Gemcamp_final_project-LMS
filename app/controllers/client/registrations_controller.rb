@@ -13,8 +13,8 @@ class Client::RegistrationsController < Devise::RegistrationsController
         promoter = User.find_by(email: promoter_email)
         resource.parent_id = promoter.id if promoter
       end
-
       if resource.save
+        resource.check_parent_member_level if promoter.present?
         flash[:notice] = "Successfully registered"
         cookies.delete(:promoter_email) # Specify the cookie to delete
       else

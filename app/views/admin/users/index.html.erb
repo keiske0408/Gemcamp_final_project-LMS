@@ -31,9 +31,9 @@
               <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
               <td><%= user.coins || 0 %></td>
               <td>0</td>
-              <td><%= user.children.count %></td>
+              <td><%= user.children_members %></td>
               <td><%= user.phone_number || "N/A" %></td>
-              <td><%= user.member_level.level %></td>
+              <td><%= user.member_level %></td>
               <td>
                 <%= link_to "Operate", new_increase_admin_orders_path(user), class: "btn btn-primary btn-sm" %>
               </td>

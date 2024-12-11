@@ -1,25 +1,41 @@
-<h1>Member Levels</h1>
-<%= link_to 'New Member Level', new_admin_member_level_path, class: 'btn btn-primary' %>
-<table class="table">
-  <thead>
-  <tr>
-    <th>Level</th>
-    <th>Required Members</th>
-    <th>Coins</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @member_levels.each do |member_level| %>
-    <tr>
-      <td><%= member_level.level %></td>
-      <td><%= member_level.required_members %></td>
-      <td><%= member_level.coins %></td>
-      <td>
-        <%= link_to 'Edit', edit_admin_member_level_path(member_level), class: 'btn btn-secondary' %>
-        <%= link_to 'Delete', admin_member_level_path(member_level), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<h1 class="text-center my-4">Member Levels Management</h1>
+<div class="container-fluid px-4 mt-3 w-75">
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <div class="d-flex justify-content-between">
+        <%= link_to 'New Member Level', new_admin_member_level_path, class: 'btn btn-primary' %>
+        <%= link_to 'Back to Admin', admin_users_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped table-hover border rounded">
+        <thead class="table-dark text-center">
+        <tr>
+          <th style="border-right: 1px solid #dee2e6;">Level</th>
+          <th style="border-right: 1px solid #dee2e6;">Required Members</th>
+          <th style="border-right: 1px solid #dee2e6;">Coins</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @member_levels.each do |member_level| %>
+          <tr>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= member_level.level %></td>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= member_level.required_members %></td>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= member_level.coins %></td>
+            <td class="text-center">
+              <div class="btn-group" role="group">
+                <%= link_to 'Edit', edit_admin_member_level_path(member_level), class: 'btn btn-outline-warning btn-sm' %>
+                <%= button_to 'Delete', admin_member_level_path(member_level), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger btn-sm' %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="pagination justify-content-center">
+        <%#= paginate @member_levels %>
+      </div>
+    </div>
+  </div>
+</div>
