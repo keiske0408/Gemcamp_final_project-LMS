@@ -1,0 +1,39 @@
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="card w-50">
+    <div class="card-header">
+      <h4 class="card-title mb-0 text-center"><%= action_name == 'new' ? 'Create a Category' : 'Edit Category' %></h4>
+    </div>
+    <div class="card-body">
+        <%= form_with(model: category, url: url, local: true, class: "row g-3") do |form| %>
+        <% if @category.errors.any? %>
+          <div class="alert alert-danger">
+            <h5><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h5>
+            <ul class="mb-0">
+              <% @category.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="col-12">
+          <%= form.label :name, 'Category Name', class: "form-label" %>
+          <%= form.text_field :name, class: "form-control", placeholder: "Enter category name" %>
+        </div>
+
+        <div class="col-12">
+          <%= form.label :sort, 'Sort Order', class: "form-label" %>
+          <%= form.number_field :sort, class: "form-control", placeholder: "Enter sort order" %>
+        </div>
+
+        <div class="col-12">
+          <%= form.submit "Create Category", class: "btn btn-primary w-100" %>
+        </div>
+
+      <% end %>
+    </div>
+    <div class="card-footer text-end">
+      <%= link_to 'Cancel', admin_categories_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

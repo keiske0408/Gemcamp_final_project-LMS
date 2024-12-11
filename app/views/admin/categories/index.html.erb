@@ -12,6 +12,7 @@
         <thead class="table-dark text-center">
         <tr>
           <th style="border-right: 1px solid #dee2e6;">Name</th>
+          <th style="border-right: 1px solid #dee2e6;">Sort</th>
           <th>Actions</th>
         </tr>
         </thead>
@@ -19,6 +20,7 @@
         <% @categories.each do |category| %>
           <tr>
             <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= category.name %></td>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= category.sort %></td>
             <td class="text-center">
               <div class="btn-group" role="group">
                 <%= link_to 'Edit', edit_admin_category_path(category), class: 'btn btn-outline-warning btn-sm' %>

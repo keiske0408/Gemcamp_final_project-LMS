@@ -15,6 +15,7 @@
           <th style="border-right: 1px solid #dee2e6;">Online At</th>
           <th style="border-right: 1px solid #dee2e6;">Offline At</th>
           <th style="border-right: 1px solid #dee2e6;">Status</th>
+          <th  style="border-right: 1px solid #dee2e6;">Sort</th>
           <th>Actions</th>
         </tr>
         </thead>
@@ -29,6 +30,7 @@
               <%= banner.offline_at.present? ? banner.offline_at.strftime('%B %d, %Y at %I:%M %p') : 'N/A' %>
             </td>
             <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= banner.active? ? "Active" : "Inactive" %></td>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= banner.sort %></td>
             <td class="text-center">
               <div class="btn-group" role="group">
                 <%= link_to 'Edit', edit_admin_banner_path(banner), class: 'btn btn-outline-warning btn-sm' %>
