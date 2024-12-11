@@ -2,7 +2,7 @@ class Admin::BannersController < Admin::BaseController
   before_action :set_banner, only: %i[edit update destroy]
 
   def index
-    @banners = Banner.all # Includes soft-deleted banners
+    @banners = Banner.order(:sort).page(params[:page])
   end
 
   def new
@@ -40,6 +40,6 @@ class Admin::BannersController < Admin::BaseController
   end
 
   def banner_params
-    params.require(:banner).permit(:preview, :online_at, :offline_at, :status)
+    params.require(:banner).permit(:preview, :online_at, :offline_at, :status,:sort)
   end
 end

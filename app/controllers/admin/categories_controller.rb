@@ -2,8 +2,7 @@ class Admin::CategoriesController < Admin::BaseController
   before_action :set_category, only: %i[show edit update destroy restore]
 
   def index
-    @categories = Category.all
-    @categories = Category.page(params[:page]).per(10)
+    @categories = Category.order(:sort).page(params[:page]).per(10)
   end
 
   def new
@@ -54,6 +53,6 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def category_params
-    params.require(:category).permit(:name)
+    params.require(:category).permit(:name,:sort)
   end
 end

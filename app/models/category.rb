@@ -3,9 +3,12 @@ class Category < ApplicationRecord
   has_many :item_category_ships
   has_many :items, through: :item_category_ships
 
+  default_scope { order(:sort) }
+  validates :sort, numericality: { only_integer: true, allow_nil: true, greater_than_or_equal_to: 0 }
+
   default_scope { where(deleted_at: nil) }
 
-  # Soft delete by setting deleted_at instead of deleting the record
+
   def destroy
     if items.exists?
       errors.add(:base, "Cannot delete category with associated items")
@@ -15,16 +18,11 @@ class Category < ApplicationRecord
     end
   end
 
-  # Check if category is soft deleted
   def deleted?
     deleted_at.present?
   end
 
-  # Restore a soft-deleted category
   def restore
     update(deleted_at: nil)
   end
-
-
-
 end

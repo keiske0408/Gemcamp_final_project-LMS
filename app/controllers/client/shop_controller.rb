@@ -37,10 +37,11 @@ class Client::ShopController < ApplicationController
   private
   def fetch_banners
     @banners = Banner.where(status: 'active')
-                     .where('online_at >= ? AND ? < offline_at', Time.current, Time.current)
+                     .where('online_at <= ? AND ? < offline_at', Time.current, Time.current)
+                     .order(:sort)
   end
 
   def fetch_news_tickers
-    @news_tickers = NewsTicker.where(status: 'active').limit(5)
+    @news_tickers = NewsTicker.where(status: 'active').order(:sort).limit(5)
   end
 end

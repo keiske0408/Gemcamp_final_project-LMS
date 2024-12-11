@@ -2,7 +2,7 @@ class Admin::NewsTickersController < Admin::BaseController
   before_action :set_news_ticker, only: [:edit, :update, :destroy]
 
   def index
-    @news_tickers = NewsTicker.all # Shows all records, including soft-deleted ones
+    @news_tickers = NewsTicker.order(:sort).page(params[:page])
   end
 
   def new
@@ -42,6 +42,6 @@ class Admin::NewsTickersController < Admin::BaseController
   end
 
   def news_ticker_params
-    params.require(:news_ticker).permit(:content, :status)
+    params.require(:news_ticker).permit(:content, :status,:sort)
   end
 end
