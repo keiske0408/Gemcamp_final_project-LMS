@@ -31,6 +31,14 @@
         <h5 class="mb-3">Choose Ticket Quantity</h5>
 
         <%= form_with url: buy_tickets_client_lottery_path(@item), method: :post, local: false do |form| %>
+          <!-- Quick Bet Buttons -->
+          <div class="mb-3">
+            <button type="button" class="btn btn-outline-primary mx-2" id="bet-1">1 Coin</button>
+            <button type="button" class="btn btn-outline-primary mx-2" id="bet-5">5 Coins</button>
+            <button type="button" class="btn btn-outline-primary mx-2" id="bet-10">10 Coins</button>
+            <button type="button" class="btn btn-outline-primary mx-2" id="bet-20">20 Coins</button>
+          </div>
+
           <!-- Add Ticket Section -->
           <div class="d-flex align-items-center justify-content-center my-4">
             <!-- Styled and Enhanced Controls -->
@@ -82,3 +90,18 @@
   </div>
   <%= link_to "back", client_lottery_index_path, class: "btn btn-outline-primary" %>
 </div>
+
+<script>
+    document.getElementById("bet-1").addEventListener("click", function() {
+        document.getElementById("ticket-quantity").value = 1;
+    });
+    document.getElementById("bet-5").addEventListener("click", function() {
+        document.getElementById("ticket-quantity").value = 5;
+    });
+    document.getElementById("bet-10").addEventListener("click", function() {
+        document.getElementById("ticket-quantity").value = 10;
+    });
+    document.getElementById("bet-20").addEventListener("click", function() {
+        document.getElementById("ticket-quantity").value = 20;
+    });
+</script>

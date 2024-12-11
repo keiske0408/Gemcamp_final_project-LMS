@@ -43,7 +43,7 @@ class Client::LotteryController < ApplicationController
     # Check if user has enough coins
     if current_client.coins < quantity
       flash[:alert] = 'Not enough coins to buy tickets.'
-      redirect_to client_lottery_path(@item)
+      redirect_to client_me_path(@item)
       return
     else
       # Create tickets and deduct coins
