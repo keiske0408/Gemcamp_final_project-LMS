@@ -1,5 +1,6 @@
 class Admin::WinnersController < Admin::BaseController
   before_action :set_winner, only: [:submit, :pay, :ship, :deliver, :publish, :remove_publish]
+
   def index
     @q = params[:q]
     @start_date = params[:start_date]
@@ -18,6 +19,27 @@ class Admin::WinnersController < Admin::BaseController
     end
 
     @winners = @winners.order(created_at: :desc).page(params[:page]) # Add pagination if needed
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = CSV.generate(headers: true) do |csv|
+          csv << ['Serial Number', 'Email', 'State', 'Price', 'Created At']
+
+          @winners.find_each do |winner|
+            csv << [
+              winner.ticket.serial_number,
+              winner.user.email,
+              winner.state.humanize,
+              winner.price,
+              winner.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            ]
+          end
+        end
+
+        send_data csv_string, filename: "winners_#{Time.now.to_i}.csv", type: 'text/csv'
+      end
+    end
   end
 
   def submit

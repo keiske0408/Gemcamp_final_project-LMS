@@ -1,6 +1,6 @@
 class Admin::ItemsController < Admin::BaseController
   before_action :set_item, only: [:show, :destroy, :edit, :update, :start, :pause, :end, :cancel]
-  layout 'admin'
+  require 'csv'
 
   def start
     if @item.start!
@@ -41,6 +41,33 @@ class Admin::ItemsController < Admin::BaseController
   def index
     @items = Item.where(deleted_at: nil)  # Exclude deleted items
     @items = Item.page(params[:page]).per(5)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = CSV.generate(headers: true) do |csv|
+          csv << [
+            'Image', 'Name', 'Quantity', 'Min Tickets', 'Batch Count',
+            'Status', 'State', 'Offline At', 'Online At', 'Category'
+          ]
+          @items.find_each do |item|
+            csv << [
+              item.image_url, # Assuming you want to include the image URL
+              item.name,
+              item.quantity,
+              item.minimum_tickets,
+              item.batch_count,
+              item.status.present? ? item.status.capitalize : 'N/A',
+              item.state.present? ? item.state.capitalize : 'N/A',
+              item.offline_at&.strftime("%Y/%m/%d %I:%M %p"),
+              item.online_at&.strftime("%Y/%m/%d %I:%M %p"),
+              item.categories.map(&:name).join(", ")
+            ]
+          end
+        end
+        send_data csv_string, filename: "items_list.csv", type: 'text/csv'
+      end
+    end
   end
 
   def show

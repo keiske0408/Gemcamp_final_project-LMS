@@ -27,7 +27,7 @@
           <% @items.each do |item| %>
             <tr>
               <td class="text-center align-middle">
-                <%= image_tag(item.image_url || "https://loremflickr.com/50/50", style: 'width: 100px; height: 100px;') %></td>
+                <%= image_tag(item.image_url || "https://loremflickr.com/50/50", style: 'width: 100px; height: 100px;') %>
               </td>
               <td class="text-center align-middle"><%= item.name %></td>
               <td class="text-center align-middle"><%= item.quantity %></td>
@@ -91,4 +91,5 @@
       </div>
     </div>
   </div>
+    <%= link_to 'Export as CSV', admin_items_path(format: :csv), class: 'btn btn-primary mb-2' %>
 </div>

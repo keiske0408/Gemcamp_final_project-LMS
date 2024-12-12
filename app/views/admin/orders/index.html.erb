@@ -78,21 +78,24 @@
             <% if order.submitted? %>
               <%= button_to "Pay", pay_admin_order_path(order), method: :post, class: "btn btn-success btn-sm" %>
             <% elsif order.paid? %>
-            <%= button_to "Cancel", cancel_admin_order_path(order), method: :post, class: "btn btn-danger btn-sm" %>
+              <%= button_to "Cancel", cancel_admin_order_path(order), method: :post, class: "btn btn-danger btn-sm" %>
             <% end %>
           </td>
         </tr>
       <% end %>
       </tbody>
     </table>
-  </div>
-
-  <div class="mt-3">
-    <p><strong>Subtotal (Current Page):</strong> <%= number_to_currency(@subtotal) %></p>
-    <p><strong>Total (All Records):</strong> <%= number_to_currency(@total) %></p>
-  </div>
-
-  <div class="mt-3">
-    <%= paginate @orders %>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div>
+        <%= paginate @orders %>
+      </div>
+      <div>
+        <%= link_to 'Export Orders to CSV', admin_orders_path(format: :csv), class: 'btn btn-outline-success' %>
+      </div>
+    </div>
+    <div class="mt-3">
+      <p><strong>Subtotal (Current Page):</strong> <%= number_to_currency(@subtotal) %></p>
+      <p><strong>Total (All Records):</strong> <%= number_to_currency(@total) %></p>
+    </div>
   </div>
 </div>

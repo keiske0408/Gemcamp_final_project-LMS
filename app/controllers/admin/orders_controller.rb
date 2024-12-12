@@ -16,6 +16,32 @@ class Admin::OrdersController < Admin::BaseController
 
     # Total for all filtered records
     @total = @q.sum(:amount) + @q.sum(:coins)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = CSV.generate do |csv|
+          csv << [
+            'Serial Number', 'Email', 'Genre', 'State', 'Offer Name',
+            'Amount', 'Coins', 'Created At'
+          ]
+          @q.find_each do |order|
+            csv << [
+              order.serial_number,
+              order.user.email,
+              order.genre,
+              order.state,
+              order.offer.name,
+              order.amount,
+              order.coin,
+              order.created_at
+            ]
+          end
+        end
+
+        render plain: csv_string
+      end
+    end
   end
 
   def pay

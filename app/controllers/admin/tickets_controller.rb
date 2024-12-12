@@ -1,10 +1,11 @@
 class Admin::TicketsController < Admin::BaseController
   def index
     @tickets = Ticket.includes(:item, :user)
+    @tickets = Ticket.page(params[:page]).per(10)
 
     # Filtering based on search params
     if params[:serial_number].present?
-      @tickets = @tickets.where(serial_number:params[:serial_number])
+      @tickets = @tickets.where(serial_number: params[:serial_number])
     end
 
     if params[:item_name].present?
@@ -22,9 +23,30 @@ class Admin::TicketsController < Admin::BaseController
     if params[:start_date].present? && params[:end_date].present?
       @tickets = @tickets.where(created_at: params[:start_date]..params[:end_date])
     end
-    @tickets = Ticket.page(params[:page]).per(10)
-  end
 
+    respond_to do |format|
+      format.html
+      format.csv do
+        csv_string = CSV.generate(headers: true) do |csv|
+          csv << ['Serial Number', 'Item Name', 'Email', 'Batch Count', 'Coins', 'State', 'Created At']
+
+          @tickets.find_each do |ticket|
+            csv << [
+              ticket.serial_number,
+              ticket.item.name,
+              ticket.user.email,
+              ticket.batch_count,
+              ticket.coins,
+              ticket.state.humanize,
+              ticket.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            ]
+          end
+        end
+
+        send_data csv_string, filename: "tickets_#{Time.now.to_i}.csv", type: 'text/csv'
+      end
+    end
+  end
 
   def cancel
     @ticket = Ticket.find(params[:id])

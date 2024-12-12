@@ -23,7 +23,9 @@
         <div class="row mb-3">
           <div class="col-md-4">
             <%= form.label :state, 'Ticket State', class: 'form-label' %>
-            <%= form.select :state, Ticket.states.keys.map { |state| [state.humanize, state] }, include_blank: true, class: "form-control" %>
+            <%= form.select :state, Ticket.states.keys.map { |state| [state.humanize, state] },{}, include_blank: 'All States', class: "form-select" %>
+
+
           </div>
           <div class="col-md-4">
             <%= form.label :start_date, 'Start Date', class: 'form-label' %>
@@ -76,5 +78,9 @@
       </tbody>
     </table>
   </div>
-  <%= paginate @tickets, class: "pagination justify-content-start" %>
+  <div class="d-flex justify-content-between mb-4 align-items-center">
+    <%= paginate @tickets, class: "pagination" %>
+    <%= link_to 'Export as CSV', admin_tickets_path(format: :csv), class: 'btn btn-secondary'%>
+  </div>
+
 </div>
