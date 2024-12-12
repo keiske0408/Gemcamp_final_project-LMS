@@ -4,7 +4,7 @@
       <h4 class="card-title m-2">Create New Offer</h4>
     </div>
     <div class="card-body">
-      <%= render partial: 'form', locals: { offer: @offer, url: admin_offer_path(@offer) } %>
+      <%= render partial: 'form', locals: { offer: @offer, url: admin_offers_path(@offer) } %>
     </div>
     <div class="card-footer text-end">
       <%= link_to 'Back to Offers', admin_offers_path, class: "btn btn-secondary fw-bold" %>

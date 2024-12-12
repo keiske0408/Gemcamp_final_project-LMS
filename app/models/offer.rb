@@ -11,15 +11,17 @@ class Offer < ApplicationRecord
   scope :active, -> { where(status: :active) }
 
   def can_be_purchased_by?(user)
+    orders = user.orders.where(offer_id: id)
+
     case genre
     when "one_time"
-      !user.orders.where(offer_id: id).exists?
+      orders.none? { |order| !order.cancelled? }
     when "monthly"
-      !user.orders.where(offer_id: id, created_at: Time.current.beginning_of_month..Time.current.end_of_month).exists?
+      orders.none? { |order| !order.cancelled? && order.created_at.between?(Time.current.beginning_of_month, Time.current.end_of_month) }
     when "weekly"
-      !user.orders.where(offer_id: id, created_at: Time.current.beginning_of_week..Time.current.end_of_week).exists?
+      orders.none? { |order| !order.cancelled? && order.created_at.between?(Time.current.beginning_of_week, Time.current.end_of_week) }
     when "daily"
-      !user.orders.where(offer_id: id, created_at: Time.current.beginning_of_day..Time.current.end_of_day).exists?
+      orders.none? { |order| !order.cancelled? && order.created_at.between?(Time.current.beginning_of_day, Time.current.end_of_day) }
     when "regular"
       true
     else

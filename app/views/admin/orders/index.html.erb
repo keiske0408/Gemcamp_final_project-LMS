@@ -77,7 +77,7 @@
           <td>
             <% if order.submitted? %>
               <%= button_to "Pay", pay_admin_order_path(order), method: :post, class: "btn btn-success btn-sm" %>
-            <% else order.paid? %>
+            <% elsif order.paid? %>
             <%= button_to "Cancel", cancel_admin_order_path(order), method: :post, class: "btn btn-danger btn-sm" %>
             <% end %>
           </td>
