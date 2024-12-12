@@ -7,22 +7,30 @@
     <div class="card-body">
       <%= form_with(url: admin_offers_path, method: :get, local: true, class: "row g-3 align-items-center") do |form| %>
         <!-- Offer Name Field -->
-        <div class="col-md-5 d-flex align-items-center">
+        <div class="d-flex justify-content-between">
+        <div class="d-flex align-items-center mx-2">
           <%= form.label :name, 'Offer Name', class: 'form-label text-nowrap me-2 mb-0' %>
           <%= form.text_field :name, placeholder: "Offer Name", class: "form-control", value: params[:name] %>
         </div>
 
-        <!-- Offer State Field -->
-        <div class="col-md-5 d-flex align-items-center">
-          <%= form.label :status, 'Offer State', class: 'form-label text-nowrap me-2 mb-0' %>
-          <%= form.select :status, Offer.statuses.keys.map { |status| [status.humanize, status] }, include_blank: 'All States', class: "form-control" %>
+        <div class="d-flex align-items-center mx-2">
+          <%= form.label :genre, 'Offer Genre', class: 'form-label text-nowrap me-2 mb-0' %>
+          <%= form.select :genre, Offer.genres.keys.map { |genre| [genre.humanize, genre] }, {}, class: "form-select", selected: params[:genre] %>
+        </div>
+
+          <div class="d-flex align-items-center mx-2">
+            <%= form.label :status, 'Offer State', class: 'form-label text-nowrap me-2 mb-0' %>
+            <%= form.select :status, Offer.statuses.keys.map { |status| [status.humanize, status] },{}, include_blank: 'All States', class: "form-select" %>
+          </div>
+
+          <div class=" d-flex align-items-center m-2">
+            <%= form.submit "Search", class: "btn btn-primary mx-2" %>
+            <%= link_to "Clear Filters", admin_offers_path, class: "btn btn-secondary" %>
+          </div>
         </div>
 
         <!-- Search and Clear Filters Buttons -->
-        <div class="col-md-2 d-flex align-items-center justify-content-end">
-          <%= form.submit "Search", class: "btn btn-primary w-100 me-2" %>
-          <%= link_to "Clear Filters", admin_offers_path, class: "btn btn-secondary w-100 text-nowrap" %>
-        </div>
+
       <% end %>
     </div>
   </div>
@@ -39,6 +47,7 @@
         <tr>
           <th style="border-right: 1px solid #dee2e6;">Image</th>
           <th style="border-right: 1px solid #dee2e6;">Name</th>
+          <th style="border-right: 1px solid #dee2e6;">Genre</th>
           <th style="border-right: 1px solid #dee2e6;">Status</th>
           <th style="border-right: 1px solid #dee2e6;">Amount</th>
           <th style="border-right: 1px solid #dee2e6;">Coin</th>
@@ -52,6 +61,7 @@
               <%= image_tag offer.image.url, alt: offer.name, class: 'img-thumbnail', width: 50, height: 50 if offer.image.present? %>
             </td>
             <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= offer.name %></td>
+            <td class="text-center" style="border-right: 1px solid #dee2e6;"><%= offer.genre.humanize %></td>
             <td class="text-center" style="border-right: 1px solid #dee2e6;">
               <%= offer.status == "active" ? "Active" : "Inactive" %>
             </td>

@@ -27,6 +27,8 @@
                     <p>Price: <%= number_to_currency(offer.amount) %></p>
                     <!-- Offer Coins -->
                     <p>Coins: <%= offer.coin %></p>
+                    <!-- Offer Genre -->
+                    <p>Genre: <%= offer.genre.titleize %></p>
                   </div>
                 </div>
 
@@ -34,16 +36,19 @@
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                   <div class="text-center">
                     <% if client_signed_in? %>
-                      <div class="d-flex gap-2 justify-content-center pb-2 ">
-                      <%= link_to "View", client_shop_path(offer), class: "btn btn-outline-dark mt-auto" %>
-                        <%= button_to "Purchase", purchase_client_shop_path(offer), method: :post, class: "btn btn-outline-dark mt-auto" %>
-                      </div>
+                      <% if offer.can_be_purchased_by?(current_client) %>
+                        <div class="d-flex gap-2 justify-content-center pb-2">
+                          <%= link_to "View", client_shop_path(offer), class: "btn btn-outline-dark mt-auto" %>
+                          <%= button_to "Purchase", purchase_client_shop_path(offer), method: :post, class: "btn btn-outline-dark mt-auto" %>
+                        </div>
+                      <% else %>
+                        <button class="btn btn-secondary mt-auto" disabled>You cannot purchase this offer</button>
+                      <% end %>
                     <% else %>
                       <%= link_to "Sign in to Purchase", new_client_session_path, class: "btn btn-secondary mt-auto" %>
                     <% end %>
                   </div>
                 </div>
-                <%= paginate @offers %>
               </div>
             </div>
           <% end %>

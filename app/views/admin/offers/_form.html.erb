@@ -1,0 +1,51 @@
+<%= form_with(model: offer, url: url, local: true, class: "row g-3") do |f| %>
+  <!-- Error Messages -->
+  <% if @offer.errors.any? %>
+    <div class="alert alert-danger">
+      <h5 class="fw-bold"><%= pluralize(@offer.errors.count, "error") %> prevented this offer from being saved:</h5>
+      <ul class="mb-0">
+        <% @offer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Name Field -->
+  <div class="col-12">
+    <%= f.label :name, "Offer Name", class: "form-label fw-semibold" %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Enter offer name" %>
+  </div>
+
+  <!-- Amount and Coin Fields -->
+  <div class="col-md-6">
+    <%= f.label :amount, "Amount (USD)", class: "form-label fw-semibold" %>
+    <%= f.number_field :amount, class: "form-control", placeholder: "Enter amount" %>
+  </div>
+  <div class="col-md-6">
+    <%= f.label :coin, "Coin Value", class: "form-label fw-semibold" %>
+    <%= f.number_field :coin, class: "form-control", placeholder: "Enter coin value" %>
+  </div>
+
+  <!-- Genre and Status Fields -->
+  <div class="col-md-6">
+    <%= f.label :genre, "Offer Genre", class: "form-label fw-semibold" %>
+    <%= f.select :genre, Offer.genres.keys.map { |genre| [genre.humanize, genre] }, {}, class: "form-select" %>
+  </div>
+  <div class="col-md-6">
+    <%= f.label :status, "Status", class: "form-label fw-semibold" %>
+    <%= f.select :status, Offer.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "form-select" %>
+  </div>
+
+  <!-- Image Field -->
+  <div class="col-12">
+    <%= f.label :image, "Upload Image", class: "form-label fw-semibold" %>
+    <%= f.file_field :image, class: "form-control" %>
+    <small class="text-muted">Recommended size: 1200x300 pixels</small>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="col-12 mt-3">
+    <%= f.submit "Create Offer", class: "btn btn-primary w-100 fw-bold" %>
+  </div>
+<% end %>

@@ -7,13 +7,15 @@ class Client::ShopController < ApplicationController
   end
 
   def index
-    @offers = Offer.active.page(params[:page])
-    # Offers are loaded via load_offers
+    @offers = Offer.active.page(params[:page]).select do |offer|
+      !client_signed_in? || offer.can_be_purchased_by?(current_client)
+      end
   end
 
   def purchase
-    if client_signed_in?
-      offer = Offer.find(params[:id])
+    offer = Offer.find(params[:id])
+
+    if client_signed_in? && offer.can_be_purchased_by?(current_client)
       order = current_client.orders.build(
         offer: offer,
         amount: offer.amount,

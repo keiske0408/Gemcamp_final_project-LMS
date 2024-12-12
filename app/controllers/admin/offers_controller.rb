@@ -5,6 +5,7 @@ class Admin::OffersController < Admin::BaseController
     @offers = Offer.all
     @offers = @offers.where(status: params[:status]) if params[:status].present?
     @offers = @offers.where(name: params[:name]) if params[:name].present?
+    @offers = @offers.where(genre: params[:genre]) if params[:genre].present?
   end
 
   def new
@@ -42,6 +43,6 @@ class Admin::OffersController < Admin::BaseController
   end
 
   def offer_params
-    params.require(:offer).permit(:name, :amount, :coin, :image, :status)
+    params.require(:offer).permit(:name, :amount, :coin, :status, :image, :genre)
   end
 end
