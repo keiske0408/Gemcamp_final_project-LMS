@@ -65,16 +65,16 @@
                     <small class="text-danger">no quantity</small>
                   <% end %>
                   <% if item.may_start? %>
-                    <%= button_to 'Start', start_admin_item_path(item), method: :patch, class: 'btn btn-light btn-sm' %>
+                    <%= button_to 'Start', start_admin_item_path(item, page: params[:page]), method: :patch, class: 'btn btn-light btn-sm' %>
                   <% end %>
                   <% if item.may_pause? %>
-                    <%= button_to 'Pause', pause_admin_item_path(item), method: :patch, class: 'btn btn-light btn-sm' %>
+                    <%= button_to 'Pause', pause_admin_item_path(item, page: params[:page]), method: :patch, class: 'btn btn-light btn-sm' %>
                   <% end %>
                   <% if item.may_end? %>
-                    <%= button_to 'End', end_admin_item_path(item), method: :patch, class: 'btn btn-light btn-sm' %>
+                    <%= button_to 'End', end_admin_item_path(item, page: params[:page]), method: :patch, class: 'btn btn-light btn-sm' %>
                   <% end %>
                   <% if item.may_cancel? %>
-                    <%= button_to 'Cancel', cancel_admin_item_path(item), method: :patch, class: 'btn btn-light btn-sm' %>
+                    <%= button_to 'Cancel', cancel_admin_item_path(item, page: params[:page]), method: :patch, class: 'btn btn-light btn-sm' %>
                   <% end %>
                 </div>
               </td>

@@ -8,7 +8,7 @@ class Admin::ItemsController < Admin::BaseController
     else
       flash[:alert] = 'Unable to start the item.'
     end
-    redirect_to admin_items_path
+    redirect_to admin_items_path(page: params[:page])
   end
 
   def pause
@@ -17,7 +17,7 @@ class Admin::ItemsController < Admin::BaseController
     else
       flash[:alert] = 'Unable to pause the item.'
     end
-    redirect_to admin_items_path
+    redirect_to admin_items_path(page: params[:page])
   end
 
   def end
@@ -26,7 +26,7 @@ class Admin::ItemsController < Admin::BaseController
     else
       flash[:alert] = 'Unable to end the item.'
     end
-    redirect_to admin_items_path
+    redirect_to admin_items_path(page: params[:page])
   end
 
   def cancel
@@ -35,12 +35,12 @@ class Admin::ItemsController < Admin::BaseController
     else
       flash[:alert] = 'Unable to cancel the item.'
     end
-    redirect_to admin_items_path
+    redirect_to admin_items_path(page: params[:page])
   end
 
+
   def index
-    @items = Item.where(deleted_at: nil)  # Exclude deleted items
-    @items = Item.page(params[:page]).per(5)
+    @items = Item.where(deleted_at: nil).order(created_at: :desc).page(params[:page]).per(5)
 
     respond_to do |format|
       format.html
@@ -50,7 +50,7 @@ class Admin::ItemsController < Admin::BaseController
             'Image', 'Name', 'Quantity', 'Min Tickets', 'Batch Count',
             'Status', 'State', 'Offline At', 'Online At', 'Category'
           ]
-          @items.find_each do |item|
+          Item.all.find_each do |item|
             csv << [
               item.image_url, # Assuming you want to include the image URL
               item.name,
