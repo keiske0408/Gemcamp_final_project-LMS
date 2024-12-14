@@ -51,7 +51,6 @@ class Order < ApplicationRecord
 
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { deposit? }
   validates :coin, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :remarks, presence: true, if: -> { increase? || deduct? || bonus? }
 
   def generate_serial_number
     number_count = Order.where(user_id: user_id).count + 1
