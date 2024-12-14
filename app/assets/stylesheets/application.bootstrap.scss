@@ -3,6 +3,25 @@
 @import 'select2/dist/css/select2';
 @import "./button_custom.css";
 
+.container {
+  max-width: 1120px;
+}
+
+.test {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
 
 #bannerCarousel {
   margin-bottom: 30px;
