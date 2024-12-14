@@ -23,11 +23,6 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :batch_count, 'Batch Count' %>
-    <%= f.number_field :batch_count, class: 'form-control' %>
-  </div>
-
-  <div class="mb-3">
     <%= f.label :status, 'Status' %>
     <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']]), {}, class: 'form-select' %>
   </div>

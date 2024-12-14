@@ -61,6 +61,9 @@
               </td>
               <td class="text-center align-middle">
                 <div class="btn-group flex-wrap gap-1" role="group">
+                  <% if item.quantity == 0 && item.ended? %>
+                    <small class="text-danger">no quantity</small>
+                  <% end %>
                   <% if item.may_start? %>
                     <%= button_to 'Start', start_admin_item_path(item), method: :patch, class: 'btn btn-light btn-sm' %>
                   <% end %>
