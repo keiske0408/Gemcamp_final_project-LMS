@@ -20,20 +20,16 @@ class Client::LotteryController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    @total_tickets = @item.tickets.count # Total tickets purchased
+    @total_tickets = @item.tickets.where(batch_count: @item.batch_count).count # Total tickets purchased
     @minimum_tickets = @item.minimum_tickets # Minimum tickets required
     # Ensure only items with state 'starting' are viewable
-    if @item.state != 'starting'
+    unless @item.starting? && @item.offline_at.present? && Time.current < @item.offline_at && @item.active?
       redirect_to client_lottery_index_path, alert: 'This item is not available.'
       return
     end
 
     # Show the client's own tickets for this item
-    if current_client
-      @user_tickets = @item.tickets.where(user: current_client)
-    else
-      @user_tickets = []
-    end
+    @user_tickets = @item.tickets.where(batch_count: @item.batch_count, user: current_client)  if current_client
   end
 
   def buy_tickets
@@ -52,6 +48,7 @@ class Client::LotteryController < ApplicationController
           Ticket.create!(
             item: @item,
             user: current_client,
+            batch_count: @item.batch_count
           )
         end
       end
