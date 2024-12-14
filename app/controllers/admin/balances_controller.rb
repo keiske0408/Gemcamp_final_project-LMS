@@ -11,10 +11,11 @@ class Admin::BalancesController < Admin::BaseController
     if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Coins successfully rewarded!"
+      redirect_to admin_users_path
     else
       flash[:error] = @order.errors.full_messages.to_sentence
+      render :new_member_level
     end
-    redirect_to admin_users_path
   end
 
   def new_increase
@@ -27,10 +28,11 @@ class Admin::BalancesController < Admin::BaseController
     if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Coins successfully increased!"
+      redirect_to admin_users_path
     else
       flash[:error] = @order.errors.full_messages.to_sentence
+      render :new_increase
     end
-    redirect_to admin_users_path
   end
 
   def new_deduct
@@ -43,17 +45,20 @@ class Admin::BalancesController < Admin::BaseController
     if @order.coin <= @user.coins
       if @order.save && @order.may_pay?
         @order.pay!
+        @order.update(state: "cancelled")
         flash[:success] = "Deduct order created and payment processed successfully."
+        redirect_to admin_users_path
       else
-        flash[:alert] = "Failed to process the deduct order. Please try again."
+        flash.now[:alert] = "Failed to process the deduct order. Please try again."
+        render :new_deduct
       end
     else
       @order.cancel! if @order.persisted?
-      flash[:alert] = "Insufficient coins. Order was cancelled."
+      flash.now[:alert] = "Insufficient coins. Order was cancelled."
+      render :new_deduct
     end
-
-    redirect_to admin_users_path
   end
+
 
   def new_bonus
     @order = Order.bonus.new
@@ -65,10 +70,11 @@ class Admin::BalancesController < Admin::BaseController
     if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Deduct order created and payment processed successfully."
+      redirect_to admin_users_path
     else
       flash[:alert] = @order.errors.full_messages.to_sentence
+      render :new_bonus
     end
-    redirect_to admin_users_path
   end
 
   private
