@@ -27,20 +27,15 @@ class Ticket < ApplicationRecord
 
     event :cancel do
       transitions from: :pending, to: :cancelled,
-                  success: :refund_coin_if_cancelled
-      transitions after: :cancel_associated_tickets
+                  success: :refund_coin
     end
-  end
-
-  def cancel_associated_tickets
-    tickets.each { |ticket| ticket.cancel! }
   end
 
   private
 
   def generate_serial_number
     number_count = Ticket.where(item_id: item_id, batch_count: batch_count).count
-    formatted_number_count = number_count.to_s.rjust(4, '0')
+    formatted_number_count = (number_count + 1).to_s.rjust(4, '0')
     time = Time.current.strftime("%y%m%d")
     self.serial_number = "#{time}-#{item.id}-#{item.batch_count}-#{formatted_number_count}"
   end
@@ -49,9 +44,8 @@ class Ticket < ApplicationRecord
     user.decrement!(:coins, 1)
   end
 
-  def refund_coin_if_cancelled
+  def refund_coin
     user.increment!(:coins, 1)
   end
-
 end
 
