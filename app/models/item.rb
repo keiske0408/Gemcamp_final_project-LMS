@@ -3,7 +3,6 @@ class Item < ApplicationRecord
   default_scope { where(deleted_at: nil) }
   enum status: { inactive: 0, active: 1 }
 
-  validate :cannot_be_deleted_if_tickets_exist, on: :destroy
   has_many :item_category_ships, dependent: :restrict_with_error
   has_many :categories, through: :item_category_ships
   has_many :tickets
@@ -35,7 +34,7 @@ class Item < ApplicationRecord
     end
 
     event :end do
-      transitions from: :starting, to: :ended, guard: :can_transition_to_ended? do
+      transitions from: :starting, to: :ended, guard: :check_minimum_tickets_reached? do
         after do
           handle_winner_selection
         end
@@ -43,31 +42,40 @@ class Item < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: [:starting, :paused], to: :cancelled
+      transitions from: [:starting, :paused], to: :cancelled do
+        after do
+          increment_quantity
+          cancel_all_tickets
+        end
+      end
     end
   end
 
-  after_update :cancel_all_tickets_if_cancelled
   validates :name, :quantity, :minimum_tickets, :batch_count, presence: true
 
   def destroy
     update(deleted_at: Time.current)
   end
+
   def startable?
-    quantity.positive? && offline_at.present? && Date.today < offline_at && active?
+    quantity.positive? && offline_at.present? && Time.current < offline_at && active?
   end
 
   private
 
   # Method to adjust quantity and batch count when item is started
+  def increment_quantity
+    increment!(:quantity, 1)
+  end
+
   def decrement_quantity_and_increment_batch
     decrement!(:quantity, 1)
     increment!(:batch_count, 1)
   end
 
-  def cancel_all_tickets_if_cancelled
-    if state == 'cancelled'
-      tickets.update_all(state: 'cancelled')
+  def cancel_all_tickets
+    self.tickets.where(batch_count: self.batch_count).each do |ticket|
+      ticket.cancel!
     end
   end
 
@@ -79,7 +87,7 @@ class Item < ApplicationRecord
   end
 
   # Guard for transitioning to 'ended'
-  def can_transition_to_ended?
+  def check_minimum_tickets_reached?
     tickets.where(batch_count: batch_count).count >= minimum_tickets
   end
 
