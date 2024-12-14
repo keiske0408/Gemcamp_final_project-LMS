@@ -2,7 +2,19 @@ class Admin::UsersController < Admin::BaseController
   require 'csv'
 
   def index
-    @client_users = User.includes(:children, :parent).page(params[:page]).per(15)
+    @client_users = User.includes(:children, :parent)
+                        .page(params[:page]).per(15)
+                        .order(created_at: :desc)
+
+    if params[:parent_email_cont].present?
+      @client_users = @client_users.joins(:parent).where('users.email LIKE ?', "%#{params[:parent_email_cont]}%")
+    end
+    if params[:email_cont].present?
+      @client_users = @client_users.where('email LIKE ?', "%#{params[:email_cont]}%")
+    end
+    if params[:member_level_id].present?
+      @client_users = @client_users.where(member_level_id: params[:member_level_id])
+    end
 
     respond_to do |format|
       format.html
@@ -13,7 +25,7 @@ class Admin::UsersController < Admin::BaseController
             'Coins', 'Total Used Coins', 'Children Members', 'Phone Number', 'Level'
           ]
 
-          @client_users.each do |user|
+          User.client.each do |user|
             csv << [
               user.parent&.email,
               user.email,
@@ -45,13 +57,15 @@ class Admin::UsersController < Admin::BaseController
     respond_to do |format|
       format.html
       format.csv do
+        all_users = @invited_user.includes(:parent).order(created_at: :desc)
+
         csv_string = CSV.generate(headers: true) do |csv|
           csv << [
             'Parent Email', 'Email', 'Total Deposit', "Members' Total Deposit",
             'Coins', 'Created At', 'Coins Used Count', 'Child Members'
           ]
 
-          @users.each do |user|
+          all_users.each do |user|
             csv << [
               user.parent&.email || "N/A",
               user.email,

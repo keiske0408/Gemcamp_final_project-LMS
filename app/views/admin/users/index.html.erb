@@ -1,5 +1,36 @@
 <div class="container-fluid px-4 mt-3">
   <h1>Hi, <%= current_admin.username %></h1>
+
+  <!-- Filter Form -->
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <i class="fas fa-filter me-1"></i>
+      Filters
+    </div>
+    <div class="card-body">
+      <%= form_with url: admin_users_path, method: :get, local: true, class: "row g-3" do |f| %>
+        <div class="col-md-3">
+          <%= f.label :parent_email_cont, "Parent Email", class: "form-label" %>
+          <%= f.text_field :parent_email_cont, value: params[:parent_email_cont], class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :email_cont, "Email", class: "form-label" %>
+          <%= f.text_field :email_cont, value: params[:email_cont], class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :member_level_id, "Member Level", class: "form-label" %>
+          <%= f.select :member_level_id, options_for_select(MemberLevel.pluck(:level, :id), params[:member_level_id]),
+                       { include_blank: "Select Level" }, class: "form-select" %>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <%= f.submit "Filter", class: "btn btn-primary me-2" %>
+          <%= link_to "Clear Filters", admin_users_path, class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- User List -->
   <div class="card mb-4 mt-3">
     <div class="card-header">
       <i class="fas fa-table me-1"></i>
@@ -41,7 +72,7 @@
           <% end %>
         <% else %>
           <tr>
-            <td colspan="9">No client users found.</td>
+            <td colspan="10">No client users found.</td>
           </tr>
         <% end %>
         </tbody>
