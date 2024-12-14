@@ -10,7 +10,12 @@ class Location < ApplicationRecord
   validates :genre, presence: true
   validates :name, presence: true
   validates :street_address, presence: true
-  validates :phone_number, presence: true
+  validates :phone_number,phone: {
+    possible: true,
+    allow_blank: true,
+    types: %i[voip mobile],
+    countries: [:ph]
+  }
   before_save :unset_previous_default, if: :is_default?
 
   def full_address
