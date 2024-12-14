@@ -63,8 +63,21 @@ class Admin::WinnersController < Admin::BaseController
   end
 
   def publish
-    @winner.publish!
-    redirect_to admin_winners_path, notice: "Winner published successfully."
+
+    if @winner.publish!
+
+      Order.create!(
+        user_id: @winner.user_id,
+        genre: :share,
+        coin: 10,
+        state: :paid,
+        amount: 100,
+        remarks: "Thank you for your feedback!"
+      )
+      redirect_to admin_winners_path, notice: "Winner published successfully, and bonus coins awarded."
+    else
+      redirect_to admin_winners_path, alert: "An error occurred: #{e.message}"
+    end
   end
 
   def remove_publish
