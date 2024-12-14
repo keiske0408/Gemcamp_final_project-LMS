@@ -8,7 +8,7 @@ class Admin::WinnersController < Admin::BaseController
     @state = params[:state]
 
     # Base query
-    @winners = Winner.all
+    @winners = Winner.all.order(created_at: :desc).page(params[:page]).per(10)
 
     # Apply filters
     @winners = @winners.where("serial_number LIKE ?", "%#{@q}%") if @q.present?
@@ -18,7 +18,6 @@ class Admin::WinnersController < Admin::BaseController
       @winners = @winners.where(created_at: @start_date..@end_date)
     end
 
-    @winners = @winners.order(created_at: :desc).page(params[:page]) # Add pagination if needed
 
     respond_to do |format|
       format.html
@@ -26,7 +25,7 @@ class Admin::WinnersController < Admin::BaseController
         csv_string = CSV.generate(headers: true) do |csv|
           csv << ['Serial Number', 'Email', 'State', 'Price', 'Created At']
 
-          @winners.find_each do |winner|
+          Winner.all.each do |winner|
             csv << [
               winner.ticket.serial_number,
               winner.user.email,

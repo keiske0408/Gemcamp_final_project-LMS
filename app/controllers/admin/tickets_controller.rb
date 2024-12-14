@@ -30,7 +30,7 @@ class Admin::TicketsController < Admin::BaseController
         csv_string = CSV.generate(headers: true) do |csv|
           csv << ['Serial Number', 'Item Name', 'Email', 'Batch Count', 'Coins', 'State', 'Created At']
 
-          @tickets.find_each do |ticket|
+          Ticket.all.find_each do |ticket|
             csv << [
               ticket.serial_number,
               ticket.item.name,

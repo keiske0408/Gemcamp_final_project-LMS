@@ -25,7 +25,7 @@ class Admin::OrdersController < Admin::BaseController
             'Serial Number', 'Email', 'Genre', 'State', 'Offer Name',
             'Amount', 'Coins', 'Created At'
           ]
-          @q.find_each do |order|
+          Order.all.each do |order|
             csv << [
               order.serial_number,
               order.user.email,
