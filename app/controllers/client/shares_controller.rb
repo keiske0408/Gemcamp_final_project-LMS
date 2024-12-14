@@ -45,6 +45,6 @@ class Client::SharesController < ApplicationController
   end
 
   def fetch_news_tickers
-    @news_tickers = NewsTicker.where(status: 'active').order(:sort).limit(5)
+    @news_tickers = NewsTicker.active.order(:sort).limit(5)
   end
 end
