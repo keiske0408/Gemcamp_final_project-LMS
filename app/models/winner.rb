@@ -6,7 +6,7 @@ class Winner < ApplicationRecord
   belongs_to :ticket
   belongs_to :user
   belongs_to :admin, class_name: "User", foreign_key: "admin_id"
-  belongs_to :location, class_name: "Location", foreign_key: "location_id"
+  belongs_to :location, class_name: "Location", foreign_key: "location_id", optional: true
 
   has_one_attached :picture
 
