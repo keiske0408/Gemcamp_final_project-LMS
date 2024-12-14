@@ -6,20 +6,21 @@ class Client::MeController < ApplicationController
   end
 
   def order_history
-    @orders = current_client.orders.page(params[:page]).per(5)
+    @orders = current_client.orders.order(created_at: :desc).page(params[:page]).per(8)
   end
 
   def lottery_history
-    @tickets = current_client.tickets.page(params[:page]).per(5)
+    @tickets = current_client.tickets.order(created_at: :desc).page(params[:page]).per(8)
   end
 
   def invitation_history
-    @invited_members = User.where(parent_id: current_client.id).page(params[:page]).per(5)
+    @invited_members = User.where(parent_id: current_client.id).order(created_at: :desc).page(params[:page]).per(8)
   end
 
   def winning_history
-    @winnings = Winner.where(user_id: current_client.id).page(params[:page]).per(5)
+    @winnings = Winner.where(user_id: current_client.id).order(created_at: :desc).page(params[:page]).per(8)
   end
+
 
   def claim_prize
     user = User.find(current_client.id)
@@ -39,24 +40,6 @@ class Client::MeController < ApplicationController
     else
       flash[:alert] = "Unable to claim prize."
     end
-    redirect_to winning_history_client_me_path
-  end
-
-  def publish
-    winner = Winner.find_by(id: params[:winner_id])
-
-    if winner.nil?
-      flash[:alert] = "Winner record not found."
-      return redirect_to winning_history_client_me_path
-    end
-
-    if winner.may_publish?
-      winner.publish!
-      flash[:notice] = "Your feedback has been successfully published!"
-    else
-      flash[:alert] = "Unable to publish feedback. Please ensure the feedback is shared first."
-    end
-
     redirect_to winning_history_client_me_path
   end
 
