@@ -8,7 +8,11 @@
     <div class="d-flex flex-row gap-4">
       <ul class="navbar-nav d-flex flex-row align-items-center gap-5">
         <li class="nav-item">
-          <%= link_to 'Sign in', new_client_session_path, class: "nav-link text-dark fw-bold" %>
+          <% if client_signed_in? %>
+            <%= link_to 'Home', client_root_path, class: "nav-link text-dark fw-bold" %>
+          <% else %>
+            <%= link_to 'Sign in', new_client_session_path, class: "nav-link text-dark fw-bold" %>
+          <% end %>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="#">Coins</a>

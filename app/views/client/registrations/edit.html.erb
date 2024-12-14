@@ -18,7 +18,7 @@
 
       <div class="form-group mb-2">
         <%= f.label :email, class: "form-label" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Enter your email" ,readonly:true %>
         <% if resource.errors[:email].present? %>
           <small class="text-danger fw-bold"><%= resource.errors[:email].join(", ") %></small>
         <% end %>

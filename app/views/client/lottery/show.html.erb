@@ -77,7 +77,7 @@
   <div class="card mb-4">
     <div class="card-body">
       <h5 class="text-center mt-2">Your Serial Numbers</h5>
-      <% if @user_tickets.any? %>
+      <% if @user_tickets.present? %>
         <ul class="list-group">
           <% @user_tickets.each do |ticket| %>
             <li class="list-group-item"><%= ticket.serial_number %></li>

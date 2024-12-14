@@ -63,7 +63,7 @@
                   <div class="card mb-3">
                     <div class="card-body">
                       <p><strong>Serial Number: </strong> <%= order.serial_number %></p>
-                      <p><strong>Offer: </strong> <%= order.offer.name %></p>
+                      <p><strong>Offer: </strong> <%= order.offer&.name %></p>
                       <p><strong>Amount: </strong> <%= order.amount %></p>
                       <p><strong>Coins: </strong> <%= order.coin %></p>
                       <p><strong>Status: </strong> <span class="text-success"><%= order.state %></span></p>
