@@ -16,7 +16,6 @@ class User < ApplicationRecord
 
   ROLES = %w[admin client].freeze
   validates :coins, numericality: { greater_than_or_equal_to: 0 }
-  validates :total_deposit, numericality: { greater_than_or_equal_to: 0 }
   validates :role, inclusion: { in: ROLES }
   validates :phone_number, phone: {
     possible: true,
@@ -32,23 +31,15 @@ class User < ApplicationRecord
   def check_parent_member_level
     parent.reload
 
-    promoter_member_count = parent.children_members
-    promoter_member_level = parent.member_level
-
-    next_member_level = MemberLevel.where("required_members > ?", promoter_member_level&.required_members || 0)
+    next_member_level = MemberLevel.where("required_members > ?", parent.member_level&.required_members || 0)
                                    .order(:required_members)
                                    .first
 
-    if next_member_level && promoter_member_count >= next_member_level.required_members
+    if next_member_level && parent.children_members >= next_member_level.required_members
       ActiveRecord::Base.transaction do
-        promoter_order = parent.orders.create!(genre: "member_level", coin: next_member_level.coins)
-
-        promoter_order.pay!
+        parent.orders.create!(genre: "member_level", coin: next_member_level.coins, state: :paid)
         parent.update!(member_level: next_member_level, coins: parent.coins + next_member_level.coins)
-
       end
-    else
-      Rails.logger.debug "Parent does not qualify for promotion."
     end
   end
 
