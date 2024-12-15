@@ -1,0 +1,90 @@
+<div class="container-fluid px-4 mt-3">
+  <h1>Hi, <%= current_admin.username %></h1>
+
+  <!-- Filter Form -->
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <i class="fas fa-filter me-1"></i>
+      Filters
+    </div>
+    <div class="card-body">
+      <%= form_with url: user_list_admin_users_path	, method: :get, local: true, class: "row g-3" do |f| %>
+        <div class="col-md-3">
+          <%= f.label :parent_email_cont, "Parent Email", class: "form-label" %>
+          <%= f.text_field :parent_email_cont, value: params[:parent_email_cont], class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :email_cont, "Email", class: "form-label" %>
+          <%= f.text_field :email_cont, value: params[:email_cont], class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :member_level_id, "Member Level", class: "form-label" %>
+          <%= f.select :member_level_id, options_for_select(MemberLevel.pluck(:level, :id), params[:member_level_id]),
+                       { include_blank: "Select Level" }, class: "form-select" %>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <%= f.submit "Filter", class: "btn btn-primary me-2" %>
+          <%= link_to "Clear Filters", user_list_admin_users_path	, class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- User List -->
+  <div class="card mb-4 mt-3">
+    <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      Userlist
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="email">Parent Email</th>
+          <th>Email</th>
+          <th>Total Deposit</th>
+          <th>Member Total Deposits</th>
+          <th>Coins</th>
+          <th>Total Used Coins</th>
+          <th>Children Members</th>
+          <th>Phone Number</th>
+          <th>Level</th>
+          <th>Balances</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @client_users.present? %>
+          <% @client_users.each do |user| %>
+            <tr>
+              <td class="email"><%= user.parent&.email || "N/A" %></td>
+              <td><%= user.email %></td>
+              <td><%= user.total_deposit || 0 %></td>
+              <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
+              <td><%= user.coins || 0 %></td>
+              <td>0</td>
+              <td><%= user.children_members %></td>
+              <td><%= user.phone_number || "N/A" %></td>
+              <td><%= user.member_level&.level %></td>
+              <td>
+                <%= link_to "Operate", new_increase_admin_orders_path(user, page: params[:page]), class: "btn btn-primary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="10">No client users found.</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <%= paginate @client_users %>
+        </div>
+        <div>
+          <%= link_to 'Export Users to CSV', user_list_admin_users_path(format: :csv, page: params[:page]), class: 'btn btn-outline-success' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

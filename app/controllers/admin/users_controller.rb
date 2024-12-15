@@ -2,12 +2,32 @@ class Admin::UsersController < Admin::BaseController
   require 'csv'
 
   def index
+    # Paginate each collection with a separate page parameter
+    @items = Item.where(deleted_at: nil).order(created_at: :desc).page(params[:items_page]).per(5)
+    @client_users = User.includes(:children, :parent)
+                        .page(params[:users_page]).per(10)
+                        .order(created_at: :desc)
+    @orders = Order.all.page(params[:orders_page]).per(5).order(created_at: :desc)
+
+    # Get counts for dashboard
+    @users_count = User.count
+    @items_count = Item.count
+    @orders_count = Order.count
+    @tickets_count = Ticket.count
+
+    # Filter users by email if search parameter is present
+    if params[:email_cont].present?
+      @client_users = @client_users.where('email LIKE ?', "%#{params[:email_cont]}%")
+    end
+  end
+  def user_list
     @client_users = User.includes(:children, :parent)
                         .page(params[:page]).per(15)
                         .order(created_at: :desc)
 
+
     if params[:parent_email_cont].present?
-      @client_users = @client_users.joins(:parent).where('users.email LIKE ?', "%#{params[:parent_email_cont]}%")
+      @client_users = @client_users.joins(:parent).where('parents_users.email LIKE ?', "%#{params[:parent_email_cont]}%")
     end
     if params[:email_cont].present?
       @client_users = @client_users.where('email LIKE ?', "%#{params[:email_cont]}%")

@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         collection do
           get :invite_list
+          get :user_list
         end
       end
 
@@ -72,7 +73,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    root to: 'admin/users#index', as: :admin_root # Root for admin domain
+    root to: 'admin/users#index', as: :admin_root
   end
 
   constraints(ClientDomainConstraint.new) do

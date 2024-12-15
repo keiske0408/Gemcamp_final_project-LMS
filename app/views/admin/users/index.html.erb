@@ -1,90 +1,189 @@
-<div class="container-fluid px-4 mt-3">
-  <h1>Hi, <%= current_admin.username %></h1>
-
-  <!-- Filter Form -->
-  <div class="card mb-4 mt-3">
-    <div class="card-header">
-      <i class="fas fa-filter me-1"></i>
-      Filters
+<main>
+  <div class="container-fluid px-4">
+    <!-- Dashboard Header -->
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="mt-4">Dashboard</h1>
+      <p class="text-muted">Hi, <%= current_admin.username %></p>
     </div>
-    <div class="card-body">
-      <%= form_with url: admin_users_path, method: :get, local: true, class: "row g-3" do |f| %>
-        <div class="col-md-3">
-          <%= f.label :parent_email_cont, "Parent Email", class: "form-label" %>
-          <%= f.text_field :parent_email_cont, value: params[:parent_email_cont], class: "form-control" %>
-        </div>
-        <div class="col-md-3">
-          <%= f.label :email_cont, "Email", class: "form-label" %>
-          <%= f.text_field :email_cont, value: params[:email_cont], class: "form-control" %>
-        </div>
-        <div class="col-md-3">
-          <%= f.label :member_level_id, "Member Level", class: "form-label" %>
-          <%= f.select :member_level_id, options_for_select(MemberLevel.pluck(:level, :id), params[:member_level_id]),
-                       { include_blank: "Select Level" }, class: "form-select" %>
-        </div>
-        <div class="col-md-3 d-flex align-items-end">
-          <%= f.submit "Filter", class: "btn btn-primary me-2" %>
-          <%= link_to "Clear Filters", admin_users_path, class: "btn btn-secondary" %>
+    <hr>
+
+    <!-- Cards Section -->
+    <div class="row">
+      <%# Dynamic Cards Array for Cleaner Code %>
+      <% cards = [
+        { title: "Total Users", count: @users_count, path: user_list_admin_users_path, bg: "primary" },
+        { title: "Total Items", count: @items_count, path: admin_items_path, bg: "warning" },
+        { title: "Total Orders", count: @orders_count, path: admin_orders_path, bg: "success" },
+        { title: "Total Tickets", count: @tickets_count, path: admin_tickets_path, bg: "danger" }
+      ] %>
+      <% cards.each do |card| %>
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card bg-<%= card[:bg] %> text-white shadow-sm">
+            <div class="card-body">
+              <h5 class="fw-bold"><%= card[:title] %></h5>
+              <p class="mb-0 fs-3"><%= card[:count] %></p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <%= link_to 'View Details', card[:path], class: "small text-white stretched-link text-decoration-underline" %>
+              <div><i class="fas fa-angle-right"></i></div>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
-  </div>
 
-  <!-- User List -->
-  <div class="card mb-4 mt-3">
-    <div class="card-header">
-      <i class="fas fa-table me-1"></i>
-      Userlist
+    <!-- Tables Section -->
+    <div class="row">
+      <%# Items Table %>
+      <div class="col-xl-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light text-dark">
+            <i class="fas fa-box me-2"></i>Items Data
+          </div>
+          <div class="card-body p-2">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered align-middle">
+                <thead class="table-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th class="text-nowrap">Min Tickets </th>
+                  <th>Batch</th>
+                  <th>Status</th>
+                  <th>State</th>
+                  <th>Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if @items.present? %>
+                  <% @items.each do |item| %>
+                    <tr>
+                      <td><%= item.name %></td>
+                      <td><%= item.quantity %></td>
+                      <td><%= item.minimum_tickets %></td>
+                      <td><%= item.batch_count %></td>
+                      <td><%= item.status&.capitalize || 'N/A' %></td>
+                      <td><%= item.state&.capitalize || 'N/A' %></td>
+                      <td><%= item.categories.map(&:name).join(", ") if item.categories.any? %></td>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">No items found.</td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+              <%= paginate @items, class: 'pagination-sm', param_name: 'items_page' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%# Orders Table %>
+      <div class="col-xl-6">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light text-dark">
+            <i class="fas fa-shopping-cart me-2"></i>Orders Data
+          </div>
+          <div class="card-body p-2">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered align-middle">
+                <thead class="table-light">
+                <tr>
+                  <th class="text-nowrap">Serial Number</th>
+                  <th>Email</th>
+                  <th>Genre</th>
+                  <th>State</th>
+                  <th>Offer</th>
+                  <th>Amount</th>
+                  <th>Coins</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if @orders.present? %>
+                  <% @orders.each do |order| %>
+                    <tr>
+                      <td><%= order.serial_number %></td>
+                      <td><%= order.user.email %></td>
+                      <td><%= order.genre.humanize %></td>
+                      <td><%= order.state.humanize %></td>
+                      <td><%= order.offer&.name || "N/A" %></td>
+                      <td><%= number_to_currency(order.amount) %></td>
+                      <td><%= order.coin %></td>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">No orders found.</td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+              <%= paginate @orders, class: 'pagination-sm', param_name: 'orders_page' %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th class="email">Parent Email</th>
-          <th>Email</th>
-          <th>Total Deposit</th>
-          <th>Member Total Deposits</th>
-          <th>Coins</th>
-          <th>Total Used Coins</th>
-          <th>Children Members</th>
-          <th>Phone Number</th>
-          <th>Level</th>
-          <th>Balances</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% if @client_users.present? %>
-          <% @client_users.each do |user| %>
+
+    <!-- Users Data -->
+    <div class="card shadow-sm mt-4 mb-3">
+      <div class="card-header bg-light text-dark">
+        <i class="fas fa-users me-2"></i>User Data
+      </div>
+      <div class="card-body">
+        <%= form_with url: admin_users_path, method: :get, local: true, class: "row g-3 mb-3" do |f| %>
+          <div class="col-md-3">
+            <%= f.text_field :email_cont, value: params[:email_cont], placeholder: "Search by Email", class: "form-control" %>
+          </div>
+          <div class="col-md-2">
+            <%= f.submit "Search", class: "btn btn-light" %>
+          </div>
+        <% end %>
+
+        <table class="table table-hover table-bordered align-middle">
+          <thead class="table-light">
+          <tr>
+            <th>Email</th>
+            <th>Total Deposit</th>
+            <th>Member Deposits</th>
+            <th>Coins</th>
+            <th>Used Coins</th>
+            <th>Invited Users</th>
+            <th>Phone Number</th>
+            <th>Level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% if @client_users.present? %>
+            <% @client_users.each do |user| %>
+              <tr>
+                <td><%= user.email %></td>
+                <td><%= user.total_deposit || 0 %></td>
+                <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
+                <td><%= user.coins || 0 %></td>
+                <td>0</td>
+                <td><%= user.children_members %></td>
+                <td><%= user.phone_number || "N/A" %></td>
+                <td><%= user.member_level&.level %></td>
+              </tr>
+            <% end %>
+          <% else %>
             <tr>
-              <td class="email"><%= user.parent&.email || "N/A" %></td>
-              <td><%= user.email %></td>
-              <td><%= user.total_deposit || 0 %></td>
-              <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
-              <td><%= user.coins || 0 %></td>
-              <td>0</td>
-              <td><%= user.children_members %></td>
-              <td><%= user.phone_number || "N/A" %></td>
-              <td><%= user.member_level&.level %></td>
-              <td>
-                <%= link_to "Operate", new_increase_admin_orders_path(user), class: "btn btn-primary btn-sm" %>
-              </td>
+              <td colspan="8" class="text-center text-muted">No client users found.</td>
             </tr>
           <% end %>
-        <% else %>
-          <tr>
-            <td colspan="10">No client users found.</td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-between align-items-center mt-3">
-        <div>
-          <%= paginate @client_users %>
-        </div>
-        <div>
-          <%= link_to 'Export Users to CSV', admin_users_path(format: :csv, page: params[:page]), class: 'btn btn-outline-success' %>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-end mt-2">
+          <%= paginate @client_users, class: 'pagination-sm', param_name: 'users_page' %>
         </div>
       </div>
     </div>
   </div>
-</div>
+</main>
