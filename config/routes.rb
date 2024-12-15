@@ -30,6 +30,7 @@ Rails.application.routes.draw do
           post :deliver
           post :publish
           post :remove_publish
+          post :re_publish
         end
       end
 

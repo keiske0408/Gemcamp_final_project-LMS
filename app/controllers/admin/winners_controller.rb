@@ -1,5 +1,5 @@
 class Admin::WinnersController < Admin::BaseController
-  before_action :set_winner, only: [:submit, :pay, :ship, :deliver, :publish, :remove_publish]
+  before_action :set_winner, except: [:index]
 
   def index
     @q = params[:q]
@@ -80,6 +80,11 @@ class Admin::WinnersController < Admin::BaseController
   def remove_publish
     @winner.remove_publish!
     redirect_to admin_winners_path(page: params[:page]), notice: "Publication removed successfully."
+  end
+
+  def re_publish
+    @winner.re_publish!
+    redirect_to admin_winners_path(page: params[:page]), notice: "Publication published successfully."
   end
 
   private

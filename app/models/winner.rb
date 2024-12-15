@@ -20,6 +20,7 @@ class Winner < ApplicationRecord
     state :shared
     state :published
     state :remove_published
+    state :re_published
 
     event :claim do
       transitions from: :won, to: :claimed

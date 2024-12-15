@@ -59,6 +59,7 @@
               <%= button_to "Deliver", deliver_admin_winner_path(winner,page: params[:page]), method: :post, class: "btn btn-warning" if winner.may_deliver? %>
               <%= button_to "Publish", publish_admin_winner_path(winner,page: params[:page]), method: :post, class: "btn btn-dark" if winner.may_publish? %>
               <%= button_to "Remove Publish", remove_publish_admin_winner_path(winner,page: params[:page]), method: :post, class: "btn btn-danger" if winner.may_remove_publish? %>
+              <%= button_to "Re-Publish", re_publish_admin_winner_path(winner,page: params[:page]), method: :post, class: "btn btn-dark" if winner.may_re_publish? %>
             </div>
           </td>
         </tr>
