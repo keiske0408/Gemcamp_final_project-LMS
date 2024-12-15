@@ -47,13 +47,13 @@ class Admin::OrdersController < Admin::BaseController
   def pay
     order = Order.find(params[:id])
     order.pay! && order.increase!
-    redirect_to admin_orders_path, notice: "Order ##{order.serial_number} marked as paid."
+    redirect_to admin_orders_path(page: params[:page]), notice: "Order ##{order.serial_number} marked as paid."
   end
 
   def cancel
     order = Order.find(params[:id])
     order.revert_payment!
-    redirect_to admin_orders_path, notice: "Order ##{order.serial_number} marked as cancelled."
+    redirect_to admin_orders_path(page: params[:page]), notice: "Order ##{order.serial_number} marked as cancelled."
   end
 
 end

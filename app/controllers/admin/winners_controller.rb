@@ -7,10 +7,8 @@ class Admin::WinnersController < Admin::BaseController
     @end_date = params[:end_date]
     @state = params[:state]
 
-    # Base query
     @winners = Winner.all.order(created_at: :desc).page(params[:page]).per(10)
 
-    # Apply filters
     @winners = @winners.where("serial_number LIKE ?", "%#{@q}%") if @q.present?
     @winners = @winners.joins(:user).where("users.email LIKE ?", "%#{@q}%") if @q.present?
     @winners = @winners.where(state: @state) if @state.present?
@@ -43,22 +41,22 @@ class Admin::WinnersController < Admin::BaseController
 
   def submit
     @winner.submit!
-    redirect_to admin_winners_path, notice: "Winner submitted successfully."
+    redirect_to admin_winners_path(page: params[:page]), notice: "Winner submitted successfully."
   end
 
   def pay
     @winner.pay!
-    redirect_to admin_winners_path, notice: "Winner marked as paid."
+    redirect_to admin_winners_path(page: params[:page]), notice: "Winner marked as paid."
   end
 
   def ship
     @winner.ship!
-    redirect_to admin_winners_path, notice: "Winner marked as shipped."
+    redirect_to admin_winners_path(page: params[:page]), notice: "Winner marked as shipped."
   end
 
   def deliver
     @winner.deliver!
-    redirect_to admin_winners_path, notice: "Winner marked as delivered."
+    redirect_to admin_winners_path(page: params[:page]), notice: "Winner marked as delivered."
   end
 
   def publish
@@ -73,15 +71,15 @@ class Admin::WinnersController < Admin::BaseController
         amount: 100,
         remarks: "Thank you for your feedback!"
       )
-      redirect_to admin_winners_path, notice: "Winner published successfully, and bonus coins awarded."
+      redirect_to admin_winners_path(page: params[:page]), notice: "Winner published successfully, and bonus coins awarded."
     else
-      redirect_to admin_winners_path, alert: "An error occurred: #{e.message}"
+      redirect_to admin_winners_path(page: params[:page]), alert: "An error occurred: #{e.message}"
     end
   end
 
   def remove_publish
     @winner.remove_publish!
-    redirect_to admin_winners_path, notice: "Publication removed successfully."
+    redirect_to admin_winners_path(page: params[:page]), notice: "Publication removed successfully."
   end
 
   private

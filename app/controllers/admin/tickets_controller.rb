@@ -51,9 +51,9 @@ class Admin::TicketsController < Admin::BaseController
   def cancel
     @ticket = Ticket.find(params[:id])
     if @ticket.cancel!
-      redirect_to admin_tickets_path, notice: "Ticket cancelled."
+      redirect_to admin_tickets_path(page: params[:page]), notice: "Ticket cancelled."
     else
-      redirect_to admin_tickets_path, alert: "Failed to cancel ticket."
+      redirect_to admin_tickets_path(page: params[:page]), alert: "Failed to cancel ticket."
     end
   end
 
