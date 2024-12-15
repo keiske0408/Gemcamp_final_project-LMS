@@ -1,50 +1,12 @@
-<h1>New Item</h1>
-
-<%= form_with model: @item, url: admin_items_path, local: true, data: { controller: 'select2' }, html: { multipart: true } do |f| %>
-
-  <div class="mb-3">
-    <%= f.label :category_ids, 'Categories' %>
-    <%= f.collection_select :category_ids, Category.all, :id, :name, { prompt: "Select Categories" }, { multiple: true, class: 'form-control select2' } %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :name, 'Name' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :quantity, 'Quantity' %>
-    <%= f.number_field :quantity, class: 'form-control' %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :minimum_tickets, 'Minimum Tickets' %>
-    <%= f.number_field :minimum_tickets, class: 'form-control' %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :status, 'Status' %>
-    <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']]), {}, class: 'form-select' %>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <%= f.label :online_at, 'Online At', class: 'form-label' %>
-      <%= f.datetime_local_field :online_at, value: @item.online_at&.strftime("%Y-%m-%dT%H:%M"), class: 'form-control' %>
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="card shadow-lg w-75">
+    <div class="card-header text-dark text-center">
+      <h4 class="card-title m-2">Create New Item</h4>
     </div>
-    <div class="col-md-6">
-      <%= f.label :offline_at, 'Offline At', class: 'form-label' %>
-      <%= f.datetime_local_field :offline_at, value: @item.offline_at&.strftime("%Y-%m-%dT%H:%M"), class: 'form-control' %>
+    <div class="card-body">
+      <%= render partial: 'form', locals: { item: @item, url: admin_items_path(@item) } %>
+    </div>
+    <div class="card-footer text-end">
     </div>
   </div>
-
-  <div class="mb-3">
-    <%= f.label :image, 'Image' %>
-    <%= f.file_field :image, class: 'form-control' %>
-  </div>
-
-
-  <%= f.submit 'Create Item', class: 'btn btn-primary' %>
-  <%= link_to 'Cancel', admin_items_path, class: 'btn btn-secondary' %>
-
-<% end %>
+</div>

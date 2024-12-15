@@ -1,0 +1,66 @@
+<%= form_with(model: item, url: url, local: true,data: { controller: 'select2' }, html: { multipart: true } , class: "row g-3") do |f| %>
+  <!-- Error Messages -->
+  <% if @item.errors.any? %>
+    <div class="alert alert-danger">
+      <h5 class="fw-bold"><%= pluralize(@item.errors.count, "error") %> prevented this item from being saved:</h5>
+      <ul class="mb-0">
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="col-12">
+    <%= f.label :category_ids, "Categories", class: "form-label fw-semibold" %>
+    <%= f.collection_select :category_ids, Category.all, :id, :name, { prompt: "Select Categories" }, { multiple: true, class: "form-control select2" } %>
+  </div>
+
+
+  <div class="col-12">
+    <%= f.label :name, "Name", class: "form-label fw-semibold" %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Enter item name" %>
+  </div>
+
+  <!-- Quantity Field -->
+  <div class="col-md-6">
+    <%= f.label :quantity, "Quantity", class: "form-label fw-semibold" %>
+    <%= f.number_field :quantity, class: "form-control", placeholder: "Enter quantity" %>
+  </div>
+
+
+  <div class="col-md-6">
+    <%= f.label :minimum_tickets, "Minimum Tickets", class: "form-label fw-semibold" %>
+    <%= f.number_field :minimum_tickets, class: "form-control", placeholder: "Enter minimum tickets" %>
+  </div>
+
+
+  <div class="col-md-6">
+    <%= f.label :online_at, "Online At", class: "form-label fw-semibold" %>
+    <%= f.datetime_local_field :online_at, value: @item.online_at&.strftime("%Y-%m-%dT%H:%M"), class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= f.label :offline_at, "Offline At", class: "form-label fw-semibold" %>
+    <%= f.datetime_local_field :offline_at, value: @item.offline_at&.strftime("%Y-%m-%dT%H:%M"), class: "form-control" %>
+  </div>
+
+  <div class="col-md-6">
+    <%= f.label :status, "Status", class: "form-label fw-semibold" %>
+    <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']]), {}, class: "form-select" %>
+  </div>
+
+
+  <div class="col-12">
+    <%= f.label :image, "Image", class: "form-label fw-semibold" %>
+    <%= f.file_field :image, class: "form-control" %>
+    <small class="text-muted">Recommended size: 1200x300 pixels</small>
+  </div>
+
+
+  <div class="col-12 mt-3 d-flex justify-content-between">
+    <%= f.submit "Create Item", class: "btn btn-primary px-4" %>
+    <%= link_to 'Cancel', admin_items_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>
