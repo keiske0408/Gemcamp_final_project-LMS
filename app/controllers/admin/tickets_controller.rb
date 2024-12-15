@@ -1,7 +1,7 @@
 class Admin::TicketsController < Admin::BaseController
   def index
     @tickets = Ticket.includes(:item, :user)
-    @tickets = Ticket.page(params[:page]).per(10)
+    @tickets = Ticket.order(created_at: :desc).page(params[:page]).per(10)
 
     # Filtering based on search params
     if params[:serial_number].present?

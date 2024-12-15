@@ -2,7 +2,7 @@ class Admin::OffersController < Admin::BaseController
   before_action :set_offer, only: %i[edit update destroy]
 
   def index
-    @offers = Offer.all
+    @offers = Offer.all.order(created_at: :desc)
     @offers = @offers.where(status: params[:status]) if params[:status].present?
     @offers = @offers.where(name: params[:name]) if params[:name].present?
     @offers = @offers.where(genre: params[:genre]) if params[:genre].present?

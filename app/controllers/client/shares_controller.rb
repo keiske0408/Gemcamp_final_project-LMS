@@ -3,9 +3,8 @@ class Client::SharesController < ApplicationController
   before_action :fetch_banners, only: [:index]
   before_action :fetch_news_tickers, only: [:index]
 
-
   def index
-    @published_winners = Winner.where(state: 'published').order(created_at: :desc).page(params[:page]).per(3)
+    @published_winners = Winner.where(state: 'published').order(created_at: :desc).page(params[:page]).per(6)
   end
   def edit
   end

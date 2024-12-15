@@ -7,7 +7,7 @@ class Client::ShopController < ApplicationController
   end
 
   def index
-    @offers = Offer.active.page(params[:page]).select do |offer|
+    @offers = Offer.order(created_at: :desc).active.page(params[:page]).select do |offer|
       !client_signed_in? || offer.can_be_purchased_by?(current_client)
       end
   end

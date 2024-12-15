@@ -4,7 +4,7 @@ class Client::LotteryController < ApplicationController
   before_action :fetch_news_tickers, only: [:index]
 
   def index
-    @categories = Category.all
+    @categories = Category.all.order(created_at: :desc)
 
     @selected_category = params[:category]
     @items = Item.where(status: 1, state: 'starting')
@@ -15,7 +15,7 @@ class Client::LotteryController < ApplicationController
     end
 
     # Pagination (uncomment if pagination gem is used)
-    @paginated_items = @items.page(params[:page]).per(8)
+    @paginated_items = @items.order(created_at: :desc).page(params[:page]).per(8)
   end
 
   def show
