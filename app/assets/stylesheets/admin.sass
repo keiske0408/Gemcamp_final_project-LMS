@@ -1,5 +1,31 @@
 @import "./style.css"
 
+.custom-pagination
+  .pagination
+    .page-item.active .page-link
+      background-color: #444  // Dark gray background for active page
+      border-color: #444      // Dark gray border
+      color: white           // White text for active page
+
+
+    .page-link
+      color: #666            // Medium gray text color for links
+      border: 1px solid #ccc  // Light gray border for buttons
+      background-color: white // White background for buttons
+      &:hover
+        background-color: #f5f5f5 // Light gray background on hover
+        color: #444              // Darker text on hover
+
+
+
+    .page-item.disabled .page-link
+      color: #aaa             // Lighter gray text for disabled buttons
+      background-color: #f9f9f9 // Off-white background for disabled state
+      border-color: #ddd      // Subtle border for disabled buttons
+
+
+
+
 .nav-tabs
   .nav-link:hover
     transition: 0.3s

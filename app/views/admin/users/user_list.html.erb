@@ -8,7 +8,7 @@
       Filters
     </div>
     <div class="card-body">
-      <%= form_with url: user_list_admin_users_path	, method: :get, local: true, class: "row g-3" do |f| %>
+      <%= form_with url: user_list_admin_users_path, method: :get, local: true, class: "row g-3" do |f| %>
         <div class="col-md-3">
           <%= f.label :parent_email_cont, "Parent Email", class: "form-label" %>
           <%= f.text_field :parent_email_cont, value: params[:parent_email_cont], class: "form-control" %>
@@ -24,7 +24,7 @@
         </div>
         <div class="col-md-3 d-flex align-items-end">
           <%= f.submit "Filter", class: "btn btn-primary me-2" %>
-          <%= link_to "Clear Filters", user_list_admin_users_path	, class: "btn btn-secondary" %>
+          <%= link_to "Clear Filters", user_list_admin_users_path, class: "btn btn-secondary" %>
         </div>
       <% end %>
     </div>
@@ -61,7 +61,7 @@
               <td><%= user.total_deposit || 0 %></td>
               <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
               <td><%= user.coins || 0 %></td>
-              <td>0</td>
+              <td><%= user.coins_used_count %></td>
               <td><%= user.children_members %></td>
               <td><%= user.phone_number || "N/A" %></td>
               <td><%= user.member_level&.level %></td>
@@ -78,11 +78,14 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-between align-items-center mt-3">
-        <div>
-          <%= paginate @client_users %>
+        <div class="pagination-container">
+          <%= paginate @client_users, class: 'pagination' %>
         </div>
         <div>
-          <%= link_to 'Export Users to CSV', user_list_admin_users_path(format: :csv, page: params[:page]), class: 'btn btn-outline-success' %>
+          <%= link_to user_list_admin_users_path(format: :csv), class: 'btn btn-outline-dark btn-sm d-flex align-items-center gap-2' do %>
+            <i class="bi bi-file-earmark-arrow-down"></i>
+            Export Users to CSV
+          <% end %>
         </div>
       </div>
     </div>

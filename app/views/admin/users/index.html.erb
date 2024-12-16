@@ -75,8 +75,8 @@
                 </tbody>
               </table>
             </div>
-            <div class="d-flex justify-content-end mt-2">
-              <%= paginate @items, class: 'pagination-sm', param_name: 'items_page' %>
+            <div class="d-flex justify-content-start mt-2">
+              <%= paginate @items, class: 'pagination-sm custom-pagination', param_name: 'items_page', views_prefix: 'items_pagination' %>
             </div>
           </div>
         </div>
@@ -124,7 +124,7 @@
               </table>
             </div>
             <div class="d-flex justify-content-end mt-2">
-              <%= paginate @orders, class: 'pagination-sm', param_name: 'orders_page' %>
+              <%= paginate @orders, class: 'pagination-sm custom-pagination', param_name: 'orders_page', views_prefix: 'items_pagination' %>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@
                 <td><%= user.total_deposit || 0 %></td>
                 <td><%= user.children.pluck(:total_deposit).reject(&:nil?).sum %></td>
                 <td><%= user.coins || 0 %></td>
-                <td>0</td>
+                <td><%= user.coins_used_count %></td>
                 <td><%= user.children_members %></td>
                 <td><%= user.phone_number || "N/A" %></td>
                 <td><%= user.member_level&.level %></td>
@@ -181,7 +181,7 @@
           </tbody>
         </table>
         <div class="d-flex justify-content-end mt-2">
-          <%= paginate @client_users, class: 'pagination-sm', param_name: 'users_page' %>
+          <%= paginate @client_users, class: 'pagination-sm custom-pagination', param_name: 'users_page', views_prefix: 'items_pagination' %>
         </div>
       </div>
     </div>

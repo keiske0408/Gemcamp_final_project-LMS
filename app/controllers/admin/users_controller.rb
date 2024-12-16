@@ -4,7 +4,7 @@ class Admin::UsersController < Admin::BaseController
   def index
     # Paginate each collection with a separate page parameter
     @items = Item.where(deleted_at: nil).order(created_at: :desc).page(params[:items_page]).per(5)
-    @client_users = User.includes(:children, :parent)
+    @client_users = User.includes(:children, :parent,:tickets)
                         .page(params[:users_page]).per(10)
                         .order(created_at: :desc)
     @orders = Order.all.page(params[:orders_page]).per(5).order(created_at: :desc)
@@ -21,7 +21,7 @@ class Admin::UsersController < Admin::BaseController
     end
   end
   def user_list
-    @client_users = User.includes(:children, :parent)
+    @client_users = User.includes(:children, :parent,:tickets)
                         .page(params[:page]).per(15)
                         .order(created_at: :desc)
 
@@ -52,7 +52,7 @@ class Admin::UsersController < Admin::BaseController
               user.total_deposit || 0,
               user.children.pluck(:total_deposit).reject(&:nil?).sum,
               user.coins || 0,
-              0,
+              user.coins_used_count,
               user.children_members,
               user.phone_number || "N/A",
               user.member_level&.level,

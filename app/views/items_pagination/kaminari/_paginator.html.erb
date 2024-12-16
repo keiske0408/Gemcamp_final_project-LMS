@@ -1,0 +1,24 @@
+<%= paginator.render do %>
+  <nav class="custom-pagination">
+    <ul class="pagination pagination-sm">
+      <%# Render the previous button as a left arrow unless on the first page %>
+      <li class="page-item">
+        <%= prev_page_tag unless current_page.first? %>
+      </li>
+
+      <%# Render each page number with the appropriate Bootstrap styling %>
+      <% each_page do |page| %>
+        <% if page.left_outer? || page.right_outer? || page.inside_window? %>
+          <%= page_tag page %>
+        <% elsif !page.was_truncated? %>
+          <%= gap_tag %>
+        <% end %>
+      <% end %>
+
+      <%# Render the next button as a right arrow unless on the last page %>
+      <li class="page-item">
+        <%= next_page_tag unless current_page.last? %>
+      </li>
+    </ul>
+  </nav>
+<% end %>
