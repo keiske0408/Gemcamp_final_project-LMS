@@ -2,7 +2,7 @@
 <footer class="d-flex justify-content-around align-items-center bg-light py-2 border-top">
   <%= link_to client_shares_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-share-fill"></i><br>
-    <small>Share</small>
+    <small><%= t("share") %></small>
   <% end %>
 
   <% if client_signed_in? %>
