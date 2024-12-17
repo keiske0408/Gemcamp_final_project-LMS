@@ -3,12 +3,142 @@
 @import 'select2/dist/css/select2';
 @import "./button_custom.css";
 
+.pagination {
+  --bs-pagination-color: black;
+  --bs-pagination-active-border-color: linear-gradient(0deg, rgba(40, 44, 52, 1) 0%, rgba(17, 0, 32, .5) 100%);
+  --bs-pagination-active-bg: darkslategrey;
+
+}
+
+.navbar-nav .dropdown-menu {
+  position: absolute;
+}
+
+.colorway{
+  border: 1px solid #ffffff22;
+  background-color: #282c34;
+  background: linear-gradient(0deg, rgba(40, 44, 52, 1) 0%, rgba(17, 0, 32, .5) 100%);
+  box-shadow: 0 7px 20px 5px #00000088;
+}
+
+.code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  monospace;
+}
+
+.nft {
+
+  border: 1px solid #ffffff22;
+  background-color: #282c34;
+  background: linear-gradient(0deg, rgba(40, 44, 52, 1) 0%, rgba(17, 0, 32, .5) 100%);
+  box-shadow: 0 7px 20px 5px #00000088;
+  border-radius: .7rem;
+
+}
+
+/* Custom Card Design */
+.custom-card {
+  background-color: #333; /* Dark background for the card */
+  color: #fff; /* White text for contrast */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.custom-card:hover {
+  transform: translateY(-5px); /* Lift the card slightly when hovered */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+}
+
+.custom-img-wrapper {
+  overflow: hidden; /* Ensures the image fits well within rounded corners */
+  border-radius: 12px 12px 0 0; /* Match rounded corners of the card */
+}
+
+.custom-card-body {
+  padding: 1.25rem; /* Adjust padding inside the card */
+}
+
+.custom-card-title {
+  font-size: 1.25rem; /* Increase the font size for titles */
+  font-weight: 700; /* Bold titles for emphasis */
+}
+
+.custom-card-text {
+  font-size: 1rem; /* Adjust font size for text */
+  color: #ccc; /* Lighter text color for better contrast on dark background */
+}
+
+.custom-img-wrapper img {
+  object-fit: cover; /* Ensure the image fits the container nicely */
+  width: 100%; /* Make the image take full width of the container */
+  height: 200px; /* Fixed height for consistent card size */
+  border-radius: 12px 12px 0 0; /* Rounded corners for the image */
+}
+
+.custom-card-body p {
+  margin-bottom: 0.5rem; /* Adjust spacing for text */
+}
+
+.custom-card-body strong {
+  color: #f39c12; /* Highlight the 'Won by' name in a gold-like color */
+}
+
+/* Add responsiveness */
+@media (max-width: 768px) {
+  .custom-card {
+    margin-bottom: 1rem; /* Add margin between cards on smaller screens */
+  }
+}
+
+.header-banner {
+  background-size: cover;
+  background-position: center;
+  height: 50vh; /* Adjust height as needed */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  text-align: center; /* Center text */
+}
+
+.header-banner h1 {
+  font-size: 4rem; /* Make the title larger */
+  font-weight: bold; /* Increase the font weight for emphasis */
+  margin-bottom: 1rem; /* Space between the title and the description */
+}
+
+.header-banner p {
+  font-size: 1.5rem; /* Make the paragraph larger */
+  font-family: 'Open Sans', sans-serif; /* A clean font for the paragraph */
+  font-weight: 300; /* Lighter weight for the paragraph */
+}
+
+
+@media (max-width: 1200px) {
+  .header-banner {
+    height: 50vh; /* Slightly smaller height for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .header-banner {
+    height: 40vh; /* Even smaller height for mobile screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .header-banner {
+    height: 35vh; /* Smallest height for very small screens */
+  }
+}
+
 .container {
   max-width: 1120px;
 }
 
 .test {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
@@ -19,12 +149,6 @@
   background: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 5px;
-}
-
-
-
-#bannerCarousel {
-  margin-bottom: 30px;
 }
 
 .announcement-bar {
@@ -39,6 +163,7 @@
   background: radial-gradient(circle at 0.2% 1.8%, rgb(86, 2, 2) 0%, rgb(250, 88, 8) 100.2%);
   color: white;
 }
+
 /* Ticker Wrapper */
 .ticker-wrap {
   flex-grow: 1;
@@ -107,6 +232,7 @@ html, body {
   min-height: 100vh;
   margin: 0;
 }
+
 .content {
   flex: 1;
   display: flex;
@@ -115,6 +241,7 @@ html, body {
   padding-top: 60px; /* Adjust based on your header height */
   padding-bottom: 60px; /* Adjust based on your footer height */
 }
+
 .container {
   flex: 1;
 }
@@ -155,11 +282,6 @@ html, body {
 
 //----Lottery---//
 
-.container {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 .badge.bg-primary {
   background-color: #007bff;
   color: white;
@@ -168,27 +290,7 @@ html, body {
   border-radius: 0.5em;
 }
 
-.banner-image {
-  height: 250px;
-  background-color: #f8f9fa;
-}
-
 .category-buttons button {
   margin-right: 5px;
 }
-
-.banner-image {
-  background-color: #e9ecef;
-  padding: 50px;
-  margin: 10px 0;
-  border: 1px solid #dee2e6;
-}
-
-.carousel-inner .carousel-item img {
-  height: 650px;
-  object-fit: cover;
-  width: 100%;
-}
-
-
 

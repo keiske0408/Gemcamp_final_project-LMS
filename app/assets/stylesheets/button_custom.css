@@ -1,3 +1,4 @@
+/* Base styles for the button */
 .button-50 {
     align-items: center;
     background: #FFFFFF;
@@ -19,8 +20,34 @@
     border-radius: 8px;
     cursor: pointer;
     user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+    transition: all 0.3s ease-in-out; /* Smooth transitions for hover and active states */
+}
+
+/* Hover effect */
+.button-50:hover {
+    background-color: #f3f4f6; /* Light gray background on hover */
+    color: #000000; /* Darker text color */
+    transform: translateY(-3px); /* Slight lift effect */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+/* Active state */
+.button-50.active {
+    background-color: #333333; /* Green highlight for active button */
+    color: #FFFFFF; /* White text for active button */
+    box-shadow: 0px 8px 15px rgba(32, 27, 27, 0.4); /* Highlighted shadow */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Combine hover with active for a seamless transition */
+.button-50.active:hover {
+    box-shadow: 0px 10px 20px rgba(55, 50, 23, 0.5); /* Stronger shadow */
+    transform: translateY(-4px); /* More lift on hover */
+}
+
+
+.button-50, .button-50.active {
+    transition: all 0.3s ease-in-out;
 }
 
 /* CSS */
@@ -139,5 +166,35 @@
     background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
     box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
 }
+
+.button-47 {
+    text-decoration: none; /* Removes the underline */
+    --hover-shadows: 16px 16px 33px #121212, -16px -16px 33px #303030;
+    --accent: #601616;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    border: none;
+    border-radius: 1.1em;
+    background-color: #212121;
+    cursor: pointer;
+    color: white;
+    padding: 1em 2em;
+    transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
+    letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+    box-shadow: 13px 13px 10px #1c1c1c, -10px -10px 8px #262626;
+}
+
+.button-47:hover {
+    box-shadow: var(--hover-shadows);
+    text-decoration: none; /* Ensure underline is not added on hover */
+}
+
+.button-47:active {
+    box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
+    background-color: var(--accent);
+    transform: scale(0.95);
+    text-decoration: none;
+}
+
 
 
