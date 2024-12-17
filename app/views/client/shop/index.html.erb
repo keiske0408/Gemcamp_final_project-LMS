@@ -1,34 +1,55 @@
-<div class="container my-5">
-  <h1 class="mb-4">Shop</h1>
+<header class="py-lg-5 border-bottom mb-lg-2 header-banner" style="background-image: url('<%= asset_path('gold.png') %>');">
+  <div class="container">
+    <div class="text-center text-white my-5">
+      <h1 class="fw-bolder">Unlock Amazing Deals and Rewards!</h1>
+      <p class="lead mb-0">Find the best deals and start earning today!</p>
+    </div>
+  </div>
+</header>
 
+<div class="container my-5">
   <%= render partial: 'client/shared/banner' %>
   <%= render partial: 'client/shared/newsticker' %>
 
+
   <!-- Offers Section -->
-  <% if @offers.present? %>
-    <section class="py-2">
+  <section class="py-2">
+    <h1 class=" text-center">Featured Offers</h1>
+    <% if @offers.present? %>
+
       <div class="container px-4 px-lg-2 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
           <% @offers.each do |offer| %>
             <div class="col mb-5">
-              <div class="card h-100">
+              <div class=" test custom-card card h-100 shadow-sm">
+                <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><%= offer.genre.titleize %></div>
                 <!-- Offer Image -->
                 <% if offer.image.present? %>
                   <img class="card-img-top" src="<%= offer.image.url %>" alt="<%= offer.name %>"
-                       style="width: 100%; height: 200px; object-fit: cover;" />
+                       style="width: 100%; height: 200px; object-fit: cover;"/>
+                <% else %>
+                  <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Default image"
+                       style="width: 100%; height: 200px; object-fit: cover;"/>
                 <% end %>
 
                 <!-- Offer Details -->
                 <div class="card-body p-4">
                   <div class="text-center">
                     <!-- Offer Name -->
-                    <h5 class="fw-bolder"><%= offer.name %></h5>
+                    <h5 class="fw-bold mb-3 fs-5"><%= offer.name %></h5>
+
                     <!-- Offer Price -->
-                    <p>Price: <%= number_to_currency(offer.amount) %></p>
+                    <p class="mb-2 text-muted">
+                      <span class="fw-semibold fs-5" style="color: lightgray;">
+                        Price: <%= number_to_currency(offer.amount) %>
+                      </span>
+                    </p>
                     <!-- Offer Coins -->
-                    <p>Coins: <%= offer.coin %></p>
-                    <!-- Offer Genre -->
-                    <p>Genre: <%= offer.genre.titleize %></p>
+                    <p class="mb-2 text-muted">
+                      <span class="fw-bold fs-5" style="color: #C4850C; font-weight: 700;">
+                        <%= offer.coin %> <i class="bi bi-coin me-1"></i>
+                      </span>
+                    </p>
                   </div>
                 </div>
 
@@ -38,14 +59,13 @@
                     <% if client_signed_in? %>
                       <% if offer.can_be_purchased_by?(current_client) %>
                         <div class="d-flex gap-2 justify-content-center pb-2">
-                          <%= link_to "View", client_shop_path(offer), class: "btn btn-outline-dark mt-auto" %>
-                          <%= button_to "Purchase", purchase_client_shop_path(offer), method: :post, class: "btn btn-outline-dark mt-auto" %>
+                          <%= button_to "Purchase Offer", purchase_client_shop_path(offer), method: :post, class: "btn btn-outline-light" %>
                         </div>
                       <% else %>
                         <button class="btn btn-secondary mt-auto" disabled>You cannot purchase this offer</button>
                       <% end %>
                     <% else %>
-                      <%= link_to "Sign in to Purchase", new_client_session_path, class: "btn btn-secondary mt-auto" %>
+                      <%= link_to "Sign in to Purchase", new_client_session_path, class: "btn btn-dark mt-auto" %>
                     <% end %>
                   </div>
                 </div>
@@ -53,9 +73,15 @@
             </div>
           <% end %>
         </div>
+        <%= paginate @offers %>
       </div>
-    </section>
-  <% else %>
-    <p class="text-center">No offers available at the moment. Please check back later!</p>
-  <% end %>
-</div>
+      </section>
+    <% else %>
+      <p class="text-center">No offers available at the moment. Please check back later!</p>
+    <% end %>
+    </div>
+
+
+
+
+
