@@ -1,20 +1,46 @@
 <% if @banners.any? %>
-  <div id="bannerCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <% @banners.each_with_index do |banner, index| %>
-        <div class="carousel-item <%= 'active' if index == 0 %>">
-          <%= image_tag banner.preview.url, class: "d-block w-100", alt: "Banner Image" %>
+  <div class="card mb-4">
+    <div class="row g-0">
+      <!-- Left Side Content -->
+      <div class="col-md-4 d-flex align-items-center justify-content-center text-white p-3"
+           style="background:linear-gradient(90deg, rgba(62,0,0,1) 0%, rgba(124,0,0,1) 100%) ">
+        <div class="text-center">
+          <h2 class="fw-bold fs-3">Our Biggest Jackpot</h2>
+          <h1 class="display-4 fw-bold">US$ 740 Million</h1>
+          <p class="fs-5 mb-3">Draw closes in 1 day 21:54:05</p>
         </div>
-      <% end %>
+      </div>
+
+      <!-- Right Side Banner Image -->
+      <div class="col-md-8">
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <% @banners.each_with_index do |banner, index| %>
+              <div class="carousel-item <%= 'active' if index == 0 %>">
+                <%= image_tag banner.preview.url, class: "d-block w-100", alt: "Banner Image", style: "max-height: 450px; object-fit: cover;" %>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Carousel Indicators -->
+          <div class="carousel-indicators">
+            <% @banners.each_with_index do |banner, index| %>
+              <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></button>
+            <% end %>
+          </div>
+
+          <!-- Carousel Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
 <% else %>
   <p class="text-center">No banners available.</p>
