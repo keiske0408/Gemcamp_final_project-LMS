@@ -10,11 +10,13 @@
         <% end %>
         <div class="sb-sidenav-menu-heading">Management</div>
         <!-- User Section -->
-        <a class="nav-link collapsed d-flex flex-row" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUserSection" aria-expanded="false" aria-controls="collapseUserSection">
+        <a class="nav-link collapsed d-flex flex-row" href="#" data-bs-toggle="collapse"
+           data-bs-target="#collapseUserSection" aria-expanded="false" aria-controls="collapseUserSection">
           <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div> <!-- User icon -->
           <span style="text-wrap: nowrap; font-size:16px">User Section</span>
           <div class="sb-sidenav-collapse-arrow" style="justify-self: flex-end;"><i class="fas fa-angle-down"></i></div>
         </a>
+
         <div class="collapse" id="collapseUserSection" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
             <%= link_to 'User List', user_list_admin_users_path, class: "nav-link" %>
