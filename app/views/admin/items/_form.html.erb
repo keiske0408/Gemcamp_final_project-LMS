@@ -48,7 +48,7 @@
 
   <div class="col-md-6">
     <%= f.label :status, "Status", class: "form-label fw-semibold" %>
-    <%= f.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']]), {}, class: "form-select" %>
+    <%= f.select :status, Item.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "form-select" %>
   </div>
 
 
@@ -60,7 +60,7 @@
 
 
   <div class="col-12 mt-3 d-flex justify-content-between">
-    <%= f.submit "Create Item", class: "btn btn-primary px-4" %>
+    <%= f.submit "Submit", class: "btn btn-primary px-4" %>
     <%= link_to 'Cancel', admin_items_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>
