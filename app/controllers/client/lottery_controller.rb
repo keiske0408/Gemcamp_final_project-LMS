@@ -15,7 +15,7 @@ class Client::LotteryController < ApplicationController
     end
 
     # Pagination (uncomment if pagination gem is used)
-    @paginated_items = @items.order(created_at: :desc).page(params[:page]).per(8)
+    @paginated_items = @items.order(created_at: :desc).page(params[:page]).per(6)
   end
 
   def show

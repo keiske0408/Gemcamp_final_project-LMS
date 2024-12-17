@@ -11,7 +11,7 @@ class Admin::BalancesController < Admin::BaseController
     if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Coins successfully rewarded!"
-      redirect_to admin_users_path
+      redirect_to user_list_admin_users_path(page: params[:page])
     else
       flash[:error] = @order.errors.full_messages.to_sentence
       render :new_member_level
@@ -28,7 +28,9 @@ class Admin::BalancesController < Admin::BaseController
     if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Coins successfully increased!"
-      redirect_to admin_users_path
+      logger.debug "Page param: #{params[:page]}"
+      redirect_to user_list_admin_users_path(page: params[:page])
+
     else
       flash[:error] = @order.errors.full_messages.to_sentence
       render :new_increase
@@ -47,7 +49,7 @@ class Admin::BalancesController < Admin::BaseController
         @order.pay!
         @order.update(state: "cancelled")
         flash[:success] = "Deduct order created and payment processed successfully."
-        redirect_to admin_users_path
+        redirect_to user_list_admin_users_path(page: params[:page])
       else
         flash.now[:alert] = "Failed to process the deduct order. Please try again."
         render :new_deduct
@@ -70,7 +72,7 @@ class Admin::BalancesController < Admin::BaseController
     if @order.save && @order.may_pay?
       @order.pay!
       flash[:success] = "Deduct order created and payment processed successfully."
-      redirect_to admin_users_path
+      redirect_to user_list_admin_users_path(page: params[:page])
     else
       flash[:alert] = @order.errors.full_messages.to_sentence
       render :new_bonus
