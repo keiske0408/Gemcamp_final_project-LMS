@@ -59,7 +59,7 @@
                     <% if client_signed_in? %>
                       <% if offer.can_be_purchased_by?(current_client) %>
                         <div class="d-flex gap-2 justify-content-center pb-2">
-                          <%= button_to "Purchase Offer", purchase_client_shop_path(offer), method: :post, class: "btn btn-outline-light" %>
+                          <%= button_to "Purchase Offer", purchase_client_shop_path(offer), method: :post, class: "button-50" %>
                         </div>
                       <% else %>
                         <button class="btn btn-secondary mt-auto" disabled>You cannot purchase this offer</button>
