@@ -1,41 +1,103 @@
+<header class="py-lg-5 border-bottom mb-lg-2 header-banner" style="background-image: url('<%= asset_path('gold.png') %>');">
+  <div class="container">
+    <div class="text-center text-white my-5">
+      <h1 class="fw-bold">Welcome to the Ultimate Lottery Experience!</h1>
+      <p class="lead mb-0">Play, Win, and Change Your Life Today!</p>
+    </div>
+  </div>
+</header>
+
 <div class="container my-xl-5">
   <!-- Banner with Navigation Arrows -->
   <%= render partial: 'client/shared/banner' %>
   <%= render partial: 'client/shared/newsticker' %>
+  <h2 class="fw-bold text-center pt-2">Winner's Feedback</h2>
+  <p class="text-center text-muted mb-4">Hear what our lucky winners have to say about their life-changing experiences!</p>
 
   <!-- Winners Feedback Section with Border -->
-  <div class="row">
-    <div class="col">
-      <div class="border border-dark rounded p-4">
-        <h4 class="mb-4">Winners Feedback</h4>
-        <div class="row">
-          <% @winners_feedback.each do |winner| %>
-            <div class="col-3 mb-4">
-              <div class="card shadow text-center h-100 d-flex flex-column">
-                <%= image_tag winner.picture.url, alt: winner.comment.truncate(30), class: "card-img-top rounded" if winner.picture.present? %>
-                <div class="mt-2 flex-grow-1">
-                  <p class="card-text"><%= winner.comment.truncate(50) %></p>
+  <div id="publishedWinnersCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @winners_feedback.each_slice(3).with_index do |winners_group, index| %>
+        <div class="carousel-item <%= 'active' if index == 0 %>">
+          <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 g-4 justify-content-center mt-3 mb-3">
+            <% winners_group.each do |winner| %>
+              <div class="col">
+                <div class="custom-card card shadow text-center h-100 d-flex flex-column">
+                  <!-- Winner's Picture -->
+                  <div class="custom-img-wrapper">
+                    <% if winner.picture.present? %>
+                      <%= image_tag winner.picture.url, class: "card-img-top", alt: winner.comment %>
+                    <% else %>
+                      <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image"/>
+                    <% end %>
+                  </div>
+                  <!-- Winner's Name and Feedback -->
+                  <div class="custom-card-body mt-2 flex-grow-1">
+                    <h5 class="custom-card-title"><%= winner.item&.name || "Prize" %></h5>
+                    <p class="custom-card-text"><%= winner.comment.presence || "No feedback provided." %></p>
+                  </div>
+                  <!-- Winner's User Info -->
+                  <div class="custom-card-footer position-relative">
+                    <div class=" w-100 mb-2"></div>
+                    <p class="fs-5" style="color: #F39C11">
+                      <strong>Won by:</strong> <%= winner.user.username %>
+                    </p>
+                  </div>
+
                 </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
-        <div class="text-center mt-4">
-          <%= link_to "Click to see more...", client_shares_path, class: "btn-hover color-8" %>
+      <% end %>
+    </div>
+    <div class="text-center pb-2 mb-2">
+      <%= link_to "Click to see more...", client_shares_path, class: "btn-hover color-8" %>
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#publishedWinnersCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #333;"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#publishedWinnersCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #333;"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+  <div class="py-5 bg-dark">
+    <div class="container px-5 my-5">
+      <div class="row gx-5 justify-content-center">
+        <div class="col-lg-10 col-xl-7">
+          <div class="text-center">
+            <div class="fs-4 mb-4 fst-italic text-white">""Fortune favors the bold! 🎟️ Join the Grand Millionaire Lotto for your chance to win life-changing prizes. Your dreams are just a ticket away!""</div>
+            <div class="d-flex align-items-center justify-content-center">
+              <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+              <div class="fw-bold text-white-50">
+                John Cena
+                <span class="fw-bold mx-1 text1-muted">/</span>
+                CEO, LotteryWin
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Coming Soon Section with Border -->
+<div class="container my-xl-5">
   <div class="row mt-lg-4">
+    <h2 class="mb-2 fw-bold text-center">Coming Soon!</h2>
+    <p class="text-center text-muted mb-4">Exciting new lotteries are on their way. Stay tuned for updates!</p>
     <div class="col">
-      <div class="border border-dark rounded p-4">
-        <h4 class="mb-4">Coming Soon</h4>
+      <div class="p-4">
         <div class="row">
           <% @coming_soon_items.each do |item| %>
             <div class="col-3 mb-4">
-              <div class="card shadow text-center h-100 d-flex flex-column">
+              <div class="whitecard card shadow text-center h-100 d-flex flex-column">
                 <%= image_tag item.image.url, alt: item.name, class: "card-img-top rounded" if item.image.present? %>
                 <div class="mt-2 flex-grow-1">
                   <h5 class="card-title"><%= item.name %></h5>
