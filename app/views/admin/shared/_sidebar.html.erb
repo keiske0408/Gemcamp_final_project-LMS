@@ -3,85 +3,85 @@
     <div class="sb-sidenav-menu">
       <div class="nav">
 
-        <div class="sb-sidenav-menu-heading">Main</div>
+        <div class="sb-sidenav-menu-heading"><%= t('menu.main') %></div> <!-- Translated Main Heading -->
         <%= link_to admin_users_path, class: "nav-link" do %>
           <div class="sb-nav-link-icon"><i class="bi bi-house-door-fill"></i></div>
-          Homepage
+          <%= t('homepage') %> <!-- Translated Homepage -->
         <% end %>
-        <div class="sb-sidenav-menu-heading">Management</div>
+
+        <div class="sb-sidenav-menu-heading"><%= t('menu.management') %></div> <!-- Translated Management Heading -->
+
         <!-- User Section -->
         <a class="nav-link collapsed d-flex flex-row" href="#" data-bs-toggle="collapse"
            data-bs-target="#collapseUserSection" aria-expanded="false" aria-controls="collapseUserSection">
           <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div> <!-- User icon -->
-          <span style="text-wrap: nowrap; font-size:16px">User Section</span>
+          <span style="text-wrap: nowrap; font-size:16px"><%= t('user_section') %></span> <!-- Translated User Section -->
           <div class="sb-sidenav-collapse-arrow" style="justify-self: flex-end;"><i class="fas fa-angle-down"></i></div>
         </a>
 
         <div class="collapse" id="collapseUserSection" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
-            <%= link_to 'User List', user_list_admin_users_path, class: "nav-link" %>
-            <%= link_to 'User Invite List', invite_list_admin_users_path, class: "nav-link" %>
-            <%= link_to 'Member Levels', admin_member_levels_path, class: "nav-link" %>
+            <%= link_to t('user_list'), user_list_admin_users_path, class: "nav-link" %> <!-- Translated User List -->
+            <%= link_to t('user_invite_list'), invite_list_admin_users_path, class: "nav-link" %> <!-- Translated User Invite List -->
+            <%= link_to t('member_levels'), admin_member_levels_path, class: "nav-link" %> <!-- Translated Member Levels -->
           </nav>
         </div>
 
         <!-- Item Section -->
         <a class="nav-link collapsed d-flex flex-row" href="#" data-bs-toggle="collapse" data-bs-target="#collapseItemSection" aria-expanded="false" aria-controls="collapseItemSection">
           <div class="sb-nav-link-icon"><i class="fas fa-cube"></i></div> <!-- Cube icon for items -->
-          <span style="text-wrap: nowrap; font-size:16px">Item Section</span>
+          <span style="text-wrap: nowrap; font-size:16px"><%= t('item_section') %></span> <!-- Translated Item Section -->
           <div class="sb-sidenav-collapse-arrow" style="justify-self: flex-end;"><i class="fas fa-angle-down"></i></div>
         </a>
         <div class="collapse" id="collapseItemSection" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
-            <%= link_to 'Item List', admin_items_path, class: "nav-link" %>
-            <%= link_to 'Item Category List', admin_categories_path, class: "nav-link" %>
+            <%= link_to t('item_list'), admin_items_path, class: "nav-link" %> <!-- Translated Item List -->
+            <%= link_to t('item_category_list'), admin_categories_path, class: "nav-link" %> <!-- Translated Item Category List -->
           </nav>
         </div>
 
         <!-- Order & Ticket Section -->
         <a class="nav-link collapsed d-flex flex-row" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrderTicketSection" aria-expanded="false" aria-controls="collapseOrderTicketSection">
           <div class="sb-nav-link-icon"><i class="fas fa-ticket-alt"></i></div> <!-- Ticket icon for orders/tickets -->
-          <span style="text-wrap: nowrap; font-size:16px">Order & Ticket Section</span>
+          <span style="text-wrap: nowrap; font-size:16px"><%= t('order_ticket_section') %></span> <!-- Translated Order & Ticket Section -->
           <div class="sb-sidenav-collapse-arrow" style="justify-self: flex-end;"><i class="fas fa-angle-down"></i></div>
         </a>
         <div class="collapse" id="collapseOrderTicketSection" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
-            <%= link_to 'Orders', admin_orders_path, class: "nav-link" %>
-            <%= link_to 'Tickets', admin_tickets_path, class: "nav-link" %>
-            <%= link_to 'Winners', admin_winners_path, class: "nav-link" %>
-            <%= link_to 'Offers', admin_offers_path, class: "nav-link" %>
+            <%= link_to t('orders'), admin_orders_path, class: "nav-link" %> <!-- Translated Orders -->
+            <%= link_to t('tickets'), admin_tickets_path, class: "nav-link" %> <!-- Translated Tickets -->
+            <%= link_to t('winners'), admin_winners_path, class: "nav-link" %> <!-- Translated Winners -->
+            <%= link_to t('offers'), admin_offers_path, class: "nav-link" %> <!-- Translated Offers -->
           </nav>
         </div>
 
         <!-- Site Section -->
         <a class="nav-link collapsed d-flex flex-row" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSiteSection" aria-expanded="false" aria-controls="collapseSiteSection">
           <div class="sb-nav-link-icon"><i class="fas fa-globe"></i></div> <!-- Globe icon for site settings -->
-          <span style="text-wrap: nowrap; font-size:16px">Site Section</span>
+          <span style="text-wrap: nowrap; font-size:16px"><%= t('site_section') %></span> <!-- Translated Site Section -->
           <div class="sb-sidenav-collapse-arrow" style="justify-self: flex-end;"><i class="fas fa-angle-down"></i></div>
         </a>
         <div class="collapse" id="collapseSiteSection" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
-            <%= link_to 'News Ticker', admin_news_tickers_path, class: "nav-link" %>
-            <%= link_to 'Banner', admin_banners_path, class: "nav-link" %>
+            <%= link_to t('news_ticker'), admin_news_tickers_path, class: "nav-link" %> <!-- Translated News Ticker -->
+            <%= link_to t('banner'), admin_banners_path, class: "nav-link" %> <!-- Translated Banner -->
           </nav>
         </div>
 
-
-        <div class="sb-sidenav-menu-heading">Under Maintenance</div>
+        <div class="sb-sidenav-menu-heading"><%= t('under_maintenance') %></div> <!-- Translated Under Maintenance -->
         <a class="nav-link" href="charts.html">
           <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-          Charts
+          <%= t('charts') %> <!-- Translated Charts -->
         </a>
         <a class="nav-link" href="tables.html">
           <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-          Tables
+          <%= t('tables') %> <!-- Translated Tables -->
         </a>
       </div>
     </div>
     <div class="sb-sidenav-footer">
-      <div class="small">Logged in as:</div>
+      <div class="small"><%= t('logged_in_as') %>:</div> <!-- Translated "Logged in as" -->
       <%= current_admin.username if current_admin %>
     </div>
   </nav>
 </div>
-

@@ -1,9 +1,10 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark navbar-height">
-  <%= link_to " System Management", admin_users_path,  class:"navbar-brand ps-3"  %>
+  <%= link_to t('system_management'), admin_users_path,  class:"navbar-brand ps-3"  %> <!-- Translated "System Management" -->
   <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+
   <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
     <div class="input-group">
-      <%= text_field_tag :q, params[:q], placeholder: "Search for...", class: "form-control", aria: { label: "Search for..." }, id: "btnNavbarSearch" %>
+      <%= text_field_tag :q, params[:q], placeholder: t('search_placeholder'), class: "form-control", aria: { label: t('search_placeholder') }, id: "btnNavbarSearch" %> <!-- Translated search placeholder -->
       <button type="submit" class="btn btn-primary">
         <i class="fas fa-search"></i>
       </button>
@@ -15,7 +16,6 @@
       <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
          aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="#!">Language</a></li>
         <li>
           <%= link_to 'English', url_for(locale: 'en'), class: 'dropdown-item' %>
         </li>
@@ -23,11 +23,10 @@
           <%= link_to 'Tagalog', url_for(locale: 'tg'), class: 'dropdown-item' %>
         </li>
         <li><hr class="dropdown-divider" /></li>
-        <li><%= button_to 'Sign Out', destroy_admin_session_path, method: :delete, form:
-          { data: { turbo_confirm: 'Are you sure?' } }, class: "dropdown-item" %></li>
+        <li><%= button_to t('sign_out'), destroy_admin_session_path, method: :delete, form:
+          { data: { turbo_confirm: t('sign_out_confirm') } }, class: "dropdown-item" %> <!-- Translated "Sign Out" and confirmation -->
+        </li>
       </ul>
     </li>
   </ul>
 </nav>
-
-

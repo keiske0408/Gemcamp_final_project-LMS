@@ -20,30 +20,29 @@
           <% else %>
             <!-- Fallback content when no client is logged in -->
             <img src="https://via.placeholder.com/200" class="border border-4 border-primary me-4 rounded-3" style="width: 150px; height: 150px;" alt="Profile Image">
-            <p>Please log in to view your profile.</p>
+            <p><%= t('please_log_in') %></p> <!-- Translated text for login prompt -->
           <% end %>
         </div>
 
         <!-- Cash In Now Button -->
         <div class="d-grid mb-5">
-          <button class="btn btn-primary btn-lg fw-bold py-3">Cash In Now</button>
+          <button class="btn btn-primary btn-lg fw-bold py-3"><%= t('cash_in_now') %></button> <!-- Translated Button Text -->
         </div>
 
         <!-- Links Section -->
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action d-flex align-items-center fs-5 py-3">
-            <i class="bi bi-telephone me-3 text-primary"></i> Contact Us
+            <i class="bi bi-telephone me-3 text-primary"></i> <%= t('contact_us') %> <!-- Translated Contact Us Text -->
           </a>
           <% if current_client.present? %>
-              <%= link_to client_me_path, class: "list-group-item list-group-item-action d-flex align-items-center fs-5 py-3 " do %>
-                <i class="bi bi-person me-3 text-primary"></i> My Profile
-              <% end %>
-                </a>
+            <%= link_to client_me_path, class: "list-group-item list-group-item-action d-flex align-items-center fs-5 py-3 " do %>
+              <i class="bi bi-person me-3 text-primary"></i> <%= t('my_profile') %> <!-- Translated My Profile Text -->
+            <% end %>
           <% else %>
-            <p class="list-group-item list-group-item-action fs-5 py-3">Please log in to view your profile.</p>
+            <p class="list-group-item list-group-item-action fs-5 py-3"><%= t('please_log_in_profile') %></p> <!-- Translated login prompt for profile -->
           <% end %>
-          <%= button_to destroy_client_session_path, method: :delete, class: "list-group-item list-group-item-action d-flex align-items-center fs-5 py-3 ", data: { confirm: 'Are you sure you want to sign out?' } do %>
-            <i class="text-danger bi bi-box-arrow-right me-3"></i> Sign Out
+          <%= button_to destroy_client_session_path, method: :delete, class: "list-group-item list-group-item-action d-flex align-items-center fs-5 py-3 ", data: { confirm: t('sign_out_confirm') } do %> <!-- Translated sign-out confirmation -->
+            <i class="text-danger bi bi-box-arrow-right me-3"></i> <%= t('sign_out') %> <!-- Translated Sign Out Text -->
           <% end %>
         </div>
       </div>

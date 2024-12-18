@@ -3,7 +3,7 @@
     <!-- Dashboard Header -->
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="mt-4">Dashboard</h1>
-      <p class="text-muted">Hi, <%= current_admin.username %></p>
+      <p class="text-muted"><%= t('dashboard.welcome') %> <%= current_admin.username %></p>
     </div>
     <hr>
 
@@ -11,10 +11,10 @@
     <div class="row">
       <%# Dynamic Cards Array for Cleaner Code %>
       <% cards = [
-        { title: "Total Users", count: @users_count, path: user_list_admin_users_path, bg: "primary" },
-        { title: "Total Items", count: @items_count, path: admin_items_path, bg: "warning" },
-        { title: "Total Orders", count: @orders_count, path: admin_orders_path, bg: "success" },
-        { title: "Total Tickets", count: @tickets_count, path: admin_tickets_path, bg: "danger" }
+        { title: t('dashboard.cards.total_users'), count: @users_count, path: user_list_admin_users_path, bg: "primary" },
+        { title: t('dashboard.cards.total_items'), count: @items_count, path: admin_items_path, bg: "warning" },
+        { title: t('dashboard.cards.total_orders'), count: @orders_count, path: admin_orders_path, bg: "success" },
+        { title: t('dashboard.cards.total_tickets'), count: @tickets_count, path: admin_tickets_path, bg: "danger" }
       ] %>
       <% cards.each do |card| %>
         <div class="col-xl-3 col-md-6 mb-4">
@@ -24,7 +24,7 @@
               <p class="mb-0 fs-3"><%= card[:count] %></p>
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
-              <%= link_to 'View Details', card[:path], class: "small text-white stretched-link text-decoration-underline" %>
+              <%= link_to t('dashboard.cards.view_details'), card[:path], class: "small text-white stretched-link text-decoration-underline" %>
               <div><i class="fas fa-angle-right"></i></div>
             </div>
           </div>
@@ -38,20 +38,20 @@
       <div class="col-xl-6">
         <div class="card shadow-sm">
           <div class="card-header bg-light text-dark">
-            <i class="fas fa-box me-2"></i>Items Data
+            <i class="fas fa-box me-2"></i><%= t('dashboard.items_data') %>
           </div>
           <div class="card-body p-2">
             <div class="table-responsive">
               <table class="table table-hover table-bordered align-middle">
                 <thead class="table-light">
                 <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th class="text-nowrap">Min Tickets </th>
-                  <th>Batch</th>
-                  <th>Status</th>
-                  <th>State</th>
-                  <th>Category</th>
+                  <th><%= t('dashboard.items.name') %></th>
+                  <th><%= t('dashboard.items.quantity') %></th>
+                  <th class="text-nowrap"><%= t('dashboard.items.min_tickets') %></th>
+                  <th><%= t('dashboard.items.batch') %></th>
+                  <th><%= t('dashboard.items.status') %></th>
+                  <th><%= t('dashboard.items.state') %></th>
+                  <th><%= t('dashboard.items.category') %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,14 +62,14 @@
                       <td><%= item.quantity %></td>
                       <td><%= item.minimum_tickets %></td>
                       <td><%= item.batch_count %></td>
-                      <td><%= item.status&.capitalize || 'N/A' %></td>
-                      <td><%= item.state&.capitalize || 'N/A' %></td>
+                      <td><%= item.status&.capitalize || t('dashboard.items.na') %></td>
+                      <td><%= item.state&.capitalize || t('dashboard.items.na') %></td>
                       <td><%= item.categories.map(&:name).join(", ") if item.categories.any? %></td>
                     </tr>
                   <% end %>
                 <% else %>
                   <tr>
-                    <td colspan="7" class="text-center text-muted">No items found.</td>
+                    <td colspan="7" class="text-center text-muted"><%= t('dashboard.items.no_items_found') %></td>
                   </tr>
                 <% end %>
                 </tbody>
@@ -86,20 +86,20 @@
       <div class="col-xl-6">
         <div class="card shadow-sm">
           <div class="card-header bg-light text-dark">
-            <i class="fas fa-shopping-cart me-2"></i>Orders Data
+            <i class="fas fa-shopping-cart me-2"></i><%= t('dashboard.orders_data') %>
           </div>
           <div class="card-body p-2">
             <div class="table-responsive">
               <table class="table table-hover table-bordered align-middle">
                 <thead class="table-light">
                 <tr>
-                  <th class="text-nowrap">Serial Number</th>
-                  <th>Email</th>
-                  <th>Genre</th>
-                  <th>State</th>
-                  <th>Offer</th>
-                  <th>Amount</th>
-                  <th>Coins</th>
+                  <th class="text-nowrap"><%= t('dashboard.orders.serial_number') %></th>
+                  <th><%= t('dashboard.orders.email') %></th>
+                  <th><%= t('dashboard.orders.genre') %></th>
+                  <th><%= t('dashboard.orders.state') %></th>
+                  <th><%= t('dashboard.orders.offer') %></th>
+                  <th><%= t('dashboard.orders.amount') %></th>
+                  <th><%= t('dashboard.orders.coins') %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -110,14 +110,14 @@
                       <td><%= order.user.email %></td>
                       <td><%= order.genre.humanize %></td>
                       <td><%= order.state.humanize %></td>
-                      <td><%= order.offer&.name || "N/A" %></td>
+                      <td><%= order.offer&.name || t('dashboard.orders.na') %></td>
                       <td><%= number_to_currency(order.amount) %></td>
                       <td><%= order.coin %></td>
                     </tr>
                   <% end %>
                 <% else %>
                   <tr>
-                    <td colspan="7" class="text-center text-muted">No orders found.</td>
+                    <td colspan="7" class="text-center text-muted"><%= t('dashboard.orders.no_orders_found') %></td>
                   </tr>
                 <% end %>
                 </tbody>
@@ -134,7 +134,7 @@
     <!-- Users Data -->
     <div class="card shadow-sm mt-4 mb-3">
       <div class="card-header bg-light text-dark">
-        <i class="fas fa-users me-2"></i>User Data
+        <i class="fas fa-users me-2"></i><%= t('dashboard.user_data') %>
       </div>
       <div class="card-body">
         <%= form_with url: admin_users_path, method: :get, local: true, class: "row g-3 mb-3" do |f| %>
@@ -149,14 +149,14 @@
         <table class="table table-hover table-bordered align-middle">
           <thead class="table-light">
           <tr>
-            <th>Email</th>
-            <th>Total Deposit</th>
-            <th>Member Deposits</th>
-            <th>Coins</th>
-            <th>Used Coins</th>
-            <th>Invited Users</th>
-            <th>Phone Number</th>
-            <th>Level</th>
+            <th><%= t('dashboard.users.email') %></th>
+            <th><%= t('dashboard.users.total_deposit') %></th>
+            <th><%= t('dashboard.users.member_deposits') %></th>
+            <th><%= t('dashboard.users.coins') %></th>
+            <th><%= t('dashboard.users.used_coins') %></th>
+            <th><%= t('dashboard.users.invited_users') %></th>
+            <th><%= t('dashboard.users.phone_number') %></th>
+            <th><%= t('dashboard.users.level') %></th>
           </tr>
           </thead>
           <tbody>
@@ -169,13 +169,13 @@
                 <td><%= user.coins || 0 %></td>
                 <td><%= user.coins_used_count %></td>
                 <td><%= user.children_members %></td>
-                <td><%= user.phone_number || "N/A" %></td>
+                <td><%= user.phone_number || t('dashboard.users.na') %></td>
                 <td><%= user.member_level&.level %></td>
               </tr>
             <% end %>
           <% else %>
             <tr>
-              <td colspan="8" class="text-center text-muted">No client users found.</td>
+              <td colspan="8" class="text-center text-muted"><%= t('dashboard.users.no_users_found') %></td>
             </tr>
           <% end %>
           </tbody>

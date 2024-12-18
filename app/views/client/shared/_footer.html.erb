@@ -1,4 +1,3 @@
-
 <footer class="d-flex justify-content-around align-items-center bg-light py-2 border-top">
   <%= link_to client_shares_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-share-fill"></i><br>
@@ -8,24 +7,24 @@
   <% if client_signed_in? %>
     <%= link_to client_invite_people_path, class: "text-center text-decoration-none text-dark" do %>
       <i class="bi bi-people-fill"></i><br>
-      <small>Invite</small>
+      <small><%= t("invite") %></small>
     <% end %>
   <% end %>
 
   <%= link_to client_lottery_index_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-gift-fill"></i><br>
-    <small>Lottery</small>
+    <small><%= t("lottery") %></small>
   <% end %>
 
   <%= link_to client_shop_index_path, class: "text-center text-decoration-none text-dark" do %>
     <i class="bi bi-shop"></i><br>
-    <small>Shop</small>
+    <small><%= t("shop") %></small>
   <% end %>
+
   <% if client_signed_in? %>
     <%= link_to client_me_path, class: "text-center text-decoration-none text-dark" do %>
       <i class="bi bi-person-fill"></i><br>
-      <small>Me</small>
+      <small><%= t("me") %></small>
     <% end %>
   <% end %>
-
 </footer>
