@@ -1,11 +1,12 @@
-<header class="py-lg-5 border-bottom mb-lg-2">
+<header class="py-lg-5 border-bottom mb-lg-2 header-banner" style="background-image: url('<%= asset_path('banner_light.png') %>');">
   <div class="container">
-    <div class="text-center my-5">
+    <div class="text-center text-white my-5">
       <h1 class="fw-bolder">Welcome to Winner's Feedback!</h1>
-      <p class="lead mb-0">Let's hear from the winners' testimonies </p>
+      <p class="lead mb-0">Let's hear from the winners' testimonies</p>
     </div>
   </div>
 </header>
+
 
 <div class="container my-4">
   <!-- Banner Image Carousel -->
@@ -13,40 +14,57 @@
   <%= render partial: 'client/shared/newsticker' %>
 
   <% if @published_winners.any? %>
-    <div class="container py-lg-4">
+    <div class="py-lg-3"> <!-- Increased padding for better spacing around the content -->
       <div class="row justify-content-center">
-        <% @published_winners.each do |winner| %>
-          <!-- Blog entries-->
-          <div class="col-lg-6 mb-4">
-            <!-- Featured blog post-->
-            <div class="card test mb-4">
-              <!-- Display winner's picture or a placeholder -->
-              <% if winner.picture.present? %>
-                <%= image_tag winner.picture.url, class: "card-img-top", alt: winner.comment %>
-              <% else %>
-                <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image"/>
-              <% end %>
-              <div class="card-body">
-                <div class="d-flex justify-content-between small text-muted">
-                  <span><%= winner.created_at.strftime('%B %d, %Y') %></span>
-                  <span>Won by: <strong><%= winner.user.username %></strong> </span>
+        <!-- Header Section -->
+        <div class="col-12 text-center ">
+          <h2 class="fw-bold">Winner's History</h2> <!-- Bold and centered header -->
+        </div>
+
+        <!-- Bootstrap Carousel -->
+        <div id="publishedWinnersCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <% @published_winners.each_slice(3).with_index do |winners_group, index| %>
+              <div class="carousel-item <%= 'active' if index == 0 %>">
+                <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 g-4 justify-content-center mt-3 mb-3">
+                  <% winners_group.each do |winner| %>
+                    <div class="col">
+                      <div class="custom-card">
+                        <div class="custom-img-wrapper">
+                          <% if winner.picture.present? %>
+                            <%= image_tag winner.picture.url, class: "card-img-top", alt: winner.comment %>
+                          <% else %>
+                            <img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="Placeholder image"/>
+                          <% end %>
+                        </div>
+                        <div class="custom-card-body text-center">
+                          <h5 class="custom-card-title"><%= winner.item&.name || "Prize" %></h5>
+                          <p class="custom-card-text"><%= winner.comment.presence || "No feedback provided." %></p>
+                          <p class="custom-card-text"><strong>Won by:</strong> <%= winner.user.username %></p>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-                <h2 class="card-title"><%= winner.item&.name || "Prize" %></h2>
-                <p class="card-text"><%= winner.comment.presence || "No feedback provided." %></p>
-                <a class="btn btn-primary" href="#">Read more →</a>
               </div>
-            </div>
+            <% end %>
           </div>
-        <% end %>
-      </div>
-      <!-- Pagination -->
-      <div class="d-flex justify-content-center">
-        <%= paginate @published_winners %>
+
+          <!-- Carousel Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#publishedWinnersCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #333;"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#publishedWinnersCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #333;"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
     </div>
   <% else %>
-    <div class="container">
-      <p class="text-center mt-4">No shares available.</p>
+    <div class="container text-center">
+      <p class="mt-4 text-muted">No shares available.</p> <!-- Added muted text color for better style -->
     </div>
   <% end %>
 </div>
