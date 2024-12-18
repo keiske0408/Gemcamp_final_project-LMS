@@ -270,6 +270,14 @@
     transform: scale(0.95) rotateZ(1.7deg);
 }
 
+.nav-item1 .nav-link1 i {
+    font-size: 1.2rem; /* Adjust icon size */
+    color: #f0ad4e; /* Gold color for the coin */
+}
 
+.nav-item1 .badge {
+    font-size: 0.9rem;
+    padding: 0.5em 0.75em;
+}
 
 
