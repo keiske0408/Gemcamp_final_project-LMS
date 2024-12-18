@@ -1,65 +1,99 @@
-<div class="container my-5">
-<!-- Header Section -->
-  <div class="text-center mb-4">
-    <h1 class="display-4">Invite People</h1>
-    <p class="lead">Scan the QR Code or use the invite URL to invite your friends and earn rewards!</p>
+<header class="bg-dark py-5">
+  <div class="container px-5">
+    <div class="row gx-5 align-items-center justify-content-center">
+      <div class="col-lg-8 col-xl-7 col-xxl-6">
+        <div class="my-5 text-center text-xl-start">
+          <h1 class="display-5 fw-bolder text-white mb-2">Invite Your Friends and Earn Rewards</h1>
+          <p class="lead fw-normal text-white-50 mb-4">
+            Use your personalized invite link or QR code to invite friends and reach new levels of rewards!
+          </p>
+        </div>
+      </div>
+      <div class="col-12 col-xl-5 col-xxl-6 d-flex justify-content-center">
+        <!-- QR code container with a background -->
+        <div class="bg-light rounded p-4 shadow-sm mb-4 text-center" style="width: 100%; max-width: 400px;">
+          <div class="d-flex justify-content-center align-items-center">
+            <%= raw @qrcode_svg %> <!-- This will render your SVG QR code -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</header>
 
-  <!-- QR Code Section -->
-  <div class="d-flex justify-content-center align-items-center bg-light rounded p-4 shadow-sm mb-4">
-    <%= raw @qrcode_svg %>
-  </div>
+<!-- Main Invite Section -->
+<section class="py-5">
+  <div class="container px-5 my-5">
+    <!-- QR Code Section -->
 
-  <!-- Invite URL -->
-  <div class="text-center mb-5">
-    <h2 class="h4">Invite URL:</h2>
-    <p>
-      <a href="<%= new_client_registration_url(promoter: @promoter_email || 'default@example.com') %>" class="text-primary">
+    <!-- Invite URL -->
+    <div class="text-center mb-5">
+      <!-- Title -->
+      <h1 class="display-4 fw-semibold mb-4">Your Invite URL:</h1>
+
+      <!-- Invite URL Container with Stylish Button -->
+      <a href="<%= new_client_registration_url(promoter: @promoter_email || 'default@example.com') %>"
+         class="btn btn-outline-dark btn-lg px-4 py-1 shadow-lg">
         <%= new_client_registration_url(promoter: @promoter_email || 'default@example.com') %>
       </a>
-    </p>
-  </div>
+    </div>
 
-  <!-- Invited Members Section -->
-  <div class="card mb-4">
-    <div class="card-header bg-primary text-white">
-      <h3 class="h5 mb-0">Your Invited Members</h3>
-    </div>
-    <div class="card-body">
-      <% if @invited_members.any? %>
-        <ul class="list-group">
-          <% @invited_members.each do |member| %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span><%= member.username %></span>
-              <span class="text-muted"><%= member.email %></span>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p class="text-muted">You have not invited any members yet.</p>
-      <% end %>
+
+    <!-- Invited Members -->
+    <div class="row gx-5">
+      <div class="col-md-8 mb-4">
+        <div class="test card custom1-card h-100">
+          <div class="custom1-card-header d-flex align-items-center">
+            <div class="icon1-container me-3">
+              <img src="https://via.placeholder.com/24" alt="icon" />
+            </div>
+            <h3 class="text-white mb-0">Your Invited Members</h3>
+          </div>
+
+          <div class="custom1-card-body">
+            <% if @invited_members.any? %>
+              <ul class="list-unstyled">
+                <% @invited_members.each do |member| %>
+                  <li class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text1-muted"><%= member.username  %></span>
+                    <span class="text1-muted"><%= member.email %></span>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p class="text1-muted">You have not invited any members yet.</p>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- Level Information -->
+      <div class="col-md-4 mb-4">
+        <div class="whitecard card h-100">
+          <div class="card-header bg-light-subtle text-dark">
+            <h3 class="h3 mb-0 mt-2">Level Information</h3>
+          </div>
+          <div class="card-body">
+            <% if @current_level %>
+              <p class="fs-5">Current Level: <strong><%= @current_level.level %></strong></p>
+            <% else %>
+              <p class="text-muted">You have not reached any level yet.</p>
+            <% end %>
+
+            <% if @next_level %>
+              <p class="fs-5">Next Level:<strong> <%= @next_level.level %></strong></p>
+              <p class="fs-5">Required Invites: <strong><%= @next_level.required_members - @invited_members.count %></strong></p>
+              <p class="fs-5">Coins Reward:<strong><%= @next_level.coins %></strong> </p>
+            <% else %>
+              <p class="text-muted">You've reached the maximum level!</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- Level Information Section -->
-  <div class="card">
-    <div class="card-header bg-success text-white">
-      <h3 class="h5 mb-0">Level Information</h3>
-    </div>
-    <div class="card-body">
-      <% if @current_level %>
-        <p><strong>Current Level:</strong> <%= @current_level.level %></p>
-      <% else %>
-        <p class="text-muted">You have not reached any level yet.</p>
-      <% end %>
 
-      <% if @next_level %>
-        <p><strong>Next Level:</strong> <%= @next_level.level %></p>
-        <p><strong>Required Invites:</strong> <%= @next_level.required_members - @invited_members.count %></p>
-        <p><strong>Coins Reward:</strong> <%= @next_level.coins %></p>
-      <% else %>
-        <p class="text-muted">You've reached the maximum level!</p>
-      <% end %>
-    </div>
-  </div>
-</div>
