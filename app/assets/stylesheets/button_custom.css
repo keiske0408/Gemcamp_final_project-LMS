@@ -197,4 +197,79 @@
 }
 
 
+.custom1-card {
+    background: linear-gradient(145deg, #141414, #1a1a1a);
+    color: #ffffff;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), inset 0 0 8px #000000;
+}
+
+.custom1-card-header {
+    background-color: transparent;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.custom1-card-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.custom1-card-body {
+    padding: 1.5rem;
+}
+
+/* Icon Style */
+.icon1-container {
+    background-color: #242424;
+    border-radius: 0.75rem;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+.icon1-container img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.text1-muted {
+    color: #aaaaaa !important;
+}
+
+.whitecard {
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    background: rgba(217, 217, 217, 0.58);
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    color: black;
+}
+
+.whitecard:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+}
+
+.whitecard:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+}
+
+
+
 
