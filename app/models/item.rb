@@ -75,7 +75,7 @@ class Item < ApplicationRecord
 
   def cancel_all_tickets
     self.tickets.where(batch_count: self.batch_count).each do |ticket|
-      ticket.cancel!
+      ticket.cancel! unless cancelled?
     end
   end
 
