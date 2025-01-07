@@ -1,24 +1,42 @@
-# README
+# Lottery/Raffle Management System
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 📖 Overview
 
-Things you may want to cover:
+The Lottery/Raffle Management System is a full-featured platform designed for managing lotteries, raffles, and user interactions. It provides a streamlined interface for administrators and clients, supporting features like ticket purchases, prize claiming, and multi-language support (Tagalog and English). Built with Ruby on Rails, the application ensures scalability and user engagement through dynamic content and robust backend functionality.
 
-* Ruby version
+## 🚀 Features
 
-* System dependencies
+### General
+* Secure user authentication using Devise.
+* Role-based access for admins and clients.
+* Multi-language support: Tagalog and English.
 
-* Configuration
+### For Clients
+* Lottery Participation: Buy tickets for items/events.
+* Prize Claiming: Claim prizes directly via profile.
+* Feedback Sharing: Share experiences with messages and images.
+* Shop Offers: Purchase offers to acquire coins.
 
-* Database creation
+### For Admins
+* Manage users, orders, tickets, and prizes.
+* Export data to CSV for reporting.
+* Track and update the state of items, tickets, and winners.
+* Set dynamic banners and news tickers.
 
-* Database initialization
+### System Features
+* State Management with AASM for tickets, items, and winners.
+* Soft Deletion for items and categories.
+* Dynamic sorting and filtering for admin and client views
 
-* How to run the test suite
+## 🛠️ Tech Stack
+* Backend: Ruby on Rails
+* Frontend: Bootstrap for responsive design
+* Database: PostgreSQL/MariaDB
+* Authentication: Devise
+* Gems:
+    * AASM for state management
+    * rqrcode for QR code generation
+    * carrierwave for image uploads
+  
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
-
-* ...
