@@ -47,7 +47,6 @@ class Admin::BalancesController < Admin::BaseController
     if @order.coin <= @user.coins
       if @order.save && @order.may_pay?
         @order.pay!
-        @order.update(state: "cancelled")
         flash[:success] = "Deduct order created and payment processed successfully."
         redirect_to user_list_admin_users_path(page: params[:page])
       else

@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
   def authorize_client
     if current_user&.admin?
       sign_out(current_admin)
-      redirect_to new_client_session_path, alert: 'You are not allowed to access this part of the site'
+      redirect_to new_client_session_path, alert: 'Invalid Email or password'
     end
   end
 

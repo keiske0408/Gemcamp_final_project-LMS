@@ -27,8 +27,7 @@ class Client::ShopController < ApplicationController
       )
 
       if order.save
-        order.submit!
-        order.update(serial_number: order.generate_serial_number)
+        order.submit! && order.generate_serial_number
         redirect_to client_shop_index_path, notice: "Offer purchased successfully!"
       else
         redirect_to shop_path, alert: "Failed to purchase offer. Please try again."

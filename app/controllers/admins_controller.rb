@@ -9,7 +9,7 @@ class AdminsController < ActionController::Base
   def authorize_admin
     if current_user&.client?
       sign_out(current_client)
-      redirect_to new_admin_session_path, alert: 'You are not allowed to access this part of the site'
+      redirect_to new_admin_session_path, alert: 'Invalid Email or Password'
     end
   end
 
